@@ -6,11 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Peckish - Bug Bounty Hunter | 100+ Vulnerabilities Reported</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
             --primary: #6366f1;
@@ -35,18 +31,11 @@
 
         /* Animated gradient background */
         .gradient-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: linear-gradient(125deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #ec4899 75%, #667eea 100%);
-            background-size: 400% 400%;
-            animation: gradientShift 20s ease infinite;
-            opacity: 0.05;
-            z-index: -2;
+            background-size: 400% 400%; animation: gradientShift 20s ease infinite;
+            opacity: 0.05; z-index: -2;
         }
-
         @keyframes gradientShift {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
@@ -54,435 +43,148 @@
         }
 
         /* Floating orbs */
-        .orb {
-            position: fixed;
-            border-radius: 50%;
-            filter: blur(100px);
-            opacity: 0.4;
-            animation: float 20s infinite ease-in-out;
-            z-index: -1;
-            pointer-events: none;
-        }
-
-        .orb1 {
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, var(--primary), transparent);
-            top: -200px;
-            left: -200px;
-            animation-delay: 0s;
-        }
-
-        .orb2 {
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, var(--accent), transparent);
-            bottom: -100px;
-            right: -100px;
-            animation-delay: 5s;
-        }
-
-        .orb3 {
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, var(--success), transparent);
-            top: 50%;
-            left: 50%;
-            animation-delay: 10s;
-        }
-
+        .orb { position: fixed; border-radius: 50%; filter: blur(100px); opacity: 0.4;
+            animation: float 20s infinite ease-in-out; z-index: -1; pointer-events: none; }
+        .orb1 { width: 600px; height: 600px; background: radial-gradient(circle, var(--primary), transparent); top: -200px; left: -200px; }
+        .orb2 { width: 400px; height: 400px; background: radial-gradient(circle, var(--accent), transparent); bottom: -100px; right: -100px; animation-delay: 5s; }
+        .orb3 { width: 300px; height: 300px; background: radial-gradient(circle, var(--success), transparent); top: 50%; left: 50%; animation-delay: 10s; }
         @keyframes float {
-            0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            25% { transform: translate(100px, -100px) rotate(90deg); }
-            50% { transform: translate(-100px, 100px) rotate(180deg); }
-            75% { transform: translate(50px, 50px) rotate(270deg); }
+            0%,100%{transform:translate(0,0)}
+            25%{transform:translate(100px,-100px)}
+            50%{transform:translate(-100px,100px)}
+            75%{transform:translate(50px,50px)}
         }
 
         /* Container */
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 80px 20px;
-        }
-
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            position: relative;
-            padding: 40px 20px;
-        }
-
-        .hero-content {
-            max-width: 1200px;
-            z-index: 1;
-        }
+        .container { max-width: 1400px; margin: 0 auto; padding: 80px 20px; }
+        .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; position: relative; padding: 40px 20px; }
+        .hero-content { max-width: 1200px; z-index: 1; }
 
         h1 {
             font-size: clamp(2.5rem, 6vw, 4.5rem);
-            font-weight: 800;
-            line-height: 1.2;
-            margin-bottom: 30px;
-            padding-bottom: 5px;
-            background: linear-gradient(135deg, var(--light) 0%, var(--gray) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            -webkit-box-decoration-break: clone;
-            box-decoration-break: clone;
+            font-weight: 800; line-height: 1.2; margin-bottom: 30px;
+            background: linear-gradient(135deg, var(--light), var(--gray));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
             animation: fadeInUp 1s ease;
         }
+        @keyframes fadeInUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .hero-subtitle {
-            font-size: 1.2rem;
-            color: var(--gray);
-            margin-bottom: 50px;
-            animation: fadeInUp 1s ease 0.2s both;
-        }
+        .hero-subtitle { font-size: 1.2rem; color: var(--gray); margin-bottom: 50px; animation: fadeInUp 1s ease 0.2s both; }
 
         /* Key Metrics Grid */
         .metrics {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
-            margin: 60px auto;
-            max-width: 1000px;
-            animation: fadeInUp 1s ease 0.4s both;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;
+            margin: 60px auto; max-width: 1000px;
         }
-
         .metric-card {
-            background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 20px;
-            padding: 30px;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-            overflow: hidden;
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px; padding: 30px; transition: all 0.3s ease;
         }
-
         .metric-card:hover {
             transform: translateY(-10px) scale(1.02);
-            border-color: rgba(255,255,255,0.2);
+            border-color: rgba(99,102,241,0.3);
+            background: rgba(99,102,241,0.05);
         }
-
         .metric-number {
-            font-size: 2.5rem;
-            font-weight: 700;
+            font-size: 2.5rem; font-weight: 700;
             background: linear-gradient(135deg, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            display: block;
-            margin-bottom: 10px;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+            display: block; margin-bottom: 10px;
         }
-
-        .metric-label {
-            color: var(--gray);
-            font-size: 0.95rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
+        .metric-label { color: var(--gray); font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1px; }
 
         /* Severity Breakdown */
-        .severity-section {
-            margin: 100px auto;
-            max-width: 1000px;
-        }
-
+        .severity-section { margin: 100px auto; max-width: 1000px; }
         .section-title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            text-align: center;
-            margin-bottom: 60px;
+            font-size: 2.5rem; font-weight: 700; text-align: center; margin-bottom: 60px;
             background: linear-gradient(135deg, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
         }
-
-        .severity-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 40px;
-        }
-
+        .severity-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 40px; }
         .severity-card {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 20px;
-            padding: 25px;
-            text-align: center;
-            transition: all 0.3s ease;
-            cursor: pointer;
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px; padding: 25px; text-align: center; transition: all 0.3s ease; cursor: pointer;
         }
-
         .severity-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(99, 102, 241, 0.35);
-            background: rgba(255,255,255,0.06);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            transform: translateY(-10px) scale(1.02);
+            border-color: rgba(99,102,241,0.3);
+            background: rgba(99,102,241,0.05);
         }
-
-        .severity-count {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 5px;
-        }
-
-        .severity-card.critical .severity-count {
-            color: var(--critical);
-        }
-
-        .severity-card.high .severity-count {
-            color: var(--danger);
-        }
-
-        .severity-label {
-            color: var(--gray);
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
+        .severity-count { font-size: 2.5rem; font-weight: 700; margin-bottom: 5px; }
+        .severity-card.critical .severity-count { color: var(--critical); }
+        .severity-card.high .severity-count { color: var(--danger); }
+        .severity-label { color: var(--gray); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
 
         /* Focus Areas */
-        .focus-areas {
-            margin: 80px auto;
-            max-width: 1000px;
-        }
-
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 15px;
-        }
-
+        .focus-areas { margin: 80px auto; max-width: 1000px; }
+        .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px; }
         .skill-pill {
-            padding: 18px 25px;
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 15px;
-            text-align: center;
-            transition: all 0.3s ease;
-            cursor: default;
-            position: relative;
-            overflow: hidden;
-            font-weight: 500;
+            padding: 18px 25px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 15px; text-align: center; transition: all 0.3s ease; cursor: default; font-weight: 500;
         }
-
-        .skill-pill:hover {
-            transform: translateY(-5px);
-            background: rgba(99, 102, 241, 0.1);
-            border-color: rgba(99, 102, 241, 0.3);
-        }
+        .skill-pill:hover { transform: translateY(-5px); background: rgba(99,102,241,0.1); border-color: rgba(99,102,241,0.3); }
 
         /* Platform Stats */
-        .platform-stats {
-            margin: 100px auto;
-            max-width: 1000px;
-        }
-
-        .stats-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-
-        .platform-link {
-            display: block;
-            text-decoration: none;
-            color: inherit;
-        }
-
+        .platform-stats { margin: 100px auto; max-width: 1000px; }
+        .stats-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .platform-link { display: block; text-decoration: none; color: inherit; }
         .platform-card {
-            cursor: pointer;
-            background: rgba(255,255,255,0.02);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 25px;
-            padding: 40px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275),
-                        background 0.25s ease,
-                        border-color 0.25s ease,
-                        box-shadow 0.25s ease;
+            cursor: pointer; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 25px; padding: 40px; text-align: center; transition: all 0.35s ease;
         }
-
-        .platform-icon {
-            width: 60px;
-            height: 60px;
-            margin: 0 auto 20px;
-            background: rgba(255,255,255,0.05);
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            transition: background 0.3s ease, transform 0.25s ease;
-        }
-
         .platform-card:hover {
-            transform: translateY(-10px);
-            background: rgba(255,255,255,0.06);
-            border-color: rgba(99, 102, 241, 0.35);
-            box-shadow: 0 14px 30px rgba(0,0,0,0.45);
+            transform: translateY(-10px); background: rgba(255,255,255,0.06);
+            border-color: rgba(99,102,241,0.35); box-shadow: 0 14px 30px rgba(0,0,0,0.45);
         }
-
+        .platform-icon {
+            width: 60px; height: 60px; margin: 0 auto 20px; background: rgba(255,255,255,0.05);
+            border-radius: 15px; display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem; transition: all 0.25s ease;
+        }
         .platform-card:hover .platform-icon {
             background: linear-gradient(135deg, var(--primary), var(--accent));
-            transform: scale(1.08);
-            color: white;
-        }
-
-        .platform-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: conic-gradient(from 0deg, transparent, var(--primary), transparent 30%);
-            transform: rotate(0deg);
-            opacity: 0;
-            transition: opacity 0.3s linear, transform 6s linear;
-            pointer-events: none;
-            z-index: -1;
-        }
-
-        .platform-card:hover::before {
-            opacity: 0.08;
-            transform: rotate(360deg);
-        }
-
-        .platform-name {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 20px;
-        }
-
-        .stat-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .stat-row:last-child {
-            border-bottom: none;
-        }
-
-        .stat-label {
-            color: var(--gray);
-            font-size: 0.9rem;
-        }
-
-        .stat-value {
-            font-weight: 600;
-            color: var(--light);
-        }
-
-        .stat-value.highlight {
-            color: var(--primary);
-            font-size: 1.1rem;
+            transform: scale(1.08); color: white;
         }
 
         /* CTA Section */
         .cta-section {
-            text-align: center;
-            margin: 100px auto 50px;
-            padding: 60px 20px;
+            text-align: center; margin: 100px auto 50px; padding: 60px 20px;
             background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(236, 72, 153, 0.02));
-            border-radius: 30px;
-            border: 1px solid rgba(99, 102, 241, 0.2);
-            max-width: 800px;
+            border-radius: 30px; border: 1px solid rgba(99, 102, 241, 0.2); max-width: 800px;
         }
-
         .cta-title {
-            font-size: 2rem;
-            margin-bottom: 20px;
+            font-size: 2rem; margin-bottom: 20px;
             background: linear-gradient(135deg, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
         }
-
-        .cta-buttons {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-top: 30px;
-        }
-
+        .cta-buttons { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-top: 30px; }
         .cta-button {
-            display: inline-block;
-            padding: 18px 40px;
-            background: transparent;
-            color: var(--primary);
-            border: 2px solid var(--primary);
-            text-decoration: none;
-            border-radius: 15px;
-            font-weight: 600;
+            display: inline-block; padding: 18px 40px;
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 15px; font-weight: 600; color: var(--light); text-decoration: none;
             transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
         }
-
         .cta-button:hover {
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            color: white;
-            transform: translateY(-3px);
-            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.3);
+            transform: translateY(-10px) scale(1.02);
+            border-color: rgba(99,102,241,0.3);
+            background: rgba(99,102,241,0.1);
+        }
+        .cta-contact {
+            margin-top: 30px;
+            display: inline-block;
         }
 
         /* Responsive */
         @media (max-width: 768px) {
-            h1 {
-                font-size: 2rem;
-            }
-
-            .metric-card {
-                padding: 20px;
-            }
-
-            .metric-number {
-                font-size: 2rem;
-            }
-
-            .platform-card {
-                padding: 30px 20px;
-            }
-
-            .cta-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .cta-button {
-                width: 100%;
-                max-width: 300px;
-            }
+            h1 { font-size: 2rem; }
+            .metric-card { padding: 20px; }
+            .metric-number { font-size: 2rem; }
+            .platform-card { padding: 30px 20px; }
+            .cta-buttons { flex-direction: column; align-items: center; }
+            .cta-button { width: 100%; max-width: 300px; }
         }
 
-        /* Smooth scroll */
-        html {
-            scroll-behavior: smooth;
-        }
+        html { scroll-behavior: smooth; }
     </style>
 </head>
 <body>
@@ -499,43 +201,19 @@
         
         <!-- Metrics -->
         <div class="metrics">
-          <div class="metric-card">
-            <span class="metric-number" data-target="107">0</span>
-            <span class="metric-label">Total Reports</span>
-          </div>
-          <div class="metric-card">
-            <span class="metric-number" data-target="40000" data-prefix="£">0</span>
-            <span class="metric-label">Bounties Earned</span>
-          </div>
-          <div class="metric-card">
-            <span class="metric-number" data-target="6.5" data-decimals="1">0</span>
-            <span class="metric-label">Signal Score</span>
-          </div>
-          <div class="metric-card">
-            <span class="metric-number" data-target="22.0" data-decimals="1">0</span>
-            <span class="metric-label">Avg Impact</span>
-          </div>
+          <div class="metric-card"><span class="metric-number" data-target="107">0</span><span class="metric-label">Total Reports</span></div>
+          <div class="metric-card"><span class="metric-number" data-target="40000" data-prefix="£">0</span><span class="metric-label">Bounties Earned</span></div>
+          <div class="metric-card"><span class="metric-number" data-target="6.5" data-decimals="1">0</span><span class="metric-label">Signal Score</span></div>
+          <div class="metric-card"><span class="metric-number" data-target="22.0" data-decimals="1">0</span><span class="metric-label">Avg Impact</span></div>
         </div>
 
         <!-- Severity Breakdown -->
         <div class="severity-section">
           <h2 class="section-title">Severity Breakdown</h2>
           <div class="severity-grid">
-            <div class="severity-card critical">
-              <div class="severity-count">29</div>
-              <div class="severity-label">Critical Issues</div>
-              <div style="color: var(--gray); font-size: 0.85rem; margin-top: 5px;">27% of findings</div>
-            </div>
-            <div class="severity-card high">
-              <div class="severity-count">23</div>
-              <div class="severity-label">High Issues</div>
-              <div style="color: var(--gray); font-size: 0.85rem; margin-top: 5px;">21% of findings</div>
-            </div>
-            <div class="severity-card">
-              <div class="severity-count" style="color: var(--warning);">55</div>
-              <div class="severity-label">Medium/Low</div>
-              <div style="color: var(--gray); font-size: 0.85rem; margin-top: 5px;">52% of findings</div>
-            </div>
+            <div class="severity-card critical"><div class="severity-count">29</div><div class="severity-label">Critical Issues</div></div>
+            <div class="severity-card high"><div class="severity-count">23</div><div class="severity-label">High Issues</div></div>
+            <div class="severity-card"><div class="severity-count" style="color: var(--warning);">55</div><div class="severity-label">Medium/Low</div></div>
           </div>
         </div>
 
@@ -551,61 +229,32 @@
           </div>
         </div>
 
-       <!-- Platform Stats -->
-<div class="platform-stats">
-  <h2 class="section-title">Platform Performance</h2>
-  <div class="stats-container">
-
-    <!-- HackerOne -->
-    <a href="https://hackerone.com/peckish?type=user" target="_blank" rel="noopener noreferrer" class="platform-link">
-      <div class="platform-card">
-        <div class="platform-icon">🎯</div>
-        <h3 class="platform-name">HackerOne</h3>
-        <div class="stat-row">
-          <span class="stat-label">Reports</span>
-          <span class="stat-value">55</span>
+        <!-- Platform Stats -->
+        <div class="platform-stats">
+          <h2 class="section-title">Platform Performance</h2>
+          <div class="stats-container">
+            <a href="https://hackerone.com/peckish?type=user" target="_blank" rel="noopener noreferrer" class="platform-link">
+              <div class="platform-card">
+                <div class="platform-icon">🎯</div>
+                <h3 class="platform-name">HackerOne</h3>
+                <div class="stat-row"><span class="stat-label">Reports</span><span class="stat-value">55</span></div>
+                <div class="stat-row"><span class="stat-label">Signal Score</span><span class="stat-value">6.5 / 7.0</span></div>
+                <div class="stat-row"><span class="stat-label">Impact Average</span><span class="stat-value">22.0</span></div>
+                <div class="stat-row"><span class="stat-label">Hackerone Clear</span><span class="stat-value">Verified</span></div>
+              </div>
+            </a>
+            <a href="https://yeswehack.com/hunters/sirpeckish" target="_blank" rel="noopener noreferrer" class="platform-link">
+              <div class="platform-card">
+                <div class="platform-icon">🛡️</div>
+                <h3 class="platform-name">YesWeHack</h3>
+                <div class="stat-row"><span class="stat-label">Reports</span><span class="stat-value">52</span></div>
+                <div class="stat-row"><span class="stat-label">Critical Findings</span><span class="stat-value">29</span></div>
+                <div class="stat-row"><span class="stat-label">Impact</span><span class="stat-value">22.2</span></div>
+                <div class="stat-row"><span class="stat-label">Rank</span><span class="stat-value">195</span></div>
+              </div>
+            </a>
+          </div>
         </div>
-        <div class="stat-row">
-          <span class="stat-label">Signal Score</span>
-          <span class="stat-value">6.5 / 7.0</span>
-        </div>
-        <div class="stat-row">
-          <span class="stat-label">Impact Average</span>
-          <span class="stat-value">22.0</span>
-        </div>
-        <div class="stat-row">
-          <span class="stat-label">Hackerone Clear</span>
-          <span class="stat-value">Verified</span>
-        </div>
-      </div>
-    </a>
-
-    <!-- YesWeHack -->
-    <a href="https://yeswehack.com/hunters/sirpeckish" target="_blank" rel="noopener noreferrer" class="platform-link">
-      <div class="platform-card">
-        <div class="platform-icon">🛡️</div>
-        <h3 class="platform-name">YesWeHack</h3>
-        <div class="stat-row">
-          <span class="stat-label">Reports</span>
-          <span class="stat-value">52</span>
-        </div>
-        <div class="stat-row">
-          <span class="stat-label">Critical Findings</span>
-          <span class="stat-value">29</span>
-        </div>
-        <div class="stat-row">
-          <span class="stat-label">Impact</span>
-          <span class="stat-value">22.2</span>
-        </div>
-        <div class="stat-row">
-          <span class="stat-label">Rank</span>
-          <span class="stat-value">195</span>
-        </div>
-      </div>
-    </a>
-
-  </div>
-</div>
 
         <!-- CTA -->
         <div class="cta-section">
@@ -618,83 +267,60 @@
             <a href="https://hackerone.com/peckish?type=user" target="_blank" class="cta-button">View HackerOne Profile</a>
             <a href="https://yeswehack.com/hunters/sirpeckish" target="_blank" class="cta-button">View YesWeHack Profile</a>
           </div>
+          <div class="cta-contact">
+            <a href="mailto:peckish@wearehackerone.com" class="cta-button">Contact Me</a>
+          </div>
         </div>
       </div>
     </section>
   </div>
 
   <script>
-    // Optimized counter with requestAnimationFrame
     const counters = document.querySelectorAll('.metric-number');
     const duration = 2000;
-
     const animateCounter = (counter) => {
       const target = parseFloat(counter.getAttribute('data-target'));
       const prefix = counter.getAttribute('data-prefix') || '';
       const decimals = counter.getAttribute('data-decimals');
       const startTime = performance.now();
-
       const updateCounter = (currentTime) => {
         const elapsed = currentTime - startTime;
         const progress = Math.min(elapsed / duration, 1);
         let current = target * progress;
-
-        if (decimals) {
-          counter.innerText = prefix + current.toFixed(decimals);
-        } else if (prefix === '£') {
-          counter.innerText = prefix + Math.round(current).toLocaleString();
-        } else {
-          counter.innerText = prefix + Math.round(current);
-        }
-
-        if (progress < 1) {
-          requestAnimationFrame(updateCounter);
-        }
+        if (decimals) counter.innerText = prefix + current.toFixed(decimals);
+        else if (prefix === '£') counter.innerText = prefix + Math.round(current).toLocaleString();
+        else counter.innerText = prefix + Math.round(current);
+        if (progress < 1) requestAnimationFrame(updateCounter);
       };
-
       requestAnimationFrame(updateCounter);
     };
-
     const observerOptions = { threshold: 0.5 };
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          animateCounter(entry.target);
-          observer.unobserve(entry.target);
-        }
-      });
+      entries.forEach(entry => { if (entry.isIntersecting) { animateCounter(entry.target); observer.unobserve(entry.target); } });
     }, observerOptions);
-
     counters.forEach(counter => observer.observe(counter));
 
-    // Parallax effect
+    // Parallax
     document.addEventListener('mousemove', (e) => {
       const orbs = document.querySelectorAll('.orb');
       const x = e.clientX / window.innerWidth;
       const y = e.clientY / window.innerHeight;
-
       orbs.forEach((orb, index) => {
         const speed = (index + 1) * 20;
         orb.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
       });
     });
 
-    // Fade-in animations
+    // Fade-in
     const fadeInObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry, index) => {
         if (entry.isIntersecting) {
-          setTimeout(() => {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
-          }, index * 100);
+          setTimeout(() => { entry.target.style.opacity = '1'; entry.target.style.transform = 'translateY(0)'; }, index * 100);
         }
       });
     }, { threshold: 0.1 });
-
     document.querySelectorAll('.severity-card, .skill-pill').forEach(el => {
-      el.style.opacity = '0';
-      el.style.transform = 'translateY(20px)';
-      el.style.transition = 'all 0.6s ease';
+      el.style.opacity = '0'; el.style.transform = 'translateY(20px)'; el.style.transition = 'all 0.6s ease';
       fadeInObserver.observe(el);
     });
   </script>
