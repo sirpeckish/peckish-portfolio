@@ -99,63 +99,59 @@
         }
 
         /* Container */
-.container {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 80px 20px;
-}
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 80px 20px;
+        }
 
-.hero {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    position: relative;
-    padding: 40px 20px;
-}
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            padding: 40px 20px;
+        }
 
-.hero-content {
-    max-width: 1200px;
-    z-index: 1;
-}
+        .hero-content {
+            max-width: 1200px;
+            z-index: 1;
+        }
 
-h1 {
-    font-size: clamp(2.5rem, 6vw, 4.5rem);
-    font-weight: 800;
-    line-height: 1.2;              /* more breathing room */
-    margin-bottom: 30px;
-    padding-bottom: 5px;           /* prevent descender clipping */
-    background: linear-gradient(135deg, var(--light) 0%, var(--gray) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+        h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 30px;
+            padding-bottom: 5px;
+            background: linear-gradient(135deg, var(--light) 0%, var(--gray) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            -webkit-box-decoration-break: clone;
+            box-decoration-break: clone;
+            animation: fadeInUp 1s ease;
+        }
 
-    /* fix clipping in WebKit */
-    -webkit-box-decoration-break: clone;
-    box-decoration-break: clone;
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-    animation: fadeInUp 1s ease;
-}
-
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.hero-subtitle {
-    font-size: 1.2rem;
-    color: var(--gray);
-    margin-bottom: 50px;
-    animation: fadeInUp 1s ease 0.2s both;
-}
-
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--gray);
+            margin-bottom: 50px;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
 
         /* Key Metrics Grid */
         .metrics {
@@ -183,26 +179,9 @@ h1 {
             border-color: rgba(99, 102, 241, 0.3);
         }
 
-        .metric-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            opacity: 0;
-            transition: opacity 0.4s ease;
-            z-index: -1;
-        }
-
         .metric-card:hover {
             transform: translateY(-10px) scale(1.02);
             border-color: rgba(255,255,255,0.2);
-        }
-
-        .metric-card:hover::before {
-            opacity: 0.1;
         }
 
         .metric-number {
@@ -316,23 +295,6 @@ h1 {
             font-weight: 500;
         }
 
-        .skill-pill::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, var(--primary), transparent);
-            transform: translate(-50%, -50%) scale(0);
-            transition: transform 0.5s ease;
-            opacity: 0.3;
-        }
-
-        .skill-pill:hover::before {
-            transform: translate(-50%, -50%) scale(2);
-        }
-
         .skill-pill:hover {
             transform: translateY(-5px);
             background: rgba(99, 102, 241, 0.1);
@@ -351,15 +313,51 @@ h1 {
             gap: 30px;
         }
 
+        .platform-link {
+            display: block;
+            text-decoration: none;
+            color: inherit;
+        }
+
         .platform-card {
+            cursor: pointer;
             background: rgba(255,255,255,0.02);
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.08);
             border-radius: 25px;
             padding: 40px;
             text-align: center;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
             overflow: hidden;
+            transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                        background 0.25s ease,
+                        border-color 0.25s ease,
+                        box-shadow 0.25s ease;
+        }
+
+        .platform-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 20px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            transition: background 0.3s ease, transform 0.25s ease;
+        }
+
+        .platform-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255,255,255,0.06);
+            border-color: rgba(99, 102, 241, 0.35);
+            box-shadow: 0 14px 30px rgba(0,0,0,0.45);
+        }
+
+        .platform-card:hover .platform-icon {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            transform: scale(1.08);
+            color: white;
         }
 
         .platform-card::before {
@@ -370,34 +368,16 @@ h1 {
             width: 200%;
             height: 200%;
             background: conic-gradient(from 0deg, transparent, var(--primary), transparent 30%);
-            animation: rotate 4s linear infinite;
+            transform: rotate(0deg);
             opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        @keyframes rotate {
-            100% { transform: rotate(360deg); }
+            transition: opacity 0.3s linear, transform 6s linear;
+            pointer-events: none;
+            z-index: -1;
         }
 
         .platform-card:hover::before {
-            opacity: 0.1;
-        }
-
-        .platform-card:hover {
-            transform: translateY(-10px);
-            background: rgba(255,255,255,0.05);
-        }
-
-        .platform-icon {
-            width: 60px;
-            height: 60px;
-            margin: 0 auto 20px;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
+            opacity: 0.08;
+            transform: rotate(360deg);
         }
 
         .platform-name {
@@ -506,11 +486,11 @@ h1 {
             h1 {
                 font-size: 2rem;
             }
-            
+
             .metric-card {
                 padding: 20px;
             }
-            
+
             .metric-number {
                 font-size: 2rem;
             }
@@ -606,46 +586,55 @@ h1 {
         <div class="platform-stats">
           <h2 class="section-title">Platform Performance</h2>
           <div class="stats-container">
-            <div class="platform-card">
-              <div class="platform-icon">🎯</div>
-              <h3 class="platform-name">HackerOne</h3>
-              <div class="stat-row">
-                <span class="stat-label">Reports</span>
-                <span class="stat-value highlight">55</span>
+
+            <!-- HackerOne -->
+            <a href="https://hackerone.com/peckish?type=user" target="_blank" rel="noopener noreferrer" class="platform-link">
+              <div class="platform-card">
+                <div class="platform-icon">🎯</div>
+                <h3 class="platform-name">HackerOne</h3>
+                <div class="stat-row">
+                  <span class="stat-label">Reports</span>
+                  <span class="stat-value highlight">55</span>
+                </div>
+                <div class="stat-row">
+                  <span class="stat-label">Signal Score</span>
+                  <span class="stat-value highlight">6.5 / 7.0</span>
+                </div>
+                <div class="stat-row">
+                  <span class="stat-label">Impact Average</span>
+                  <span class="stat-value">22.0</span>
+                </div>
+                <div class="stat-row">
+                  <span class="stat-label">Hackerone Clear</span>
+                  <span class="stat-value">Verified</span>
+                </div>
               </div>
-              <div class="stat-row">
-                <span class="stat-label">Signal Score</span>
-                <span class="stat-value highlight">6.5 / 7.0</span>
+            </a>
+
+            <!-- YesWeHack -->
+            <a href="https://yeswehack.com/hunters/sirpeckish" target="_blank" rel="noopener noreferrer" class="platform-link">
+              <div class="platform-card">
+                <div class="platform-icon">🛡️</div>
+                <h3 class="platform-name">YesWeHack</h3>
+                <div class="stat-row">
+                  <span class="stat-label">Reports</span>
+                  <span class="stat-value highlight">52</span>
+                </div>
+                <div class="stat-row">
+                  <span class="stat-label">Critical Findings</span>
+                  <span class="stat-value">29</span>
+                </div>
+                <div class="stat-row">
+                  <span class="stat-label">Impact</span>
+                  <span class="stat-value">22.2</span>
+                </div>
+                <div class="stat-row">
+                  <span class="stat-label">Rank</span>
+                  <span class="stat-value">195</span>
+                </div>
               </div>
-              <div class="stat-row">
-                <span class="stat-label">Impact Average</span>
-                <span class="stat-value">22.0</span>
-              </div>
-              <div class="stat-row">
-                <span class="stat-label">Hackerone Clear</span>
-                <span class="stat-value"> Verfied</span>
-              </div>
-            </div>
-            <div class="platform-card">
-              <div class="platform-icon">🛡️</div>
-              <h3 class="platform-name">YesWeHack</h3>
-              <div class="stat-row">
-                <span class="stat-label">Reports</span>
-                <span class="stat-value highlight">52</span>
-              </div>
-              <div class="stat-row">
-                <span class="stat-label">Critical Findings</span>
-                <span class="stat-value">29</span>
-              </div>
-              <div class="stat-row">
-                <span class="stat-label">Impact</span>
-                <span class="stat-value">22.2</span>
-              </div>
-              <div class="stat-row">
-                <span class="stat-label">Rank</span>
-                <span class="stat-value">195</span>
-              </div>
-            </div>
+            </a>
+
           </div>
         </div>
 
@@ -657,8 +646,8 @@ h1 {
             I bring expertise in identifying critical security flaws before they can be exploited.
           </p>
           <div class="cta-buttons">
-            <a href="#" class="cta-button">View HackerOne Profile</a>
-            <a href="#" class="cta-button secondary">View YesWeHack Profile</a>
+            <a href="https://hackerone.com/peckish?type=user" target="_blank" class="cta-button">View HackerOne Profile</a>
+            <a href="https://yeswehack.com/hunters/sirpeckish" target="_blank" class="cta-button secondary">View YesWeHack Profile</a>
           </div>
         </div>
       </div>
@@ -668,7 +657,7 @@ h1 {
   <script>
     // Optimized counter with requestAnimationFrame
     const counters = document.querySelectorAll('.metric-number');
-    const duration = 2000; // animation duration in ms
+    const duration = 2000;
 
     const animateCounter = (counter) => {
       const target = parseFloat(counter.getAttribute('data-target'));
@@ -697,7 +686,6 @@ h1 {
       requestAnimationFrame(updateCounter);
     };
 
-    // Intersection Observer for animation trigger
     const observerOptions = { threshold: 0.5 };
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -743,6 +731,3 @@ h1 {
   </script>
 </body>
 </html>
-
-
-
