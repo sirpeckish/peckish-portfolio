@@ -174,11 +174,6 @@
             overflow: hidden;
         }
 
-        .metric-card.highlight {
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(236, 72, 153, 0.05));
-            border-color: rgba(99, 102, 241, 0.3);
-        }
-
         .metric-card:hover {
             transform: translateY(-10px) scale(1.02);
             border-color: rgba(255,255,255,0.2);
@@ -233,20 +228,14 @@
             padding: 25px;
             text-align: center;
             transition: all 0.3s ease;
-        }
-
-        .severity-card.critical {
-            border-color: rgba(220, 38, 38, 0.3);
-            background: rgba(220, 38, 38, 0.05);
-        }
-
-        .severity-card.high {
-            border-color: rgba(239, 68, 68, 0.3);
-            background: rgba(239, 68, 68, 0.05);
+            cursor: pointer;
         }
 
         .severity-card:hover {
             transform: translateY(-5px);
+            border-color: rgba(99, 102, 241, 0.35);
+            background: rgba(255,255,255,0.06);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
         }
 
         .severity-count {
@@ -443,8 +432,9 @@
         .cta-button {
             display: inline-block;
             padding: 18px 40px;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            color: white;
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
             text-decoration: none;
             border-radius: 15px;
             font-weight: 600;
@@ -453,30 +443,9 @@
             overflow: hidden;
         }
 
-        .cta-button.secondary {
-            background: transparent;
-            border: 2px solid var(--primary);
-            color: var(--primary);
-        }
-
-        .cta-button::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 300%;
-            height: 300%;
-            background: rgba(255,255,255,0.2);
-            transform: translate(-50%, -50%) scale(0);
-            border-radius: 50%;
-            transition: transform 0.5s ease;
-        }
-
-        .cta-button:hover::before {
-            transform: translate(-50%, -50%) scale(1);
-        }
-
         .cta-button:hover {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
             transform: translateY(-3px);
             box-shadow: 0 20px 40px rgba(99, 102, 241, 0.3);
         }
@@ -530,7 +499,7 @@
         
         <!-- Metrics -->
         <div class="metrics">
-          <div class="metric-card highlight">
+          <div class="metric-card">
             <span class="metric-number" data-target="107">0</span>
             <span class="metric-label">Total Reports</span>
           </div>
@@ -647,7 +616,7 @@
           </p>
           <div class="cta-buttons">
             <a href="https://hackerone.com/peckish?type=user" target="_blank" class="cta-button">View HackerOne Profile</a>
-            <a href="https://yeswehack.com/hunters/sirpeckish" target="_blank" class="cta-button secondary">View YesWeHack Profile</a>
+            <a href="https://yeswehack.com/hunters/sirpeckish" target="_blank" class="cta-button">View YesWeHack Profile</a>
           </div>
         </div>
       </div>
@@ -731,4 +700,3 @@
   </script>
 </body>
 </html>
-
