@@ -1,586 +1,718 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="icon" href="/favicon.ico" type="image/x-icon">
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Peckish - Bug Bounty Hunter | 100+ Vulnerabilities Reported</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    :root {
-      --primary: #6366f1;
-      --accent: #ec4899;
-      --dark: #0f0f23;
-      --darker: #05051e;
-      --light: #ffffff;
-      --gray: #94a3b8;
-      --success: #10b981;
-      --warning: #f59e0b;
-      --danger: #ef4444;
-      --critical: #dc2626;
-    }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Inter', sans-serif;
-      background: var(--darker);
-      color: var(--light);
-      overflow-x: hidden;
-      line-height: 1.6;
-    }
-
-    /* Animated gradient background */
-    .gradient-bg {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(125deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #ec4899 75%, #667eea 100%);
-      background-size: 400% 400%;
-      animation: gradientShift 20s ease infinite;
-      opacity: 0.05;
-      z-index: -2;
-    }
-    @keyframes gradientShift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    /* Floating orbs */
-    .orb {
-      position: fixed;
-      border-radius: 50%;
-      filter: blur(100px);
-      opacity: 0.4;
-      animation: float 20s infinite ease-in-out;
-      z-index: -1;
-      pointer-events: none;
-    }
-    .orb1 { width: 600px; height: 600px; background: radial-gradient(circle, var(--primary), transparent); top: -200px; left: -200px; animation-delay: 0s; }
-    .orb2 { width: 400px; height: 400px; background: radial-gradient(circle, var(--accent), transparent); bottom: -100px; right: -100px; animation-delay: 5s; }
-    .orb3 { width: 300px; height: 300px; background: radial-gradient(circle, var(--success), transparent); top: 50%; left: 50%; animation-delay: 10s; }
-
-    @keyframes float {
-      0%, 100% { transform: translate(0, 0) rotate(0deg); }
-      25% { transform: translate(100px, -100px) rotate(90deg); }
-      50% { transform: translate(-100px, 100px) rotate(180deg); }
-      75% { transform: translate(50px, 50px) rotate(270deg); }
-    }
-
-    /* Container */
-    .container { max-width: 1400px; margin: 0 auto; padding: 80px 20px; }
-    .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; position: relative; padding: 40px 20px; }
-    .hero-content { max-width: 1200px; z-index: 1; }
-    h1 {
-      font-size: clamp(2.5rem, 6vw, 4.5rem);
-      font-weight: 800;
-      line-height: 1.2;
-      margin-bottom: 30px;
-      padding-bottom: 5px;
-      background: linear-gradient(135deg, var(--light) 0%, var(--gray) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      -webkit-box-decoration-break: clone;
-      box-decoration-break: clone;
-      animation: fadeInUp 1s ease;
-    }
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .hero-subtitle {
-      font-size: 1.2rem;
-      color: var(--gray);
-      margin-bottom: 50px;
-      animation: fadeInUp 1s ease 0.2s both;
-    }
-
-    /* Key Metrics Grid */
-    .metrics {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
-      margin: 60px auto;
-      max-width: 1000px;
-      animation: fadeInUp 1s ease 0.4s both;
-    }
-    .metric-card {
-      background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 20px;
-      padding: 30px;
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      position: relative;
-      overflow: hidden;
-    }
-    .metric-number {
-      font-size: 2.5rem;
-      font-weight: 700;
-      background: linear-gradient(135deg, var(--primary), var(--accent));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      display: block;
-      margin-bottom: 10px;
-    }
-    .metric-label {
-      color: var(--gray);
-      font-size: 0.95rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    /* Severity Breakdown */
-    .severity-section { margin: 100px auto; max-width: 1000px; }
-    .section-title {
-      font-size: 2.8rem;
-      font-weight: 800;
-      text-align: center;
-      margin-bottom: 60px;
-      background: linear-gradient(135deg, var(--primary), var(--accent));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      position: relative;
-      letter-spacing: -0.5px;
-      text-transform: none;
-    }
-    .section-title::after {
-      content: '';
-      position: absolute;
-      bottom: -15px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 80px;
-      height: 4px;
-      background: linear-gradient(90deg, var(--primary), var(--accent));
-      border-radius: 2px;
-      opacity: 0.8;
-    }
-    .section-title::before {
-      content: '';
-      position: absolute;
-      bottom: -25px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 40px;
-      height: 2px;
-      background: linear-gradient(90deg, var(--accent), var(--primary));
-      border-radius: 1px;
-      opacity: 0.6;
-    }
-    .severity-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 25px; margin-bottom: 40px; }
-    .severity-card {
-      background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
-      backdrop-filter: blur(15px);
-      border: 1px solid rgba(255,255,255,0.15);
-      border-radius: 20px;
-      padding: 35px 25px;
-      text-align: center;
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      cursor: default;
-      position: relative;
-      overflow: hidden;
-    }
-    .severity-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-      background: linear-gradient(90deg, var(--critical), var(--danger));
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-    .severity-card.critical::before {
-      background: linear-gradient(90deg, var(--critical), #ff6b6b);
-      opacity: 1;
-    }
-    .severity-card.high::before {
-      background: linear-gradient(90deg, var(--danger), #ff8a80);
-      opacity: 1;
-    }
-    .severity-card:not(.critical):not(.high)::before {
-      background: linear-gradient(90deg, var(--warning), #ffb74d);
-      opacity: 1;
-    }
-    .severity-count { 
-      font-size: 3rem; 
-      font-weight: 800; 
-      margin-bottom: 8px;
-    }
-    .severity-card.critical .severity-count { 
-      color: var(--critical);
-    }
-    .severity-card.high .severity-count { 
-      color: var(--danger);
-    }
-    .severity-label { 
-      color: var(--gray); 
-      font-size: 0.95rem; 
-      text-transform: uppercase; 
-      letter-spacing: 1.5px;
-      font-weight: 600;
-      margin-bottom: 8px;
-    }
-
-    /* Focus Areas */
-    .focus-areas { margin: 80px auto; max-width: 1000px; }
-    .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
-    .skill-pill {
-      background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
-      backdrop-filter: blur(15px);
-      border: 1px solid rgba(255,255,255,0.15);
-      border-radius: 20px;
-      padding: 25px 30px;
-      text-align: center;
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      cursor: default;
-      font-weight: 600;
-      font-size: 1.05rem;
-      overflow: hidden;
-      position: relative;
-      letter-spacing: 0.5px;
-    }
-    .skill-pill::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-      transition: left 0.6s ease;
-    }
-    .skill-pill:hover::before {
-      left: 100%;
-    }
-
-    /* Platform Stats */
-    .platform-stats { margin: 100px auto; max-width: 1000px; }
-    .stats-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-    .platform-link { display: block; text-decoration: none; color: inherit; }
-    .platform-card {
-      background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 15px;
-      padding: 40px;
-      text-align: center;
-      position: relative;
-      transition: all 0.3s ease;
-      cursor: pointer;
-    }
-    .platform-icon {
-      width: 60px;
-      height: 60px;
-      margin: 0 auto 20px;
-      background: rgba(255,255,255,0.05);
-      border-radius: 15px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.5rem;
-    }
-    .platform-name { font-size: 1.5rem; font-weight: 600; margin-bottom: 20px; }
-    .stat-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
-    .stat-row:last-child { border-bottom: none; }
-    .stat-label { color: var(--gray); font-size: 0.9rem; }
-    .stat-value { font-weight: 600; color: var(--light); }
-    .stat-value.highlight { color: var(--primary); font-size: 1.1rem; }
-
-    /* CTA Section */
-    .cta-section {
-      text-align: center;
-      margin: 100px auto 50px;
-      padding: 60px 20px;
-      background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(236, 72, 153, 0.02));
-      border-radius: 30px;
-      border: 1px solid rgba(99, 102, 241, 0.2);
-      max-width: 800px;
-    }
-    .cta-title {
-      font-size: 2rem;
-      margin-bottom: 20px;
-      background: linear-gradient(135deg, var(--primary), var(--accent));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .cta-buttons { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-top: 30px; }
-    .cta-button {
-      background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 15px;
-      padding: 18px 40px;
-      text-align: center;
-      font-weight: 600;
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      cursor: pointer;
-      color: var(--light);
-      text-decoration: none;
-      display: inline-block;
-    }
-
-    /* Unified hover effect - now includes CTA buttons */
-    .cta-button:hover,
-    .metric-card:hover,
-    .severity-card:hover,
-    .skill-pill:hover,
-    .platform-card:hover {
-      transform: translateY(-10px) scale(1.02) !important;
-      border-color: rgba(255,255,255,0.2) !important;
-      box-shadow: 0 20px 40px rgba(99, 102, 241, 0.3) !important;
-      background: linear-gradient(135deg, rgba(99, 102, 241, 0.3), rgba(236, 72, 153, 0.3)) !important;
-      color: white !important;
-    }
-    
-    .metric-card:hover .metric-number,
-    .severity-card:hover .severity-count {
-      color: white !important;
-      -webkit-text-fill-color: white !important;
-    }
-    
-    .metric-card:hover .metric-label,
-    .severity-card:hover .severity-label,
-    .platform-card:hover .stat-label,
-    .platform-card:hover .stat-value {
-      color: white !important;
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-      h1 { font-size: 2rem; }
-      .metric-card { padding: 20px; }
-      .metric-number { font-size: 2rem; }
-      .platform-card { padding: 30px 20px; }
-      .cta-buttons { flex-direction: column; align-items: center; }
-      .cta-button { width: 100%; max-width: 300px; }
-    }
-
-    /* Smooth scroll */
-    html { scroll-behavior: smooth; }
-  </style>
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peckish — Security Researcher</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap');
+ 
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+ 
+        :root {
+            --bg: #0e0e10;
+            --bg-raised: #161618;
+            --bg-hover: #1c1c1f;
+            --text: #e8e6e3;
+            --text-secondary: #8a8a8d;
+            --text-dim: #555558;
+            --border: #2a2a2d;
+            --accent: #e2c044;
+            --red: #e05a47;
+            --orange: #e0943a;
+            --green: #4aba8a;
+            --purple: #9b7ad4;
+            --blue: #5b9bd5;
+            --mono: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
+        }
+ 
+        html { font-size: 16px; scroll-behavior: smooth; }
+ 
+        body {
+            font-family: 'DM Sans', -apple-system, sans-serif;
+            color: var(--text);
+            background: var(--bg);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+ 
+        ::selection {
+            background: var(--accent);
+            color: var(--bg);
+        }
+ 
+        /* ---- LAYOUT ---- */
+        .container {
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 0 28px;
+        }
+ 
+        .wide-container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0 28px;
+        }
+ 
+        section { padding: 72px 0; }
+ 
+        /* ---- NAV ---- */
+        nav {
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            background: rgba(14,14,16,0.92);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            z-index: 10;
+        }
+ 
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+ 
+        .logo {
+            font-family: var(--mono);
+            font-weight: 500;
+            font-size: 0.85rem;
+            color: var(--accent);
+            letter-spacing: 0.02em;
+        }
+ 
+        .logo::before { content: '~ '; color: var(--text-dim); }
+ 
+        nav .links { display: flex; gap: 28px; }
+ 
+        nav .links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 0.82rem;
+            font-family: var(--mono);
+            transition: color 0.2s;
+        }
+ 
+        nav .links a:hover { color: var(--text); }
+ 
+        /* ---- HERO ---- */
+        .hero { padding: 96px 0 64px; }
+ 
+        .hero-eyebrow {
+            font-family: var(--mono);
+            font-size: 0.78rem;
+            color: var(--accent);
+            margin-bottom: 20px;
+            letter-spacing: 0.02em;
+        }
+ 
+        .hero-eyebrow::before {
+            content: '// ';
+            color: var(--text-dim);
+        }
+ 
+        .hero h1 {
+            font-weight: 700;
+            font-size: 3.2rem;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            margin-bottom: 28px;
+            max-width: 600px;
+        }
+ 
+        .hero h1 em {
+            font-style: italic;
+            color: var(--accent);
+            font-weight: 700;
+        }
+ 
+        .hero .intro {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            max-width: 520px;
+            line-height: 1.75;
+        }
+ 
+        /* ---- NUMBERS ---- */
+        .numbers {
+            padding: 0;
+            margin-bottom: 72px;
+        }
+ 
+        .numbers-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1px;
+            background: var(--border);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+ 
+        .number-item {
+            background: var(--bg-raised);
+            padding: 28px 24px;
+            text-align: center;
+        }
+ 
+        .number-item .value {
+            font-family: var(--mono);
+            font-size: 1.75rem;
+            font-weight: 500;
+            color: var(--text);
+            line-height: 1.2;
+        }
+ 
+        .number-item .desc {
+            font-size: 0.72rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-top: 6px;
+        }
+ 
+        /* ---- SECTION HEADERS ---- */
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+ 
+        .section-header h2 {
+            font-weight: 600;
+            font-size: 1.15rem;
+            letter-spacing: -0.01em;
+        }
+ 
+        .section-header .line {
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+ 
+        .section-label {
+            font-family: var(--mono);
+            font-size: 0.72rem;
+            color: var(--text-dim);
+        }
+ 
+        /* ---- SEVERITY ---- */
+        .severity-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+ 
+        .severity-row {
+            display: grid;
+            grid-template-columns: 90px 1fr 50px;
+            align-items: center;
+            gap: 20px;
+        }
+ 
+        .severity-row .label {
+            font-family: var(--mono);
+            font-size: 0.82rem;
+            font-weight: 400;
+            color: var(--text-secondary);
+        }
+ 
+        .severity-bar-track {
+            height: 4px;
+            background: var(--border);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+ 
+        .severity-bar-fill {
+            height: 100%;
+            border-radius: 2px;
+        }
+ 
+        .severity-bar-fill.critical { background: var(--red); }
+        .severity-bar-fill.high { background: var(--orange); }
+        .severity-bar-fill.medium { background: var(--purple); }
+        .severity-bar-fill.low { background: var(--blue); }
+ 
+        .severity-row .count {
+            text-align: right;
+            font-family: var(--mono);
+            font-size: 1rem;
+            font-weight: 500;
+        }
+ 
+        .severity-pct {
+            font-size: 0.72rem;
+            color: var(--text-dim);
+            margin-left: 4px;
+        }
+ 
+        /* ---- EXPERTISE ---- */
+        .expertise-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+ 
+        .expertise-item {
+            padding: 20px 22px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--bg-raised);
+            transition: all 0.2s;
+        }
+ 
+        .expertise-item:hover {
+            border-color: #3a3a3d;
+        }
+ 
+        .expertise-item .expertise-name {
+            font-family: var(--mono);
+            font-size: 0.84rem;
+            font-weight: 500;
+            color: var(--text);
+            margin-bottom: 6px;
+        }
+ 
+        .expertise-item .expertise-desc {
+            font-size: 0.82rem;
+            color: var(--text-dim);
+            line-height: 1.55;
+        }
+ 
+        /* ---- PLATFORMS ---- */
+        .platforms-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+ 
+        .platform-card {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            padding: 28px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: var(--bg-raised);
+            transition: all 0.25s;
+            position: relative;
+            overflow: hidden;
+        }
+ 
+        .platform-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: var(--border);
+            transition: background 0.25s;
+        }
+ 
+        .platform-card:hover::before { background: var(--accent); }
+ 
+        .platform-card:hover {
+            border-color: #3a3a3d;
+            background: var(--bg-hover);
+        }
+ 
+        .platform-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 22px;
+        }
+ 
+        .platform-header .name {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+ 
+        .platform-header .arrow {
+            font-family: var(--mono);
+            color: var(--text-dim);
+            font-size: 0.85rem;
+            transition: all 0.25s;
+        }
+ 
+        .platform-card:hover .arrow {
+            color: var(--accent);
+            transform: translateX(3px);
+        }
+ 
+        .platform-stats {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+ 
+        .platform-stat {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.84rem;
+        }
+ 
+        .platform-stat .stat-label {
+            color: var(--text-dim);
+        }
+ 
+        .platform-stat .stat-value {
+            font-family: var(--mono);
+            font-weight: 500;
+            font-size: 0.82rem;
+        }
+ 
+        .verified-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-family: var(--mono);
+            font-size: 0.75rem;
+            color: var(--green);
+            font-weight: 500;
+        }
+ 
+        .verified-badge::before {
+            content: '✓';
+            font-weight: 700;
+        }
+ 
+        /* ---- CONTACT ---- */
+        .contact-inner {
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: var(--bg-raised);
+            padding: 48px;
+            text-align: center;
+        }
+ 
+        .contact-inner h2 {
+            font-weight: 600;
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+        }
+ 
+        .contact-inner p {
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+            max-width: 440px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.7;
+        }
+ 
+        .contact-links {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+ 
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 11px 22px;
+            font-size: 0.84rem;
+            font-weight: 500;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.2s;
+            font-family: 'DM Sans', sans-serif;
+        }
+ 
+        .btn-primary {
+            background: var(--accent);
+            color: var(--bg);
+        }
+ 
+        .btn-primary:hover {
+            background: #eecf5a;
+            transform: translateY(-1px);
+        }
+ 
+        .btn-ghost {
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+        }
+ 
+        .btn-ghost:hover {
+            border-color: #444;
+            color: var(--text);
+        }
+ 
+        /* ---- FOOTER ---- */
+        footer {
+            padding: 28px 0;
+            border-top: 1px solid var(--border);
+        }
+ 
+        footer .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+ 
+        footer p {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            font-family: var(--mono);
+        }
+ 
+        /* ---- RESPONSIVE ---- */
+        @media (max-width: 640px) {
+            .hero h1 { font-size: 2.2rem; }
+ 
+            .numbers-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+ 
+            .platforms-grid {
+                grid-template-columns: 1fr;
+            }
+ 
+            .severity-row {
+                grid-template-columns: 80px 1fr 40px;
+            }
+ 
+            .contact-inner {
+                padding: 32px 24px;
+            }
+ 
+            .expertise-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="gradient-bg"></div>
-  <div class="orb orb1"></div>
-  <div class="orb orb2"></div>
-  <div class="orb orb3"></div>
-
-  <div class="container">
-    <section class="hero">
-      <div class="hero-content">
-        <h1>Peckish</h1>
-        <div style="font-size: 1.4rem; font-weight: 600; color: var(--primary); margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px;">Ethical Hacker & Bug Bounty Hunter</div>
-        <p class="hero-subtitle">
-          Proven track record across HackerOne and YesWeHack with 100+ vulnerabilities reported, as well as £40,000 in bounties.
-        </p>
-
-        <!-- Metrics -->
-        <div class="metrics">
-          <div class="metric-card">
-            <span class="metric-number" data-target="107">0</span>
-            <span class="metric-label">Total Reports</span>
-          </div>
-          <div class="metric-card">
-            <span class="metric-number" data-target="40000" data-prefix="£">0</span>
-            <span class="metric-label">Bounties Earned</span>
-          </div>
-          <div class="metric-card">
-            <span class="metric-number" data-target="6.5" data-decimals="1">0</span>
-            <span class="metric-label">Signal Score</span>
-          </div>
-          <div class="metric-card">
-            <span class="metric-number" data-target="22.0" data-decimals="1">0</span>
-            <span class="metric-label">Avg Impact</span>
-          </div>
-        </div>
-
-        <!-- Severity Breakdown -->
-        <div class="severity-section">
-          <h2 class="section-title">Severity Breakdown</h2>
-          <div class="severity-grid">
-            <div class="severity-card critical">
-              <div class="severity-count">29</div>
-              <div class="severity-label">Critical Issues</div>
-              <div style="color: var(--gray); font-size: 0.85rem; margin-top: 5px;">27% of findings</div>
+ 
+    <nav>
+        <div class="container">
+            <span class="logo">peckish</span>
+            <div class="links">
+                <a href="#work">work</a>
+                <a href="#platforms">platforms</a>
+                <a href="#contact">contact</a>
             </div>
-            <div class="severity-card high">
-              <div class="severity-count">23</div>
-              <div class="severity-label">High Issues</div>
-              <div style="color: var(--gray); font-size: 0.85rem; margin-top: 5px;">21% of findings</div>
+        </div>
+    </nav>
+ 
+    <div class="container">
+ 
+        <section class="hero">
+            <p class="hero-eyebrow">security researcher</p>
+            <h1>I find the bugs before the <em>bad guys</em> do.</h1>
+            <p class="intro">Ethical hacker with <span data-stat="totals.reports">135</span> verified vulnerabilities across HackerOne and YesWeHack. Focused on critical attack surfaces — code injection, access control, XSS, and IDOR.</p>
+        </section>
+ 
+        <div class="numbers">
+            <div class="numbers-grid">
+                <div class="number-item">
+                    <div class="value" data-stat="totals.reports">135</div>
+                    <div class="desc">Reports</div>
+                </div>
+                <div class="number-item">
+                    <div class="value" data-stat="totals.bounties">£40,000+</div>
+                    <div class="desc">Bounties</div>
+                </div>
+                <div class="number-item">
+                    <div class="value" data-stat="totals.signal">6.4</div>
+                    <div class="desc">Signal</div>
+                </div>
+                <div class="number-item">
+                    <div class="value" data-stat="totals.avg_impact">22.2</div>
+                    <div class="desc">Avg Impact</div>
+                </div>
             </div>
-            <div class="severity-card">
-              <div class="severity-count" style="color: var(--warning);">55</div>
-              <div class="severity-label">Medium/Low</div>
-              <div style="color: var(--gray); font-size: 0.85rem; margin-top: 5px;">52% of findings</div>
+        </div>
+ 
+        <section id="work">
+            <div class="section-header">
+                <h2>Severity</h2>
+                <div class="line"></div>
+                <span class="section-label"><span data-stat="totals.reports">135</span> total</span>
             </div>
-          </div>
+            <div class="severity-list">
+                <div class="severity-row">
+                    <span class="label">critical</span>
+                    <div class="severity-bar-track">
+                        <div class="severity-bar-fill critical" data-severity="critical" style="width:27.4%"></div>
+                    </div>
+                    <span class="count" data-stat="severity.critical">37</span>
+                </div>
+                <div class="severity-row">
+                    <span class="label">high</span>
+                    <div class="severity-bar-track">
+                        <div class="severity-bar-fill high" data-severity="high" style="width:23.7%"></div>
+                    </div>
+                    <span class="count" data-stat="severity.high">32</span>
+                </div>
+                <div class="severity-row">
+                    <span class="label">medium</span>
+                    <div class="severity-bar-track">
+                        <div class="severity-bar-fill medium" data-severity="medium" style="width:28.1%"></div>
+                    </div>
+                    <span class="count" data-stat="severity.medium">38</span>
+                </div>
+                <div class="severity-row">
+                    <span class="label">low</span>
+                    <div class="severity-bar-track">
+                        <div class="severity-bar-fill low" data-severity="low" style="width:13.3%"></div>
+                    </div>
+                    <span class="count" data-stat="severity.low">18</span>
+                </div>
+            </div>
+ 
+            <div style="margin-top: 56px;">
+                <div class="section-header">
+                    <h2>Expertise</h2>
+                    <div class="line"></div>
+                </div>
+                <div class="expertise-list">
+                    <div class="expertise-item">
+                        <div class="expertise-name">Code Injection</div>
+                        <div class="expertise-desc">SQL, OS command, and template injection across web applications and APIs.</div>
+                    </div>
+                    <div class="expertise-item">
+                        <div class="expertise-name">Access Control</div>
+                        <div class="expertise-desc">Broken authorization, privilege escalation, and authentication bypass flaws.</div>
+                    </div>
+                    <div class="expertise-item">
+                        <div class="expertise-name">IDOR</div>
+                        <div class="expertise-desc">Insecure direct object references exposing user data and admin functionality.</div>
+                    </div>
+                    <div class="expertise-item">
+                        <div class="expertise-name">Info Disclosure</div>
+                        <div class="expertise-desc">Leaked credentials, debug endpoints, and sensitive data in responses.</div>
+                    </div>
+                    <div class="expertise-item">
+                        <div class="expertise-name">XSS</div>
+                        <div class="expertise-desc">Stored, reflected, and DOM-based cross-site scripting in complex applications.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+ 
+        <section id="platforms">
+            <div class="section-header">
+                <h2>Platforms</h2>
+                <div class="line"></div>
+            </div>
+            <div class="platforms-grid">
+                <a href="https://hackerone.com/peckish?type=user" target="_blank" rel="noopener" class="platform-card">
+                    <div class="platform-header">
+                        <span class="name">HackerOne</span>
+                        <span class="arrow">-&gt;</span>
+                    </div>
+                    <div class="platform-stats">
+                        <div class="platform-stat">
+                            <span class="stat-label">Reports</span>
+                            <span class="stat-value" data-stat="hackerone.reports">63</span>
+                        </div>
+                        <div class="platform-stat">
+                            <span class="stat-label">Signal Score</span>
+                            <span class="stat-value" data-stat="hackerone.signal" data-format="signal">6.4 / 7.0</span>
+                        </div>
+                        <div class="platform-stat">
+                            <span class="stat-label">Impact Average</span>
+                            <span class="stat-value" data-stat="hackerone.impact">22.1</span>
+                        </div>
+                        <div class="platform-stat">
+                            <span class="stat-label">HackerOne Clear</span>
+                            <span class="verified-badge">Verified</span>
+                        </div>
+                    </div>
+                </a>
+                <a href="https://yeswehack.com/hunters/sirpeckish" target="_blank" rel="noopener" class="platform-card">
+                    <div class="platform-header">
+                        <span class="name">YesWeHack</span>
+                        <span class="arrow">-&gt;</span>
+                    </div>
+                    <div class="platform-stats">
+                        <div class="platform-stat">
+                            <span class="stat-label">Reports</span>
+                            <span class="stat-value" data-stat="yeswehack.reports">72</span>
+                        </div>
+                        <div class="platform-stat">
+                            <span class="stat-label">Impact</span>
+                            <span class="stat-value" data-stat="yeswehack.impact">22.2</span>
+                        </div>
+                        <div class="platform-stat">
+                            <span class="stat-label">Rank</span>
+                            <span class="stat-value" data-stat="yeswehack.rank" data-format="rank">#178</span>
+                        </div>
+                        <div class="platform-stat">
+                            <span class="stat-label">Points</span>
+                            <span class="stat-value" data-stat="yeswehack.points">1430</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </section>
+ 
+        <section id="contact">
+            <div class="contact-inner">
+                <h2>Get in touch</h2>
+                <p>Looking for someone to audit your attack surface? I find critical vulnerabilities before they become incidents.</p>
+                <div class="contact-links">
+                    <a href="mailto:peckish@wearehackerone.com" class="btn btn-primary">Contact me</a>
+                    <a href="https://hackerone.com/peckish?type=user" target="_blank" rel="noopener" class="btn btn-ghost">HackerOne</a>
+                    <a href="https://yeswehack.com/hunters/sirpeckish" target="_blank" rel="noopener" class="btn btn-ghost">YesWeHack</a>
+                </div>
+            </div>
+        </section>
+ 
+    </div>
+ 
+    <footer>
+        <div class="container">
+            <p>peckish</p>
+            <p>peki.sh</p>
         </div>
-
-        <!-- Core Expertise -->
-        <div class="focus-areas">
-          <h2 class="section-title">Core Expertise</h2>
-          <div class="skills-grid">
-            <div class="skill-pill">Code Injection</div>
-            <div class="skill-pill">Access Control</div>
-            <div class="skill-pill">IDOR</div>
-            <div class="skill-pill">Information Disclosure</div>
-            <div class="skill-pill">XSS</div>
-          </div>
-        </div>
-
-        <!-- Platform Stats -->
-        <div class="platform-stats">
-          <h2 class="section-title">Platform Performance</h2>
-          <div class="stats-container">
-            <!-- HackerOne -->
-            <a href="https://hackerone.com/peckish?type=user" target="_blank" rel="noopener noreferrer" class="platform-link">
-              <div class="platform-card">
-                <div class="platform-icon">🎯</div>
-                <h3 class="platform-name">HackerOne</h3>
-                <div class="stat-row">
-                  <span class="stat-label">Reports</span>
-                  <span class="stat-value">55</span>
-                </div>
-                <div class="stat-row">
-                  <span class="stat-label">Signal Score</span>
-                  <span class="stat-value">6.5 / 7.0</span>
-                </div>
-                <div class="stat-row">
-                  <span class="stat-label">Impact Average</span>
-                  <span class="stat-value">22.0</span>
-                </div>
-                <div class="stat-row">
-                  <span class="stat-label">Hackerone Clear</span>
-                  <span class="stat-value">Verified</span>
-                </div>
-              </div>
-            </a>
-
-            <!-- YesWeHack -->
-            <a href="https://yeswehack.com/hunters/sirpeckish" target="_blank" rel="noopener noreferrer" class="platform-link">
-              <div class="platform-card">
-                <div class="platform-icon">🛡️</div>
-                <h3 class="platform-name">YesWeHack</h3>
-                <div class="stat-row">
-                  <span class="stat-label">Reports</span>
-                  <span class="stat-value">52</span>
-                </div>
-                <div class="stat-row">
-                  <span class="stat-label">Critical Findings</span>
-                  <span class="stat-value">29</span>
-                </div>
-                <div class="stat-row">
-                  <span class="stat-label">Impact</span>
-                  <span class="stat-value">22.2</span>
-                </div>
-                <div class="stat-row">
-                  <span class="stat-label">Rank</span>
-                  <span class="stat-value">195</span>
-                </div>
-              </div>
-            </a>
-          </div>
-        </div>
-
-        <!-- CTA -->
-        <div class="cta-section">
-          <h2 class="cta-title">Ready to Secure Your Assets?</h2>
-          <p style="color: var(--gray); margin-bottom: 20px;">
-            With a proven track record of 107 vulnerabilities discovered and £40,000+ in bounties earned, I bring expertise in identifying critical security flaws before they can be exploited.
-          </p>
-          <div class="cta-buttons">
-            <a href="https://hackerone.com/peckish?type=user" target="_blank" class="cta-button">View HackerOne Profile</a>
-            <a href="https://yeswehack.com/hunters/sirpeckish" target="_blank" class="cta-button">View YesWeHack Profile</a>
-          </div>
-          <div style="margin-top: 30px;">
-            <a href="mailto:peckish@wearehackerone.com" class="cta-button">Contact Me</a>
-          </div>
-        </div>
-      </div>
-    </section>
-  </div>
-
-  <script>
-    // Optimized counter with requestAnimationFrame
-    const counters = document.querySelectorAll('.metric-number');
-    const duration = 2000;
-
-    const animateCounter = (counter) => {
-      const target = parseFloat(counter.getAttribute('data-target'));
-      const prefix = counter.getAttribute('data-prefix') || '';
-      const decimals = counter.getAttribute('data-decimals');
-      const startTime = performance.now();
-
-      const updateCounter = (currentTime) => {
-        const elapsed = currentTime - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-        let current = target * progress;
-
-        if (decimals) {
-          counter.innerText = prefix + current.toFixed(decimals);
-        } else if (prefix === '£') {
-          counter.innerText = prefix + Math.round(current).toLocaleString();
-        } else {
-          counter.innerText = prefix + Math.round(current);
-        }
-
-        if (progress < 1) {
-          requestAnimationFrame(updateCounter);
-        }
-      };
-      requestAnimationFrame(updateCounter);
-    };
-
-    const observerOptions = { threshold: 0.5 };
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          animateCounter(entry.target);
-          observer.unobserve(entry.target);
-        }
-      });
-    }, observerOptions);
-
-    counters.forEach(counter => observer.observe(counter));
-
-    // Parallax effect
-    document.addEventListener('mousemove', (e) => {
-      const orbs = document.querySelectorAll('.orb');
-      const x = e.clientX / window.innerWidth;
-      const y = e.clientY / window.innerHeight;
-      orbs.forEach((orb, index) => {
-        const speed = (index + 1) * 20;
-        orb.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
-      });
-    });
-
-    // Fade-in animations
-    const fadeInObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry, index) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
-          }, index * 100);
-        }
-      });
-    }, { threshold: 0.1 });
-
-    document.querySelectorAll('.severity-card, .skill-pill').forEach(el => {
-      el.style.opacity = '0';
-      el.style.transform = 'translateY(20px)';
-      el.style.transition = 'all 0.6s ease';
-      fadeInObserver.observe(el);
-    });
-  </script>
+    </footer>
+ 
+    <script>
+    // Load stats.json and populate all [data-stat] elements
+    fetch('stats.json')
+        .then(r => r.json())
+        .then(stats => {
+            // Helper: resolve "totals.reports" -> stats.totals.reports
+            const resolve = (path) => path.split('.').reduce((o, k) => o?.[k], stats);
+ 
+            // Update all data-stat elements
+            document.querySelectorAll('[data-stat]').forEach(el => {
+                const val = resolve(el.dataset.stat);
+                if (val == null) return;
+ 
+                const fmt = el.dataset.format;
+                if (fmt === 'signal') {
+                    el.textContent = `${val} / 7.0`;
+                } else if (fmt === 'rank') {
+                    el.textContent = `#${val}`;
+                } else {
+                    el.textContent = val;
+                }
+            });
+ 
+            // Update severity bars — use total reports as the denominator
+            // so bars show proportion of ALL reports, not just severity sum
+            const totalReports = stats.totals?.reports || 1;
+ 
+            document.querySelectorAll('[data-severity]').forEach(bar => {
+                const key = bar.dataset.severity;
+                const count = stats.severity?.[key] || 0;
+                const pct = (count / totalReports * 100);
+                bar.style.width = `${pct}%`;
+            });
+        })
+        .catch(() => {
+            // stats.json failed to load — hardcoded fallback values remain visible
+        });
+    </script>
 </body>
 </html>
-
-
