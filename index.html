@@ -7,9 +7,9 @@
     <title>Peckish — Security Researcher</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap');
- 
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
- 
+
         :root {
             --bg: #0e0e10;
             --bg-raised: #161618;
@@ -26,9 +26,9 @@
             --blue: #5b9bd5;
             --mono: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
         }
- 
+
         html { font-size: 16px; scroll-behavior: smooth; }
- 
+
         body {
             font-family: 'DM Sans', -apple-system, sans-serif;
             color: var(--text);
@@ -36,27 +36,27 @@
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
         }
- 
+
         ::selection {
             background: var(--accent);
             color: var(--bg);
         }
- 
+
         /* ---- LAYOUT ---- */
         .container {
             max-width: 780px;
             margin: 0 auto;
             padding: 0 28px;
         }
- 
+
         .wide-container {
             max-width: 960px;
             margin: 0 auto;
             padding: 0 28px;
         }
- 
+
         section { padding: 72px 0; }
- 
+
         /* ---- NAV ---- */
         nav {
             padding: 20px 0;
@@ -68,13 +68,13 @@
             -webkit-backdrop-filter: blur(12px);
             z-index: 10;
         }
- 
+
         nav .container {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
- 
+
         .logo {
             font-family: var(--mono);
             font-weight: 500;
@@ -82,11 +82,11 @@
             color: var(--accent);
             letter-spacing: 0.02em;
         }
- 
+
         .logo::before { content: '~ '; color: var(--text-dim); }
- 
+
         nav .links { display: flex; gap: 28px; }
- 
+
         nav .links a {
             color: var(--text-dim);
             text-decoration: none;
@@ -94,12 +94,12 @@
             font-family: var(--mono);
             transition: color 0.2s;
         }
- 
+
         nav .links a:hover { color: var(--text); }
- 
+
         /* ---- HERO ---- */
         .hero { padding: 96px 0 64px; }
- 
+
         .hero-eyebrow {
             font-family: var(--mono);
             font-size: 0.78rem;
@@ -107,12 +107,12 @@
             margin-bottom: 20px;
             letter-spacing: 0.02em;
         }
- 
+
         .hero-eyebrow::before {
             content: '// ';
             color: var(--text-dim);
         }
- 
+
         .hero h1 {
             font-weight: 700;
             font-size: 3.2rem;
@@ -121,26 +121,26 @@
             margin-bottom: 28px;
             max-width: 600px;
         }
- 
+
         .hero h1 em {
             font-style: italic;
             color: var(--accent);
             font-weight: 700;
         }
- 
+
         .hero .intro {
             font-size: 1.05rem;
             color: var(--text-secondary);
             max-width: 520px;
             line-height: 1.75;
         }
- 
+
         /* ---- NUMBERS ---- */
         .numbers {
             padding: 0;
             margin-bottom: 72px;
         }
- 
+
         .numbers-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -150,13 +150,13 @@
             border-radius: 10px;
             overflow: hidden;
         }
- 
+
         .number-item {
             background: var(--bg-raised);
             padding: 28px 24px;
             text-align: center;
         }
- 
+
         .number-item .value {
             font-family: var(--mono);
             font-size: 1.75rem;
@@ -164,7 +164,7 @@
             color: var(--text);
             line-height: 1.2;
         }
- 
+
         .number-item .desc {
             font-size: 0.72rem;
             color: var(--text-dim);
@@ -172,7 +172,7 @@
             letter-spacing: 0.1em;
             margin-top: 6px;
         }
- 
+
         /* ---- SECTION HEADERS ---- */
         .section-header {
             display: flex;
@@ -180,83 +180,83 @@
             gap: 12px;
             margin-bottom: 32px;
         }
- 
+
         .section-header h2 {
             font-weight: 600;
             font-size: 1.15rem;
             letter-spacing: -0.01em;
         }
- 
+
         .section-header .line {
             flex: 1;
             height: 1px;
             background: var(--border);
         }
- 
+
         .section-label {
             font-family: var(--mono);
             font-size: 0.72rem;
             color: var(--text-dim);
         }
- 
+
         /* ---- SEVERITY ---- */
         .severity-list {
             display: flex;
             flex-direction: column;
             gap: 20px;
         }
- 
+
         .severity-row {
             display: grid;
             grid-template-columns: 90px 1fr 50px;
             align-items: center;
             gap: 20px;
         }
- 
+
         .severity-row .label {
             font-family: var(--mono);
             font-size: 0.82rem;
             font-weight: 400;
             color: var(--text-secondary);
         }
- 
+
         .severity-bar-track {
             height: 4px;
             background: var(--border);
             border-radius: 2px;
             overflow: hidden;
         }
- 
+
         .severity-bar-fill {
             height: 100%;
             border-radius: 2px;
         }
- 
+
         .severity-bar-fill.critical { background: var(--red); }
         .severity-bar-fill.high { background: var(--orange); }
         .severity-bar-fill.medium { background: var(--purple); }
         .severity-bar-fill.low { background: var(--blue); }
- 
+
         .severity-row .count {
             text-align: right;
             font-family: var(--mono);
             font-size: 1rem;
             font-weight: 500;
         }
- 
+
         .severity-pct {
             font-size: 0.72rem;
             color: var(--text-dim);
             margin-left: 4px;
         }
- 
+
         /* ---- EXPERTISE ---- */
         .expertise-list {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 16px;
         }
- 
+
         .expertise-item {
             padding: 20px 22px;
             border: 1px solid var(--border);
@@ -264,11 +264,11 @@
             background: var(--bg-raised);
             transition: all 0.2s;
         }
- 
+
         .expertise-item:hover {
             border-color: #3a3a3d;
         }
- 
+
         .expertise-item .expertise-name {
             font-family: var(--mono);
             font-size: 0.84rem;
@@ -276,20 +276,20 @@
             color: var(--text);
             margin-bottom: 6px;
         }
- 
+
         .expertise-item .expertise-desc {
             font-size: 0.82rem;
             color: var(--text-dim);
             line-height: 1.55;
         }
- 
+
         /* ---- PLATFORMS ---- */
         .platforms-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 16px;
         }
- 
+
         .platform-card {
             text-decoration: none;
             color: inherit;
@@ -302,7 +302,7 @@
             position: relative;
             overflow: hidden;
         }
- 
+
         .platform-card::before {
             content: '';
             position: absolute;
@@ -311,60 +311,60 @@
             background: var(--border);
             transition: background 0.25s;
         }
- 
+
         .platform-card:hover::before { background: var(--accent); }
- 
+
         .platform-card:hover {
             border-color: #3a3a3d;
             background: var(--bg-hover);
         }
- 
+
         .platform-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
             margin-bottom: 22px;
         }
- 
+
         .platform-header .name {
             font-weight: 600;
             font-size: 1rem;
         }
- 
+
         .platform-header .arrow {
             font-family: var(--mono);
             color: var(--text-dim);
             font-size: 0.85rem;
             transition: all 0.25s;
         }
- 
+
         .platform-card:hover .arrow {
             color: var(--accent);
             transform: translateX(3px);
         }
- 
+
         .platform-stats {
             display: flex;
             flex-direction: column;
             gap: 14px;
         }
- 
+
         .platform-stat {
             display: flex;
             justify-content: space-between;
             font-size: 0.84rem;
         }
- 
+
         .platform-stat .stat-label {
             color: var(--text-dim);
         }
- 
+
         .platform-stat .stat-value {
             font-family: var(--mono);
             font-weight: 500;
             font-size: 0.82rem;
         }
- 
+
         .verified-badge {
             display: inline-flex;
             align-items: center;
@@ -374,12 +374,12 @@
             color: var(--green);
             font-weight: 500;
         }
- 
+
         .verified-badge::before {
             content: '✓';
             font-weight: 700;
         }
- 
+
         /* ---- CONTACT ---- */
         .contact-inner {
             border: 1px solid var(--border);
@@ -388,13 +388,13 @@
             padding: 48px;
             text-align: center;
         }
- 
+
         .contact-inner h2 {
             font-weight: 600;
             font-size: 1.5rem;
             margin-bottom: 12px;
         }
- 
+
         .contact-inner p {
             color: var(--text-secondary);
             margin-bottom: 32px;
@@ -403,14 +403,14 @@
             margin-right: auto;
             line-height: 1.7;
         }
- 
+
         .contact-links {
             display: flex;
             gap: 10px;
             justify-content: center;
             flex-wrap: wrap;
         }
- 
+
         .btn {
             display: inline-flex;
             align-items: center;
@@ -423,66 +423,66 @@
             transition: all 0.2s;
             font-family: 'DM Sans', sans-serif;
         }
- 
+
         .btn-primary {
             background: var(--accent);
             color: var(--bg);
         }
- 
+
         .btn-primary:hover {
             background: #eecf5a;
             transform: translateY(-1px);
         }
- 
+
         .btn-ghost {
             background: transparent;
             color: var(--text-secondary);
             border: 1px solid var(--border);
         }
- 
+
         .btn-ghost:hover {
             border-color: #444;
             color: var(--text);
         }
- 
+
         /* ---- FOOTER ---- */
         footer {
             padding: 28px 0;
             border-top: 1px solid var(--border);
         }
- 
+
         footer .container {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
- 
+
         footer p {
             font-size: 0.75rem;
             color: var(--text-dim);
             font-family: var(--mono);
         }
- 
+
         /* ---- RESPONSIVE ---- */
         @media (max-width: 640px) {
             .hero h1 { font-size: 2.2rem; }
- 
+
             .numbers-grid {
                 grid-template-columns: 1fr 1fr;
             }
- 
+
             .platforms-grid {
                 grid-template-columns: 1fr;
             }
- 
+
             .severity-row {
                 grid-template-columns: 80px 1fr 40px;
             }
- 
+
             .contact-inner {
                 padding: 32px 24px;
             }
- 
+
             .expertise-list {
                 grid-template-columns: 1fr;
             }
@@ -490,7 +490,7 @@
     </style>
 </head>
 <body>
- 
+
     <nav>
         <div class="container">
             <span class="logo">peckish</span>
@@ -501,73 +501,73 @@
             </div>
         </div>
     </nav>
- 
+
     <div class="container">
- 
+
         <section class="hero">
             <p class="hero-eyebrow">security researcher</p>
             <h1>I find the bugs before the <em>bad guys</em> do.</h1>
-            <p class="intro">Ethical hacker with <span data-stat="totals.reports">135</span> verified vulnerabilities across HackerOne and YesWeHack. Focused on critical attack surfaces — code injection, access control, XSS, and IDOR.</p>
+            <p class="intro">Ethical hacker with <span data-stat="totals.reports">160</span> verified vulnerabilities across HackerOne and YesWeHack. Focused on critical attack surfaces — code injection, access control, XSS, and IDOR.</p>
         </section>
- 
+
         <div class="numbers">
             <div class="numbers-grid">
                 <div class="number-item">
-                    <div class="value" data-stat="totals.reports">135</div>
+                    <div class="value" data-stat="totals.reports">160</div>
                     <div class="desc">Reports</div>
                 </div>
                 <div class="number-item">
-                    <div class="value" data-stat="totals.bounties">£40,000+</div>
+                    <div class="value" data-stat="totals.bounties">£50,000+</div>
                     <div class="desc">Bounties</div>
                 </div>
                 <div class="number-item">
-                    <div class="value" data-stat="totals.signal">6.4</div>
+                    <div class="value" data-stat="totals.signal">6.45</div>
                     <div class="desc">Signal</div>
                 </div>
                 <div class="number-item">
-                    <div class="value" data-stat="totals.avg_impact">22.2</div>
+                    <div class="value" data-stat="totals.avg_impact">24.0</div>
                     <div class="desc">Avg Impact</div>
                 </div>
             </div>
         </div>
- 
+
         <section id="work">
             <div class="section-header">
                 <h2>Severity</h2>
                 <div class="line"></div>
-                <span class="section-label"><span data-stat="totals.reports">135</span> total</span>
+                <span class="section-label"><span data-stat="totals.reports">160</span> total</span>
             </div>
             <div class="severity-list">
                 <div class="severity-row">
                     <span class="label">critical</span>
                     <div class="severity-bar-track">
-                        <div class="severity-bar-fill critical" data-severity="critical" style="width:27.4%"></div>
+                        <div class="severity-bar-fill critical" data-severity="critical" style="width:27.5%"></div>
                     </div>
-                    <span class="count" data-stat="severity.critical">37</span>
+                    <span class="count" data-stat="severity.critical">44</span>
                 </div>
                 <div class="severity-row">
                     <span class="label">high</span>
                     <div class="severity-bar-track">
-                        <div class="severity-bar-fill high" data-severity="high" style="width:23.7%"></div>
+                        <div class="severity-bar-fill high" data-severity="high" style="width:27.5%"></div>
                     </div>
-                    <span class="count" data-stat="severity.high">32</span>
+                    <span class="count" data-stat="severity.high">44</span>
                 </div>
                 <div class="severity-row">
                     <span class="label">medium</span>
                     <div class="severity-bar-track">
-                        <div class="severity-bar-fill medium" data-severity="medium" style="width:28.1%"></div>
+                        <div class="severity-bar-fill medium" data-severity="medium" style="width:27.5%"></div>
                     </div>
-                    <span class="count" data-stat="severity.medium">38</span>
+                    <span class="count" data-stat="severity.medium">44</span>
                 </div>
                 <div class="severity-row">
                     <span class="label">low</span>
                     <div class="severity-bar-track">
-                        <div class="severity-bar-fill low" data-severity="low" style="width:13.3%"></div>
+                        <div class="severity-bar-fill low" data-severity="low" style="width:11.25%"></div>
                     </div>
                     <span class="count" data-stat="severity.low">18</span>
                 </div>
             </div>
- 
+
             <div style="margin-top: 56px;">
                 <div class="section-header">
                     <h2>Expertise</h2>
@@ -597,7 +597,7 @@
                 </div>
             </div>
         </section>
- 
+
         <section id="platforms">
             <div class="section-header">
                 <h2>Platforms</h2>
@@ -612,15 +612,15 @@
                     <div class="platform-stats">
                         <div class="platform-stat">
                             <span class="stat-label">Reports</span>
-                            <span class="stat-value" data-stat="hackerone.reports">63</span>
+                            <span class="stat-value" data-stat="hackerone.reports">67</span>
                         </div>
                         <div class="platform-stat">
                             <span class="stat-label">Signal Score</span>
-                            <span class="stat-value" data-stat="hackerone.signal" data-format="signal">6.4 / 7.0</span>
+                            <span class="stat-value" data-stat="hackerone.signal" data-format="signal">6.45 / 7.0</span>
                         </div>
                         <div class="platform-stat">
                             <span class="stat-label">Impact Average</span>
-                            <span class="stat-value" data-stat="hackerone.impact">22.1</span>
+                            <span class="stat-value" data-stat="hackerone.impact">23.41</span>
                         </div>
                         <div class="platform-stat">
                             <span class="stat-label">HackerOne Clear</span>
@@ -636,25 +636,25 @@
                     <div class="platform-stats">
                         <div class="platform-stat">
                             <span class="stat-label">Reports</span>
-                            <span class="stat-value" data-stat="yeswehack.reports">72</span>
+                            <span class="stat-value" data-stat="yeswehack.reports">93</span>
                         </div>
                         <div class="platform-stat">
                             <span class="stat-label">Impact</span>
-                            <span class="stat-value" data-stat="yeswehack.impact">22.2</span>
+                            <span class="stat-value" data-stat="yeswehack.impact">24.62</span>
                         </div>
                         <div class="platform-stat">
                             <span class="stat-label">Rank</span>
-                            <span class="stat-value" data-stat="yeswehack.rank" data-format="rank">#178</span>
+                            <span class="stat-value" data-stat="yeswehack.rank" data-format="rank">#130</span>
                         </div>
                         <div class="platform-stat">
                             <span class="stat-label">Points</span>
-                            <span class="stat-value" data-stat="yeswehack.points">1430</span>
+                            <span class="stat-value" data-stat="yeswehack.points">2021</span>
                         </div>
                     </div>
                 </a>
             </div>
         </section>
- 
+
         <section id="contact">
             <div class="contact-inner">
                 <h2>Get in touch</h2>
@@ -666,53 +666,53 @@
                 </div>
             </div>
         </section>
- 
+
     </div>
- 
+
     <footer>
         <div class="container">
             <p>peckish</p>
             <p>peki.sh</p>
         </div>
     </footer>
- 
+
     <script>
-    // Load stats.json and populate all [data-stat] elements
-    fetch('stats.json')
-        .then(r => r.json())
-        .then(stats => {
-            // Helper: resolve "totals.reports" -> stats.totals.reports
-            const resolve = (path) => path.split('.').reduce((o, k) => o?.[k], stats);
- 
-            // Update all data-stat elements
-            document.querySelectorAll('[data-stat]').forEach(el => {
-                const val = resolve(el.dataset.stat);
-                if (val == null) return;
- 
-                const fmt = el.dataset.format;
-                if (fmt === 'signal') {
-                    el.textContent = `${val} / 7.0`;
-                } else if (fmt === 'rank') {
-                    el.textContent = `#${val}`;
-                } else {
-                    el.textContent = val;
-                }
+        // Load stats.json and populate all [data-stat] elements
+        fetch('stats.json')
+            .then(r => r.json())
+            .then(stats => {
+                // Helper: resolve "totals.reports" -> stats.totals.reports
+                const resolve = (path) => path.split('.').reduce((o, k) => o?.[k], stats);
+
+                // Update all data-stat elements
+                document.querySelectorAll('[data-stat]').forEach(el => {
+                    const val = resolve(el.dataset.stat);
+                    if (val == null) return;
+
+                    const fmt = el.dataset.format;
+                    if (fmt === 'signal') {
+                        el.textContent = `${val} / 7.0`;
+                    } else if (fmt === 'rank') {
+                        el.textContent = `#${val}`;
+                    } else {
+                        el.textContent = val;
+                    }
+                });
+
+                // Update severity bars — use total reports as the denominator
+                // so bars show proportion of ALL reports, not just severity sum
+                const totalReports = stats.totals?.reports || 1;
+
+                document.querySelectorAll('[data-severity]').forEach(bar => {
+                    const key = bar.dataset.severity;
+                    const count = stats.severity?.[key] || 0;
+                    const pct = (count / totalReports * 100);
+                    bar.style.width = `${pct}%`;
+                });
+            })
+            .catch(() => {
+                // stats.json failed to load — hardcoded fallback values remain visible
             });
- 
-            // Update severity bars — use total reports as the denominator
-            // so bars show proportion of ALL reports, not just severity sum
-            const totalReports = stats.totals?.reports || 1;
- 
-            document.querySelectorAll('[data-severity]').forEach(bar => {
-                const key = bar.dataset.severity;
-                const count = stats.severity?.[key] || 0;
-                const pct = (count / totalReports * 100);
-                bar.style.width = `${pct}%`;
-            });
-        })
-        .catch(() => {
-            // stats.json failed to load — hardcoded fallback values remain visible
-        });
     </script>
     <script data-goatcounter="https://peckish.goatcounter.com/count"
         async src="//gc.zgo.at/count.js"></script>
