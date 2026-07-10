@@ -186,4 +186,39 @@ document.addEventListener('keydown',e=>{
 
 /* live terminal typewriter (aggregate stats only — no report details) */
 (function(){
-  
+  const el=document.getElementById('term');
+  const seq=[
+    {c:'whoami'},           {o:['peckish — ethical hacker','<span class="hl">HackerOne Clear</span> verified · UK']},
+    {c:'stats --all'},      {o:['reports .......... <span class="hl">174</span>','bounties ......... <span class="hl">&pound;77,000+</span>','h1 signal ........ <span class="hl">6.45</span> / 7.0','avg impact ....... <span class="hl">23.7</span>']},
+    {c:'severity --count'}, {o:['<span class="red">&#9608; critical 46</span>   <span class="orange">&#9608; high 51</span>','<span class="blue">&#9608; medium 48</span>   <span class="green">&#9608; low 28</span>']},
+    {c:'cat status.txt'},   {o:['&gt;&gt; <span class="green">open for work</span> — auditing attack surfaces','&gt;&gt; most engagements under NDA','&gt;&gt; specifics shared privately on request']},
+    {c:'contact --now'},    {o:['<a href="mailto:peckish@wearehackerone.com">peckish@wearehackerone.com</a>']},
+    {c:''}
+  ];
+  const PROMPT='<span class="p">$</span> ';
+  let html='', i=0;
+  function render(active){ el.innerHTML = html + active + '<span class="tc"></span>'; el.parentElement.scrollTop=el.parentElement.scrollHeight; }
+  function typeCmd(txt,done){
+    let j=0;
+    (function tick(){
+      render('<span class="cmd">'+txt.slice(0,j)+'</span>');
+      if(j<txt.length){ j++; setTimeout(tick, 34+Math.random()*46); }
+      else { html+=PROMPT+'<span class="cmd">'+txt+'</span>\n'; setTimeout(done,240); }
+    })();
+  }
+  function step(){
+    if(i>=seq.length){ render(''); return; }
+    const item=seq[i++];
+    if('c' in item){
+      el.innerHTML = html + PROMPT + '<span class="tc"></span>';
+      setTimeout(()=>typeCmd(item.c, step), 200);
+    } else {
+      html += '<span class="o">'+item.o.join('\n')+'</span>\n\n';
+      render(''); setTimeout(step, 220);
+    }
+  }
+  step();
+})();
+</script>
+</body>
+</html>
