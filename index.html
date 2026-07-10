@@ -62,7 +62,11 @@ a{color:var(--accent)}
 #p-about p b{color:var(--text)}
 .cursor{display:inline-block;width:8px;height:15px;background:var(--accent);vertical-align:-2px;animation:blink 1.1s steps(1) infinite}
 @keyframes blink{50%{opacity:0}}
-.btnrow{margin-top:auto;padding-top:20px}
+.status{margin-top:20px;font-size:13.5px;color:var(--text-secondary);line-height:1.6}
+.status .sdot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--green);margin-right:9px;vertical-align:1px;box-shadow:0 0 0 3px rgba(74,186,138,.15)}
+.status b{color:var(--text);font-weight:700}
+.status-sub{margin-top:7px;font-size:12px;color:var(--text-dim);padding-left:17px}
+.btnrow{margin-top:auto;padding-top:22px}
 .btn{display:inline-block;background:var(--accent);color:var(--bg);font-weight:700;padding:11px 20px;text-decoration:none;font-size:13px;margin-right:10px}
 .btn:hover{background:var(--text)}
 .btn.ghost{background:none;border:1px solid var(--border);color:var(--text-secondary)}
@@ -127,6 +131,10 @@ a{color:var(--accent)}
       <h1>I find the bugs <em>before the bad guys do.</em><span class="cursor"></span></h1>
       <p>Ethical hacker with <b>174 reports</b> across HackerOne and YesWeHack. Focused on critical attack surfaces — code injection, access control, XSS, and IDOR.</p>
       <p>Manual-first methodology. Application logic over scanner noise. Impact over volume. <b>HackerOne Clear</b> verified.</p>
+      <div class="status">
+        <span class="sdot"></span><b>Open for work</b> — auditing attack surfaces
+        <div class="status-sub">Most engagements under NDA · specifics shared privately on request</div>
+      </div>
       <div class="btnrow">
         <a class="btn" href="mailto:peckish@wearehackerone.com">./hire_me</a>
         <a class="btn ghost" href="https://hackerone.com/peckish?type=user">--verify ↗</a>
@@ -199,8 +207,6 @@ document.addEventListener('keydown',e=>{
     {c:'whoami'},           {o:['peckish — ethical hacker','<span class="hl">HackerOne Clear</span> verified · UK']},
     {c:'stats --all'},      {o:['reports .......... <span class="hl">174</span>','bounties ......... <span class="hl">&pound;77,000+</span>','h1 signal ........ <span class="hl">6.45</span> / 7.0','avg impact ....... <span class="hl">23.7</span>']},
     {c:'severity --graph'}, {o:['<span class="red">crit ▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉ 46</span>','<span class="orange">high ▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉ 51</span>','<span class="blue">med  ▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉ 48</span>','<span class="green">low  ▉▉▉▉▉▉▉▉▉▉▉▉▉▉ 28</span>']},
-    {c:'cat status.txt'},   {o:['&gt;&gt; <span class="green">open for work</span> — auditing attack surfaces','&gt;&gt; most engagements under NDA','&gt;&gt; specifics shared privately on request']},
-    {c:'contact --now'},    {o:['<a href="mailto:peckish@wearehackerone.com">peckish@wearehackerone.com</a>']},
     {c:''}
   ];
   const PROMPT='<span class="p">$</span> ';
