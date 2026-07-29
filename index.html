@@ -1,241 +1,357 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>peckish — security researcher</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>peckish // portfolio </title>
+<meta name="description" content="Peckish Pest Control: manual-first security research. 174 disclosed reports and £77,000+ in bounties across HackerOne and YesWeHack. Open for engagements — auditing attack surfaces.">
+<link rel="canonical" href="https://peki.sh/">
+<meta name="theme-color" content="#1d1710">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://peki.sh/">
+<meta property="og:title" content="Peckish Bugbounty hunter — got bugs?">
+<meta property="og:description" content="I find the bugs before the bad guys do. 174 confirmed exterminations across HackerOne & YesWeHack. Free quote, no obligation.">
+<meta property="og:image" content="https://peki.sh/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E %3Crect width=%22100%22 height=%22100%22 fill=%22%23f3ecdb%22/%3E %3Ccircle cx=%2258%22 cy=%2252%22 r=%2229%22 fill=%22%231d1710%22/%3E %3Cpath d=%22M36 60 L12 80 L40 76 Z%22 fill=%22%23dfa41f%22 stroke=%22%231d1710%22 stroke-width=%224%22 stroke-linejoin=%22round%22/%3E %3Cpath d=%22M35 28 C29 15 43 7 50 17 C53 4 68 6 68 19 C77 12 87 23 79 33 C64 25 48 25 35 28 Z%22 fill=%22%23c8271b%22/%3E %3Ccircle cx=%2249%22 cy=%2248%22 r=%228%22 fill=%22%23f3ecdb%22/%3E %3Ccircle cx=%2247%22 cy=%2249%22 r=%223.8%22 fill=%22%231d1710%22/%3E %3C/svg%3E">
+<script data-goatcounter="https://peckish.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Person","name":"peckish","url":"https://peki.sh/","jobTitle":"Security Researcher","email":"mailto:peckish@wearehackerone.com","sameAs":["https://hackerone.com/peckish"]}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Oswald:wght@400;500;600&family=Libre+Franklin:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=DM+Sans:wght@400;500;700&display=swap');
-:root{
-  --bg:#0e0e10; --bg-raised:#161618; --bg-hover:#1c1c1f; --border:#2a2a2d;
-  --text:#e8e6e3; --text-secondary:#8a8a8d; --text-dim:#555558;
-  --accent:#e2c044; --red:#e05a47; --orange:#e0943a; --blue:#5b9bd5; --green:#4aba8a;
-  --mono:'JetBrains Mono',monospace; --sans:'DM Sans',sans-serif;
-  --gap:8px;
-}
-*{margin:0;padding:0;box-sizing:border-box}
-html,body{height:100%}
-body{background:var(--bg);color:var(--text);font-family:var(--mono);font-size:14px;display:flex;flex-direction:column}
-a{color:var(--accent)}
+  :root{
+    --paper:#f3ecdb;
+    --ink:#1d1710;
+    --red:#c8271b;
+    --mustard:#dfa41f;
+    --teal:#1f6b60;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    background:#c9bfa8;
+    font-family:"Libre Franklin",sans-serif;
+    color:var(--ink);
+    font-size:16px;line-height:1.5;
+    padding:30px 12px;
+  }
+  .slab{font-family:"Alfa Slab One",serif;font-weight:400}
+  .cond{font-family:"Oswald",sans-serif}
+  a{color:inherit}
 
-/* themed scrollbars */
-*{scrollbar-width:thin;scrollbar-color:var(--border) transparent}
-::-webkit-scrollbar{width:10px;height:10px}
-::-webkit-scrollbar-track{background:var(--bg)}
-::-webkit-scrollbar-thumb{background:var(--border);border:2px solid var(--bg)}
-::-webkit-scrollbar-thumb:hover{background:var(--accent)}
-::-webkit-scrollbar-corner{background:var(--bg)}
+  .flyer{
+    max-width:820px;margin:0 auto;background:var(--paper);
+    background-image:radial-gradient(rgba(29,23,16,.06) 1px, transparent 1.3px);
+    background-size:5px 5px;
+    border:3px solid var(--ink);
+    box-shadow:10px 10px 0 rgba(29,23,16,.35);
+    overflow:hidden;
+  }
 
-/* status bar (top, i3-style) */
-.statusbar{display:flex;align-items:center;background:var(--bg-raised);border-bottom:1px solid var(--border);height:32px;padding:0 10px;gap:2px;font-size:12px;flex-shrink:0}
-.ws{padding:4px 12px;color:var(--text-secondary);cursor:pointer;user-select:none}
-.ws.on{background:var(--accent);color:var(--bg);font-weight:700}
-.ws:not(.on):hover{background:var(--bg-hover);color:var(--text)}
-.statusbar .title{margin-left:16px;color:var(--text-dim)}
-.statusbar .right{margin-left:auto;display:flex;gap:18px;color:var(--text-secondary)}
-.statusbar .right .g{color:var(--green)}
-.statusbar .right .a{color:var(--accent)}
+  .topline{
+    background:var(--ink);color:var(--paper);
+    font-family:"Oswald";font-size:12px;letter-spacing:.28em;text-transform:uppercase;
+    text-align:center;padding:8px 10px;
+  }
 
-/* tiled layout: 2x2 — about + terminal top, exploits + platforms bottom */
-.tiles{flex:1;display:grid;gap:var(--gap);padding:var(--gap);overflow:hidden;
-  grid-template-columns:1.1fr 1fr;
-  grid-template-rows:1.05fr 0.95fr;
-  grid-template-areas:"about term" "exploits plat";
-}
-.pane{background:var(--bg-raised);border:1px solid var(--border);display:flex;flex-direction:column;min-height:0;min-width:0}
-.pane:hover,.pane:focus-within{border-color:var(--accent)}
-.pane .ph{display:flex;justify-content:space-between;align-items:center;padding:7px 12px;border-bottom:1px solid var(--border);font-size:11.5px;color:var(--text-secondary);user-select:none;flex-shrink:0}
-.pane:hover .ph{color:var(--text)}
-.pane .ph .idx{color:var(--accent)}
-.pane .pb{padding:16px 18px;overflow:auto;flex:1;display:flex;flex-direction:column}
+  .masthead{padding:38px 40px 26px;text-align:center;position:relative;border-bottom:3px solid var(--ink)}
+  .masthead h1{
+    font-family:"Alfa Slab One";font-size:clamp(46px,9vw,92px);line-height:.95;
+    letter-spacing:.01em;color:var(--red);
+    text-shadow:3px 3px 0 var(--ink);
+    text-transform:uppercase;
+  }
+  .masthead .sub{
+    display:inline-block;margin-top:14px;background:var(--ink);color:var(--paper);
+    font-family:"Oswald";font-weight:600;font-size:clamp(15px,2.6vw,22px);
+    letter-spacing:.42em;text-transform:uppercase;padding:6px 18px 6px 22px;
+  }
+  .masthead .tag{margin-top:16px;font-style:italic;font-size:17px}
 
-#p-about{grid-area:about}
-#p-term{grid-area:term}
-#p-exploits{grid-area:exploits}
-#p-plat{grid-area:plat}
+  /* mascot chicken */
+  .mascot{position:absolute;top:24px;left:34px;width:150px;text-align:center;transform:rotate(-5deg)}
+  .mascot svg{width:100%;height:auto;display:block}
+  .mascot .cap{font-family:"Oswald";font-weight:600;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#463d30;margin-top:2px}
 
-/* about pane */
-#p-about .prompt{color:var(--text-dim);font-size:12px}
-#p-about h1{font-family:var(--sans);font-size:clamp(26px,2.9vw,42px);line-height:1.15;margin:12px 0 18px}
-#p-about h1 em{color:var(--accent);font-style:italic}
-#p-about p{color:var(--text-secondary);line-height:1.75;margin-bottom:13px;max-width:56ch;font-size:14px}
-#p-about p b{color:var(--text)}
-.cursor{display:inline-block;width:8px;height:15px;background:var(--accent);vertical-align:-2px;animation:blink 1.1s steps(1) infinite}
-@keyframes blink{50%{opacity:0}}
-.status{margin-top:20px;font-size:13.5px;color:var(--text-secondary);line-height:1.6}
-.status .sdot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--green);margin-right:9px;vertical-align:1px;box-shadow:0 0 0 3px rgba(74,186,138,.15)}
-.status b{color:var(--text);font-weight:700}
-.status-sub{margin-top:7px;font-size:12px;color:var(--text-dim);padding-left:17px}
-.btnrow{margin-top:auto;padding-top:22px}
-.btn{display:inline-block;background:var(--accent);color:var(--bg);font-weight:700;padding:11px 20px;text-decoration:none;font-size:13px;margin-right:10px}
-.btn:hover{background:var(--text)}
-.btn.ghost{background:none;border:1px solid var(--border);color:var(--text-secondary)}
-.btn.ghost:hover{border-color:var(--accent);color:var(--accent)}
+  /* starburst */
+  .burst{
+    position:absolute;top:18px;right:26px;width:150px;height:150px;
+    display:flex;align-items:center;justify-content:center;text-align:center;
+    transform:rotate(10deg);
+  }
+  .burst svg{position:absolute;inset:0;width:100%;height:100%}
+  .burst .t{
+    position:relative;font-family:"Oswald";font-weight:600;font-size:14px;line-height:1.15;
+    text-transform:uppercase;color:var(--ink);width:100px;
+  }
+  .burst .t b{font-family:"Alfa Slab One";font-size:26px;display:block;font-weight:400}
 
-/* live terminal pane (carries stats + severity) */
-#term{font-size:13px;line-height:1.8;white-space:pre-wrap;word-break:break-word;flex:1}
-#term .cmd{color:var(--text)}
-#term .p{color:var(--green)}
-#term .o{color:var(--text-secondary)}
-#term .hl{color:var(--accent)}
-#term .red{color:var(--red)} #term .orange{color:var(--orange)}
-#term .blue{color:var(--blue)} #term .green{color:var(--green)}
-#term a{color:var(--accent)}
-#term .tc{display:inline-block;width:8px;height:15px;background:var(--accent);vertical-align:-2px;animation:blink 1.1s steps(1) infinite}
+  .gotbugs{
+    background:var(--mustard);border-bottom:3px solid var(--ink);
+    padding:20px 40px;display:flex;align-items:center;gap:26px;justify-content:center;
+  }
+  .gotbugs h2{
+    font-family:"Alfa Slab One";font-size:clamp(28px,5.4vw,52px);text-transform:uppercase;
+    letter-spacing:.01em;
+  }
+  .gotbugs p{font-family:"Oswald";font-weight:500;font-size:clamp(13px,2vw,17px);text-transform:uppercase;letter-spacing:.12em;max-width:30ch}
+  .gotbugs p b{color:var(--red)}
 
-/* exploits pane */
-.sk{padding:10px 0;border-bottom:1px solid var(--bg-hover);font-size:13px;display:flex;gap:10px}
-.sk .b{color:var(--accent);white-space:nowrap}
-.sk .d{color:var(--text-secondary)}
-.sk:hover .d{color:var(--text)}
-.skfoot{margin-top:auto;padding-top:14px;font-size:11.5px;color:var(--text-dim)}
+  /* services */
+  .services{padding:34px 40px 8px}
+  .services h3, .sec-title{
+    font-family:"Oswald";font-weight:600;font-size:15px;letter-spacing:.3em;text-transform:uppercase;
+    text-align:center;margin-bottom:24px;
+  }
+  .sec-title span, .services h3 span{background:var(--ink);color:var(--paper);padding:5px 16px}
+  .svc-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;border:2px solid var(--ink)}
+  .svc{
+    display:grid;grid-template-columns:64px 1fr;gap:14px;align-items:center;
+    padding:18px;border-bottom:2px solid var(--ink);
+  }
+  .svc:nth-child(odd){border-right:2px solid var(--ink)}
+  .svc:nth-last-child(1){border-bottom:none}
+  .svc:nth-last-child(2){border-bottom:none}
+  .svc .ic{width:64px;height:64px;display:flex;align-items:center;justify-content:center}
+  .svc .ic svg{width:54px;height:54px}
+  .svc h4{font-family:"Oswald";font-weight:600;font-size:17px;text-transform:uppercase;letter-spacing:.06em}
+  .svc h4 small{display:block;font-weight:400;font-size:11px;letter-spacing:.18em;color:var(--red)}
+  .svc p{font-size:13.5px;margin-top:4px;color:#463d30}
+  .svc.wide{grid-column:1/-1;border-right:none;background:var(--ink);color:var(--paper)}
+  .svc.wide p{color:#cfc6b4}
+  .svc.wide h4 small{color:var(--mustard)}
 
-/* platforms pane */
-.plt{display:block;border:1px solid var(--border);padding:13px 15px;margin-bottom:10px;text-decoration:none;color:var(--text);font-size:12.5px}
-.plt:hover{border-color:var(--accent)}
-.plt .nm{color:var(--accent);font-weight:700;display:flex;justify-content:space-between}
-.plt .dt{color:var(--text-secondary);margin-top:6px;line-height:1.6}
-.plt-contact{margin-top:auto;font-size:12px;color:var(--text-dim);display:flex;justify-content:space-between;align-items:center;gap:12px;padding-top:8px;flex-wrap:wrap}
-.plt-contact a{color:var(--accent)}
+  /* guarantee band */
+  .guarantee{
+    margin:34px 40px;border:3px double var(--ink);padding:22px 26px;position:relative;
+    display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center;background:rgba(255,255,255,.35);
+  }
+  .guarantee h3{font-family:"Alfa Slab One";font-size:22px;text-transform:uppercase;margin-bottom:8px}
+  .guarantee p{font-size:14.5px;max-width:56ch}
+  .guarantee p b{background:var(--ink);color:var(--paper);padding:0 5px}
+  .stamp{
+    font-family:"Oswald";font-weight:600;text-transform:uppercase;color:var(--teal);
+    border:3px solid var(--teal);border-radius:8px;padding:10px 14px;text-align:center;
+    font-size:13px;letter-spacing:.14em;transform:rotate(-8deg);line-height:1.3;
+    opacity:.85;
+  }
+  .stamp b{display:block;font-size:17px}
 
-/* fake keybind hints footer */
-.hints{background:var(--bg-raised);border-top:1px solid var(--border);padding:6px 12px;font-size:11px;color:var(--text-dim);display:flex;gap:20px;flex-shrink:0}
-.hints kbd{background:var(--bg);border:1px solid var(--border);padding:1px 6px;color:var(--text-secondary);font-family:inherit}
+  /* scoreboard */
+  .score{padding:0 40px 6px}
+  .score-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+  .card{border:2px solid var(--ink);background:#fff}
+  .card .hd{
+    background:var(--red);color:var(--paper);font-family:"Oswald";font-weight:600;
+    text-transform:uppercase;letter-spacing:.18em;font-size:14px;padding:9px 14px;
+    display:flex;justify-content:space-between;align-items:baseline;
+    border-bottom:2px solid var(--ink);
+  }
+  .card .hd a{font-size:11px;letter-spacing:.1em}
+  .card ul{list-style:none;padding:8px 0}
+  .card li{
+    display:flex;justify-content:space-between;padding:7px 16px;
+    font-size:14px;
+  }
+  .card li+li{border-top:1px dashed #b9ac92}
+  .card li b{font-family:"Oswald";font-weight:600;font-size:15px}
+  .card .clear{color:var(--teal)}
 
-@media(max-width:900px){
-  body{height:auto}
-  .tiles{display:flex;flex-direction:column;overflow:visible}
-  .pane .pb{overflow:visible}
-  #term{min-height:280px}
-  .btnrow,.skfoot,.plt-contact{margin-top:16px}
-  .hints{display:none}
-}
+  /* coupon */
+  .coupon{
+    margin:34px 40px 40px;border:2px solid var(--ink);padding:30px;
+    text-align:center;background:#fff;
+  }
+  .coupon h3{
+    font-family:"Oswald";font-weight:600;font-size:15px;letter-spacing:.3em;
+    text-transform:uppercase;margin-bottom:4px;
+  }
+  .coupon .quote-line{font-size:14px;color:#5c5140;margin-bottom:14px;font-style:italic}
+  .coupon .mail{
+    display:inline-block;margin-top:12px;font-family:"Oswald";font-weight:600;
+    font-size:clamp(16px,3vw,24px);letter-spacing:.04em;
+    background:var(--ink);color:var(--paper);padding:10px 22px;text-decoration:none;
+  }
+  .coupon .mail:hover{background:var(--red)}
+  .coupon p{margin-top:12px;font-size:13px;font-style:italic;color:#5c5140}
+
+  .fineprint{
+    border-top:3px solid var(--ink);padding:14px 40px 20px;
+    font-size:11px;color:#5c5140;text-align:center;line-height:1.7;
+  }
+
+  @media(max-width:680px){
+    .svc-grid{grid-template-columns:1fr}
+    .svc:nth-child(odd){border-right:none}
+    .svc:nth-last-child(2){border-bottom:2px solid var(--ink)}
+    .score-grid{grid-template-columns:1fr}
+    .guarantee{grid-template-columns:1fr}
+    .burst{position:static;transform:rotate(0);margin:10px auto 0}
+    .mascot{position:static;transform:rotate(0);margin:0 auto 8px;width:120px}
+    .burst .t{font-size:12px;width:92px}
+    .burst .t b{font-size:22px}
+    .masthead,.services,.score{padding-left:20px;padding-right:20px}
+    .guarantee,.coupon{margin-left:20px;margin-right:20px}
+    .gotbugs{flex-direction:column;text-align:center;gap:8px}
+  }
 </style>
 </head>
 <body>
 
-<div class="statusbar">
-  <span class="ws on" onclick="focusPane('p-about')">1:about</span>
-  <span class="ws" onclick="focusPane('p-exploits')">2:work</span>
-  <span class="ws" onclick="location.href='mailto:peckish@wearehackerone.com'">3:mail</span>
-  <span class="title">~/peckish — peki.sh</span>
-  <span class="right"><span class="g">● 174 reports</span><span class="a">£77k+ paid</span><span id="clock"></span></span>
+<div class="flyer">
+
+  <div class="topline">★ Sole operator — trusted on HackerOne &amp; YesWeHack ★ 174 confirmed exterminations ★ London &amp; worldwide (remote) ★</div>
+
+  <div class="masthead">
+    <div class="mascot">
+      <svg viewBox="0 0 200 160" fill="none" aria-label="A chicken tipped forward, pecking a bug off the ground">
+        <!-- ground -->
+        <path d="M10 148 L190 148" stroke="#1d1710" stroke-width="2" opacity=".5"/>
+        <!-- the bug, right at the beak tip -->
+        <g transform="translate(31 146)">
+          <ellipse cx="0" cy="0" rx="5.5" ry="3.8" fill="#1d1710"/>
+          <circle cx="-6.5" cy="-1" r="2.3" fill="#1d1710"/>
+          <g stroke="#1d1710" stroke-width="1.3" stroke-linecap="round">
+            <path d="M-3 3.5 L-5 6.5"/><path d="M1 3.5 L1 7"/><path d="M4 2.5 L6.5 6"/>
+            <path d="M-8 -3 L-10.5 -5.5"/><path d="M-7 -4 L-8 -7"/>
+          </g>
+        </g>
+        <!-- alarm marks -->
+        <g stroke="#c8271b" stroke-width="2" stroke-linecap="round">
+          <path d="M16 130 L11 125"/><path d="M23 126 L21 119"/><path d="M12 139 L5 137"/>
+        </g>
+        <!-- tail: fanned high off the raised rear -->
+        <g fill="#1d1710">
+          <path d="M148 70 C156 46 168 30 182 24 C180 44 172 60 160 74 Z"/>
+          <path d="M150 78 C162 62 176 52 188 50 C184 66 174 80 160 90 Z"/>
+          <path d="M150 86 C160 78 172 74 182 76 C176 86 164 94 154 96 Z"/>
+          <!-- body: one egg, tipped hard forward -->
+          <ellipse cx="116" cy="94" rx="45" ry="31" transform="rotate(-38 116 94)"/>
+          <!-- head: tucked straight onto the body front — no neck -->
+          <circle cx="72" cy="124" r="15"/>
+        </g>
+        <!-- beak: one clean triangle onto the bug -->
+        <path d="M57 128 L44 148 L66 140 Z" fill="#dfa41f" stroke="#1d1710" stroke-width="1.6" stroke-linejoin="round"/>
+        <!-- comb: three lobes along the crown -->
+        <path d="M59 117 C57 108 64 103 68 109 C69 100 78 100 78 108 C83 103 89 109 85 116 C76 112 67 113 59 117 Z" fill="#c8271b"/>
+        <!-- wattle: under the jaw -->
+        <path d="M71 140 C71 147 76 149 79 146 C79 142 76 139 75 136 Z" fill="#c8271b"/>
+        <!-- eye: on the prize -->
+        <circle cx="68" cy="121" r="3.6" fill="#f3ecdb"/>
+        <circle cx="67" cy="122" r="1.7" fill="#1d1710"/>
+        <!-- wing: folded along the sloping back -->
+        <g stroke="#f3ecdb" stroke-width="2.4" fill="none" opacity=".85">
+          <path d="M104 64 C120 64 136 74 144 88"/>
+          <path d="M96 74 C110 74 124 82 132 94"/>
+        </g>
+        <!-- legs: planted under the body -->
+        <g stroke="#1d1710" stroke-width="3.2" stroke-linecap="round">
+          <path d="M114 126 L108 148"/><path d="M131 122 L129 148"/>
+          <path d="M108 148 L101 150 M108 148 L108 153 M108 148 L115 152"/>
+          <path d="M129 148 L122 151 M129 148 L130 153 M129 148 L136 150"/>
+        </g>
+      </svg>
+      <div class="cap">The exterminator himself</div>
+    </div>
+    <h1>Peckish</h1>
+    <div class="sub">Pest Control</div>
+    <p class="tag">“I find the bugs <b>before</b> the bad guys do.”</p>
+    <div class="burst">
+      <svg viewBox="0 0 100 100"><polygon fill="#dfa41f" stroke="#1d1710" stroke-width="2" points="50,2 57,14 70,6 72,20 86,17 83,31 97,33 89,44 100,52 88,59 94,72 80,72 81,86 68,81 64,95 53,86 44,97 38,84 25,90 26,76 12,77 18,64 5,58 16,50 6,41 20,37 15,23 29,25 30,11 43,17"/></svg>
+      <div class="t"><b>174</b> bugs exterminated<br>&amp; counting</div>
+    </div>
+  </div>
+
+  <div class="gotbugs">
+    <h2>Got bugs?</h2>
+    <p>Every website, app and API has them. The only question is <b>who finds them first</b> — me, or somebody far less polite.</p>
+  </div>
+
+  <div class="services">
+    <h3><span>I exterminate all common infestations</span></h3>
+    <div class="svc-grid">
+
+      <div class="svc">
+        <div class="ic"><svg viewBox="0 0 54 54"><ellipse cx="27" cy="30" rx="11" ry="14" fill="#1d1710"/><circle cx="27" cy="13" r="5" fill="#1d1710"/><g stroke="#1d1710" stroke-width="2.4" stroke-linecap="round"><path d="M17 22 L6 17"/><path d="M16 30 L5 30"/><path d="M17 38 L7 45"/><path d="M37 22 L48 17"/><path d="M38 30 L49 30"/><path d="M37 38 L47 45"/></g><path d="M27 18 L27 42" stroke="#f3ecdb" stroke-width="2"/></svg></div>
+        <div><h4>SQL &amp; code injection <small>structural pest</small></h4>
+        <p>Eats straight through your data layer. Left untreated, brings the whole application down.</p></div>
+      </div>
+
+      <div class="svc">
+        <div class="ic"><svg viewBox="0 0 54 54"><rect x="14" y="24" width="26" height="20" rx="3" fill="none" stroke="#1d1710" stroke-width="3"/><path d="M20 24 V17 a7 7 0 0 1 14 0" fill="none" stroke="#1d1710" stroke-width="3"/><circle cx="27" cy="34" r="3.4" fill="#1d1710"/></svg></div>
+        <div><h4>Broken access control <small>door &amp; lock specialist</small></h4>
+        <p>Your locks look fine but half of them don't check who's holding the key. I test every door.</p></div>
+      </div>
+
+      <div class="svc">
+        <div class="ic"><svg viewBox="0 0 54 54"><rect x="8" y="14" width="24" height="16" rx="2" fill="none" stroke="#1d1710" stroke-width="2.6"/><rect x="22" y="26" width="24" height="16" rx="2" fill="#1d1710"/><text x="12" y="26" font-family="Oswald" font-size="9" fill="#1d1710">id=41</text><text x="26" y="38" font-family="Oswald" font-size="9" fill="#f3ecdb">id=42</text></svg></div>
+        <div><h4>IDOR <small>gets into other people&rsquo;s data</small></h4>
+        <p>Change one number in a request, get another user's data. Astonishingly common; very quick to catch.</p></div>
+      </div>
+
+      <div class="svc">
+        <div class="ic"><svg viewBox="0 0 54 54"><path d="M8 40 C16 20 38 20 46 40" fill="none" stroke="#1d1710" stroke-width="3"/><circle cx="27" cy="34" r="6" fill="#1d1710"/><g stroke="#1d1710" stroke-width="2"><path d="M27 12 L27 5"/><path d="M14 16 L9 10"/><path d="M40 16 L45 10"/></g></svg></div>
+        <div><h4>Information disclosure <small>leaks &amp; seepage</small></h4>
+        <p>Secrets, internals and credentials seeping out of the foundations — then chained into worse.</p></div>
+      </div>
+
+      <div class="svc wide">
+        <div class="ic"><svg viewBox="0 0 54 54"><path d="M27 14 C13 3 2 11 8 22 C13 31 21 31 27 25 C33 31 41 31 46 22 C52 11 41 3 27 14 Z" fill="#f3ecdb"/><path d="M27 14 L27 46" stroke="#f3ecdb" stroke-width="2.6"/></svg></div>
+        <div><h4>Cross-site scripting <small>swarms — stored · reflected · DOM</small></h4>
+        <p>One unescaped field and it's in every visitor's browser. I trace each swarm to demonstrated account impact — no alert(1) and gone.</p></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="guarantee">
+    <div>
+      <h3>The Peckish guarantee</h3>
+      <p><b>Manual-first, always.</b> A one-man outfit — the same pair of hands on every job. No scanner spray-and-pray, no noise, no 40-page report of duplicates. Application logic over scanner noise, impact over volume — every find reproduced, chained where possible, and written up so the fix is obvious.</p>
+    </div>
+    <div class="stamp">Licensed &amp; vetted<b>HackerOne Clear ✓</b>background checked</div>
+  </div>
+
+  <div class="score">
+    <div class="sec-title"><span>The scoreboard</span></div>
+    <div class="score-grid">
+      <div class="card">
+        <div class="hd">HackerOne <a href="https://hackerone.com/peckish" target="_blank" rel="noopener">verify ↗</a></div>
+        <ul>
+          <li>Bugs exterminated <b>61</b></li>
+          <li>Signal <b>6.45 / 7.0</b></li>
+          <li>Impact <b>23.41</b></li>
+          <li>Background check <b class="clear">CLEAR ✓</b></li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="hd">YesWeHack <a href="https://yeswehack.com" target="_blank" rel="noopener">verify ↗</a></div>
+        <ul>
+          <li>Bugs exterminated <b>113</b></li>
+          <li>Impact <b>23.8</b></li>
+          <li>League table <b>#115</b></li>
+          <li>Points <b>2,332</b></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="coupon">
+    <h3>Enquiries</h3>
+    <p class="quote-line">Free quote, no obligation — currently taking on new engagements.</p>
+    <a class="mail" href="mailto:peckish@wearehackerone.com">peckish@wearehackerone.com</a>
+    <p>Open for work: auditing attack surfaces. £77,000+ in bounties paid out by bug bounty programs to date.</p>
+  </div>
+
+  <div class="fineprint">
+    · peki.sh · Most engagements conducted under NDA — specifics shared privately on request.<br>
+    Responsible disclosure, always. No actual woodpeckers are involved in the treatment of your infrastructure.
+  </div>
+
 </div>
 
-<main class="tiles">
-
-  <section class="pane" id="p-about" tabindex="0">
-    <div class="ph"><span><span class="idx">[1]</span> about.txt</span><span>peckish@peki.sh</span></div>
-    <div class="pb">
-      <div class="prompt">$ whoami</div>
-      <h1>I find the bugs <em>before the bad guys do.</em><span class="cursor"></span></h1>
-      <p>Ethical hacker with <b>174 reports</b> across HackerOne and YesWeHack. Focused on critical attack surfaces — code injection, access control, XSS, and IDOR.</p>
-      <p>Manual-first methodology. Application logic over scanner noise. Impact over volume. <b>HackerOne Clear</b> verified.</p>
-      <div class="status">
-        <span class="sdot"></span><b>Open for work</b> — auditing attack surfaces
-        <div class="status-sub">Most engagements under NDA · specifics shared privately on request</div>
-      </div>
-      <div class="btnrow">
-        <a class="btn" href="mailto:peckish@wearehackerone.com">./hire_me</a>
-        <a class="btn ghost" href="https://hackerone.com/peckish?type=user">--verify ↗</a>
-      </div>
-    </div>
-  </section>
-
-  <section class="pane" id="p-term" tabindex="0">
-    <div class="ph"><span><span class="idx">[2]</span> peckish@peki:~ — zsh</span><span>live</span></div>
-    <div class="pb"><div id="term"></div></div>
-  </section>
-
-  <section class="pane" id="p-exploits" tabindex="0">
-    <div class="ph"><span><span class="idx">[3]</span> exploits/ — ls -la</span><span>5 dirs</span></div>
-    <div class="pb">
-      <div class="sk"><span class="b">code-injection/</span><span class="d">SQL · OS command · template, webapps &amp; APIs</span></div>
-      <div class="sk"><span class="b">access-control/</span><span class="d">broken authz · privesc · auth bypass</span></div>
-      <div class="sk"><span class="b">idor/</span><span class="d">object refs leaking user data &amp; admin functions</span></div>
-      <div class="sk"><span class="b">info-disclosure/</span><span class="d">leaked creds · debug endpoints · secrets</span></div>
-      <div class="sk"><span class="b">xss/</span><span class="d">stored · reflected · DOM-based</span></div>
-      <div class="skfoot">// manual-first · chained impact · responsible disclosure</div>
-    </div>
-  </section>
-
-  <section class="pane" id="p-plat" tabindex="0">
-    <div class="ph"><span><span class="idx">[4]</span> platforms — verified</span><span>2 profiles</span></div>
-    <div class="pb">
-      <a class="plt" href="https://hackerone.com/peckish?type=user">
-        <div class="nm">hackerone/peckish <span>↗</span></div>
-        <div class="dt">61 reports · signal 6.45/7.0 · impact 23.41 · Clear ✓</div>
-      </a>
-      <a class="plt" href="https://yeswehack.com/hunters/sirpeckish">
-        <div class="nm">yeswehack/sirpeckish <span>↗</span></div>
-        <div class="dt">113 reports · impact 23.8 · rank #115 · 2332 pts</div>
-      </a>
-      <div class="plt-contact"><span>$ open for work</span><a href="mailto:peckish@wearehackerone.com">peckish@wearehackerone.com</a></div>
-    </div>
-  </section>
-
-</main>
-
-<div class="hints">
-  <span><kbd>mod</kbd>+<kbd>enter</kbd> hire me</span>
-  <span><kbd>mod</kbd>+<kbd>1-4</kbd> focus pane</span>
-  <span><kbd>mod</kbd>+<kbd>shift</kbd>+<kbd>q</kbd> nothing, this is a website</span>
-</div>
-
-  <script data-goatcounter="https://peckish.goatcounter.com/count"
-        async src="//gc.zgo.at/count.js"></script>
-
-<script>
-const clock=document.getElementById('clock');
-const tick=()=>clock.textContent=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
-tick();setInterval(tick,1000);
-function focusPane(id){
-  const p=document.getElementById(id);
-  if(p){p.focus();p.scrollIntoView({behavior:'smooth',block:'nearest'});}
-  document.querySelectorAll('.ws').forEach(w=>w.classList.remove('on'));
-  const map={'p-about':0,'p-exploits':1};
-  if(id in map) document.querySelectorAll('.ws')[map[id]].classList.add('on');
-}
-document.addEventListener('keydown',e=>{
-  if(e.altKey&&['1','2','3','4'].includes(e.key)){
-    const p=document.querySelectorAll('.pane')[+e.key-1];if(p){p.focus();e.preventDefault();}
-  }
-  if(e.altKey&&e.key==='Enter')location.href='mailto:peckish@wearehackerone.com';
-});
-
-/* live terminal typewriter (aggregate stats only — no report details) */
-(function(){
-  const el=document.getElementById('term');
-  const seq=[
-    {c:'whoami'},           {o:['peckish — ethical hacker','<span class="hl">HackerOne Clear</span> verified · UK']},
-    {c:'stats --all'},      {o:['reports .......... <span class="hl">174</span>','bounties ......... <span class="hl">&pound;77,000+</span>','h1 signal ........ <span class="hl">6.45</span> / 7.0','avg impact ....... <span class="hl">23.7</span>']},
-    {c:'severity --graph'}, {o:['<span class="red">crit ▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉ 46</span>','<span class="orange">high ▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉ 51</span>','<span class="blue">med  ▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉ 48</span>','<span class="green">low  ▉▉▉▉▉▉▉▉▉▉▉▉▉▉ 28</span>']},
-    {c:''}
-  ];
-  const PROMPT='<span class="p">$</span> ';
-  let html='', i=0;
-  function render(active){ el.innerHTML = html + active + '<span class="tc"></span>'; el.parentElement.scrollTop=el.parentElement.scrollHeight; }
-  function typeCmd(txt,done){
-    let j=0;
-    (function tick(){
-      render('<span class="cmd">'+txt.slice(0,j)+'</span>');
-      if(j<txt.length){ j++; setTimeout(tick, 34+Math.random()*46); }
-      else { html+=PROMPT+'<span class="cmd">'+txt+'</span>\n'; setTimeout(done,240); }
-    })();
-  }
-  function step(){
-    if(i>=seq.length){ render(''); return; }
-    const item=seq[i++];
-    if('c' in item){
-      el.innerHTML = html + PROMPT + '<span class="tc"></span>';
-      setTimeout(()=>typeCmd(item.c, step), 200);
-    } else {
-      html += '<span class="o">'+item.o.join('\n')+'</span>\n\n';
-      render(''); setTimeout(step, 220);
-    }
-  }
-  step();
-})();
-</script>
 </body>
 </html>
