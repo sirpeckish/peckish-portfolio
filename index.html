@@ -13,7 +13,7 @@
 <meta property="og:description" content="I find the bugs before the bad guys do. Human-led, AI-assisted. 174 confirmed exterminations across HackerOne &amp; YesWeHack.">
 <meta property="og:image" content="https://peki.sh/og.png">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22%3E%3Crect x=%222%22 y=%222%22 width=%2260%22 height=%2260%22 rx=%229%22 fill=%22%23f3ecdb%22 stroke=%22%231d1710%22 stroke-width=%224%22/%3E%3Cpath d=%22M21 21 C15 17 18 9 24 12 C24 5 33 4 34 11 C38 6 46 9 43 16 C47 17 47 22 44 24 Z%22 fill=%22%23c8271b%22 stroke=%22%231d1710%22 stroke-width=%223%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M17 32 C15 22 24 15 33 16 C42 17 47 25 45 34 C49 42 53 50 55 60 L31 60 C31 53 28 47 23 43 C19 40 17 36 17 32 Z%22 fill=%22%23f3ecdb%22 stroke=%22%231d1710%22 stroke-width=%223.5%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M18 26 L5 32 L18 36 Z%22 fill=%22%23dfa41f%22 stroke=%22%231d1710%22 stroke-width=%223%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M18 36 C14 41 16 47 21 46 C24 43 23 39 21 36 Z%22 fill=%22%23c8271b%22 stroke=%22%231d1710%22 stroke-width=%222.6%22 stroke-linejoin=%22round%22/%3E%3Ccircle cx=%2227%22 cy=%2226%22 r=%223.4%22 fill=%22%231d1710%22/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22%3E%3Crect width=%2264%22 height=%2264%22 rx=%2214%22 fill=%22%2314161F%22/%3E%3Ccircle cx=%2227%22 cy=%2216%22 r=%227%22 fill=%22%23EC5A4C%22/%3E%3Ccircle cx=%2237%22 cy=%2213%22 r=%227.5%22 fill=%22%23EC5A4C%22/%3E%3Ccircle cx=%2246%22 cy=%2218%22 r=%226.5%22 fill=%22%23EC5A4C%22/%3E%3Cpath d=%22M21 31 L4 38 L21 45 Z%22 fill=%22%23E5A823%22/%3E%3Cellipse cx=%2224%22 cy=%2250%22 rx=%225%22 ry=%226.5%22 fill=%22%23EC5A4C%22/%3E%3Ccircle cx=%2236%22 cy=%2236%22 r=%2219%22 fill=%22%23ECE7DA%22/%3E%3Ccircle cx=%2230%22 cy=%2232%22 r=%224.6%22 fill=%22%2314161F%22/%3E%3C/svg%3E">
 <script data-goatcounter="https://peckish.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Person","name":"peckish","url":"https://peki.sh/","jobTitle":"Security Researcher","email":"mailto:peckish@wearehackerone.com","sameAs":["https://hackerone.com/peckish","https://yeswehack.com/hunters/sirpeckish"]}
@@ -123,6 +123,8 @@ html{scroll-behavior:smooth}
 <use class="pk-bug" href="#pk-bug" x="310" y="152"/>
 <use class="pk-bug" href="#pk-bug" x="244" y="152"/>
 <use class="pk-bug" href="#pk-bug" x="112" y="152"/>
+<text class="pk-alarm" x="0" y="133" text-anchor="middle" font-family="Unbounded, sans-serif" font-weight="800" font-size="17" fill="#E5A823" opacity="0">!</text>
+<g class="pk-crumbs" fill="#EC5A4C" opacity="0"><circle r="2.2"/><circle r="1.8"/><circle r="2"/></g>
 <g class="pk-walk">
 <g class="pk-body">
 <g class="pk-lb1" stroke="#B98A22" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"><path d="M142 128 V146.0"/><g class="pk-lb2"><path d="M142 146.0 V164.0"/><g class="pk-lb3"><path d="M142 164.0 l-11 1.5 M142 164.0 l-8 4 M142 164.0 l8 2.5"/></g></g></g>
@@ -368,7 +370,8 @@ const HALF = 22;            // ground covered by one step
 const V = 100;              // walking speed, units per second
 const RAMP = 0.24;          // seconds to ease in or out of a stop
 const PAUSE = 0.26;         // seconds standing still at each bug
-const stops = bugs.map((x) => x - 48);
+const FLEE = 44;         // how far the last bug gets before it is caught
+const stops = bugs.map((x, i) => x - 48 - (i === bugs.length - 1 ? FLEE : 0));
 const T0 = stops[0] + HALF * 14;
 const TEND = stops[stops.length - 1] - HALF * 20;
 const segs = [];
@@ -386,8 +389,8 @@ t += dur;
 from = pts[i];
 if (rout) { pecks.push(t + 0.05); t += PAUSE; }
 }
-this._c = { HALF: HALF, V: V, RAMP: RAMP, T0: T0, TEND: TEND, segs: segs, pecks: pecks, exit: t };
-this._total = t + 1.4;
+this._c = { bugs: bugs, FLEE: FLEE, HALF: HALF, V: V, RAMP: RAMP, T0: T0, TEND: TEND, segs: segs, pecks: pecks, exit: t };
+this._total = t + 2.8;
 }
 _pos(t) {
 const c = this._c;
@@ -451,7 +454,8 @@ const q = (sel) => root.querySelector(sel);
 this._root = root;
 this._els = { walk: q('.pk-walk'), body: q('.pk-body'), top: q('.pk-top'),
 a: [q('.pk-la1'), q('.pk-la2'), q('.pk-la3')], b: [q('.pk-lb1'), q('.pk-lb2'), q('.pk-lb3')],
-bugs: Array.prototype.slice.call(root.querySelectorAll('.pk-bug')) };
+bugs: Array.prototype.slice.call(root.querySelectorAll('.pk-bug')),
+alarm: q('.pk-alarm'), crumbs: Array.prototype.slice.call(root.querySelectorAll('.pk-crumbs circle')), crumbBox: q('.pk-crumbs') };
 }
 const c = this._c, e = this._els;
 if (!e.walk) { return; }
@@ -467,10 +471,69 @@ for (let i = 0; i < 3; i++) {
 e.a[i].style.transform = 'rotate(' + la[i].toFixed(2) + 'deg)';
 e.b[i].style.transform = 'rotate(' + lb[i].toFixed(2) + 'deg)';
 }
-const back = Math.max(0, Math.min(1, (t - c.exit - 0.3) / 0.8));
-for (let i = 0; i < e.bugs.length; i++) {
-const eaten = i < c.pecks.length && t >= c.pecks[i];
-e.bugs[i].style.opacity = eaten ? back : 1;
+const n = e.bugs.length;
+let alarm = null, crumb = null;
+for (let i = 0; i < n; i++) {
+const tc = c.pecks[i];
+const x0 = c.bugs[i];
+const last = i === n - 1;
+let dx = 0, dy = 0, rot = 0, sc = 1, op = 1;
+if (t < tc) {
+// Idle: an occasional twitch, each bug on its own beat.
+const w = (t + i * 0.83) % 2.6;
+if (w < 0.3) { rot = 7 * Math.sin(w / 0.3 * 4 * Math.PI) * (1 - w / 0.3); }
+// Startled hop when a bug further up the line gets eaten; nearer bugs jump higher.
+for (let j = 0; j < i; j++) {
+const u = (t - c.pecks[j] - 0.05 * (i - j)) / 0.28;
+if (u > 0 && u < 1) { dy -= (9 / Math.sqrt(i - j)) * Math.sin(Math.PI * u); }
+}
+// The last one makes a run for it. It does not get far.
+if (last && n > 1) {
+const r0 = c.pecks[i - 1] + 0.3, r1 = tc - 0.3;
+const u = Math.max(0, Math.min(1, (t - r0) / (r1 - r0)));
+dx -= c.FLEE * u;
+if (u > 0 && u < 1) { dy -= 1.6 * Math.abs(Math.sin(t * 38)); }
+}
+// Frozen and trembling, with a "!" overhead, just before the beak lands.
+if (t > tc - 0.7) {
+dx += 1.2 * Math.sin(t * 75);
+alarm = { x: x0 + dx - 2, k: Math.min(1, (t - (tc - 0.7)) / 0.12) };
+}
+} else if (t < tc + 0.12) {
+// Gulp: snatched up and gone.
+const u = (t - tc) / 0.12;
+sc = 1 - u; dy = -5 * u;
+if (last) { dx = -c.FLEE; }
+} else { op = 0; }
+if (t >= tc && t < tc + 0.42) { crumb = { x: x0 - (last ? c.FLEE : 0) - 2, u: (t - tc) / 0.42 }; }
+// After he leaves, a fresh lot scurries in from the right, one after another.
+const rt = t - (c.exit + 0.2 + i * 0.12);
+if (rt > 0) {
+const dist = 960 - x0;
+const u = Math.min(1, rt / (dist / 560));
+dx = dist * (1 - u) * (1 - u);
+dy = u < 1 ? -1.6 * Math.abs(Math.sin(t * 38)) : 0;
+rot = 0; sc = 1; op = 1;
+}
+const st = e.bugs[i].style;
+st.opacity = op;
+// Turn and shrink about the bug's own feet, not the corner of the drawing.
+st.transform = 'translate(' + (x0 + dx).toFixed(2) + 'px,' + (160 + dy).toFixed(2) + 'px) rotate(' + rot.toFixed(1) + 'deg) scale(' + sc.toFixed(3) + ') translate(' + (-x0) + 'px,-160px)';
+}
+if (e.alarm) {
+e.alarm.style.opacity = alarm ? alarm.k : 0;
+if (alarm) { e.alarm.setAttribute('x', alarm.x.toFixed(1)); }
+}
+if (e.crumbBox) {
+e.crumbBox.style.opacity = crumb ? 1 - crumb.u : 0;
+if (crumb) {
+const ang = [-2.6, -1.55, -0.6];
+for (let m = 0; m < e.crumbs.length; m++) {
+const r = 17 * crumb.u;
+e.crumbs[m].setAttribute('cx', (crumb.x + Math.cos(ang[m]) * r).toFixed(1));
+e.crumbs[m].setAttribute('cy', (151 + Math.sin(ang[m]) * r + 14 * crumb.u * crumb.u).toFixed(1));
+}
+}
 }
 }
 }
