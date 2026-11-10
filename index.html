@@ -36,12 +36,12 @@ html{scroll-behavior:smooth}
 .pk-lb2{transform-origin:142px 146px;transform:rotate(52.8deg)}
 .pk-lb3{transform-origin:142px 164px;transform:rotate(-19.3deg)}
 .pk-frame{display:none}
-@media (min-width:900px){.pk-frame{display:block;position:fixed;top:14px;right:14px;bottom:14px;left:14px;border:1.5px solid #E5A823;border-radius:10px;pointer-events:none;z-index:5}}
+@media (min-width:900px){.pk-frame{display:block;position:absolute;top:14px;right:14px;bottom:14px;left:14px;border:1.5px solid #E5A823;border-radius:10px;pointer-events:none;z-index:5}.pk-band{margin:0 28px;border-radius:6px}}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 </style>
 </head>
 <body>
-<div style="background: #14161F; color: #ECE7DA; font-family: 'Hanken Grotesk', system-ui, sans-serif; font-size: 18px; line-height: 1.55">
+<div style="position: relative; background: #14161F; color: #ECE7DA; font-family: 'Hanken Grotesk', system-ui, sans-serif; font-size: 18px; line-height: 1.55">
 
 <div class="pk-frame" aria-hidden="true"></div>
 
@@ -402,7 +402,7 @@ html{scroll-behavior:smooth}
 </main>
 
 <!-- contact -->
-<section id="contact" style="background: #E5A823; color: #14161F">
+<section id="contact" class="pk-band" style="background: #E5A823; color: #14161F">
 <div style="max-width: 1160px; margin: 0 auto; padding: clamp(48px, 8vw, 96px) clamp(20px, 5vw, 56px); box-sizing: border-box; display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 32px 56px">
 <div style="flex: 1 1 380px; display: flex; flex-direction: column; gap: 16px">
 <h2 style="margin: 0; font-family: 'Unbounded', sans-serif; font-weight: 800; font-size: clamp(44px, 9vw, 116px); line-height: 0.95; letter-spacing: -0.03em">Got bugs?</h2>
