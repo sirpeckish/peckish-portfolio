@@ -555,7 +555,7 @@ e.b[i].style.transform = 'rotate(' + lb[i].toFixed(2) + 'deg)';
 }
 const n = e.bugs.length;
 // Each bug has its own way of meeting its end.
-const KIND = ['freeze', 'oblivious', 'jump', 'dead', 'brave', 'hide'];
+const KIND = ['freeze', 'oblivious', 'jump', 'dither', 'brave', 'spin'];
 const HIP = [[-5, 2], [0, 3], [5, 2]];
 let alarm = null, crumb = null;
 for (let i = 0; i < n; i++) {
@@ -594,23 +594,24 @@ alarm = { x: x0 - 2, y: 0, k: k, s: '!' };
 dy -= 13 * Math.abs(Math.sin(near * Math.PI / 0.3));
 run = 1;
 alarm = { x: x0 - 2, y: dy, k: k, s: '!!' };
-} else if (kind === 'dead') {
-// Plays dead: rolls onto its back, legs in the air.
-flip = 180 * k; dy -= 3 * k; kick = 1;
+} else if (kind === 'dither') {
+// Dashes left and right, unable to pick a direction, and ends up back where it started.
+dx += 7 * k * Math.sin(near * 2 * Math.PI / 0.3);
+run = 1;
+alarm = { x: x0 + dx - 2, y: 0, k: k, s: '!' };
 } else if (kind === 'brave') {
 // Turns round and squares up to him.
 sx = 1 - 2 * k; rot = -18 * k;
 alarm = { x: x0 + 2, y: -4 * k, k: k, s: '!' };
-} else if (kind === 'hide') {
-// Flattens itself against the ground and hopes.
-sy = 1 - 0.55 * k; sx = 1 + 0.2 * k;
+} else if (kind === 'spin') {
+// Turns round and round on the spot, confused.
+sx = Math.cos(near * 2 * Math.PI / 0.45);
+alarm = { x: x0, y: 0, k: k, s: '?' };
 }
 // 'oblivious' carries on as if nothing is happening.
 }
 } else {
-if (kind === 'dead') { flip = 180; dy = -3; }
 if (kind === 'brave') { sx = -1; rot = -18; }
-if (kind === 'hide') { sy = 0.45; sx = 1.2; }
 dx = -fled;
 if (t < tc + 0.12) { const u = (t - tc) / 0.12; sc = 1 - u; dy -= 5 * u; } else { op = 0; }
 }
