@@ -555,7 +555,7 @@ e.b[i].style.transform = 'rotate(' + lb[i].toFixed(2) + 'deg)';
 }
 const n = e.bugs.length;
 // Each bug has its own way of meeting its end.
-const KIND = ['freeze', 'oblivious', 'jump', 'dither', 'brave', 'spin'];
+const KIND = ['freeze', 'oblivious', 'jump', 'puff', 'brave', 'spin'];
 const HIP = [[-5, 2], [0, 3], [5, 2]];
 let alarm = null, crumb = null;
 for (let i = 0; i < n; i++) {
@@ -594,11 +594,11 @@ alarm = { x: x0 - 2, y: 0, k: k, s: '!' };
 dy -= 13 * Math.abs(Math.sin(near * Math.PI / 0.3));
 run = 1;
 alarm = { x: x0 - 2, y: dy, k: k, s: '!!' };
-} else if (kind === 'dither') {
-// Dashes left and right, unable to pick a direction, and ends up back where it started.
-dx += 7 * k * Math.sin(near * 2 * Math.PI / 0.3);
-run = 1;
-alarm = { x: x0 + dx - 2, y: 0, k: k, s: '!' };
+} else if (kind === 'puff') {
+// Puffs itself up to look bigger. It stays put.
+const g = Math.min(1, near / 0.5);
+const big = 1 + 0.45 * g * g * (3 - 2 * g);
+sx = big; sy = big;
 } else if (kind === 'brave') {
 // Turns round and squares up to him.
 sx = 1 - 2 * k; rot = -18 * k;
@@ -612,6 +612,7 @@ alarm = { x: x0, y: 0, k: k, s: '?' };
 }
 } else {
 if (kind === 'brave') { sx = -1; rot = -18; }
+if (kind === 'puff') { sx = 1.45; sy = 1.45; }
 dx = -fled;
 if (t < tc + 0.12) { const u = (t - tc) / 0.12; sc = 1 - u; dy -= 5 * u; } else { op = 0; }
 }
