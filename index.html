@@ -6,7 +6,7 @@
 <title>peckish // portfolio</title>
 <meta name="description" content="Peckish Pest Control: human-led, AI-assisted security research. 174 disclosed reports across HackerOne and YesWeHack. Open for engagements, auditing attack surfaces.">
 <link rel="canonical" href="https://peki.sh/">
-<meta name="theme-color" content="#1d1710">
+<meta name="theme-color" content="#14161F">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://peki.sh/">
 <meta property="og:title" content="Peckish Bug Bounty Hunter: got bugs?">
@@ -20,580 +20,461 @@
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Oswald:wght@400;500;600;700&family=Libre+Franklin:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400..900&family=Hanken+Grotesk:ital,wght@0,400..700;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --paper:#f3ecdb;
-    --paper-2:#ebe2cc;
-    --ink:#1d1710;
-    --ink-soft:#463d30;
-    --ink-muted:#5c5140;
-    --rule:#b9ac92;
-    --red:#c8271b;
-    --mustard:#dfa41f;
-    --teal:#1f6b60;
-    --desk:#c9bfa8;
-  }
-  *{margin:0;padding:0;box-sizing:border-box}
-  html{-webkit-text-size-adjust:100%}
-  body{
-    background:var(--desk);
-    background-image:
-      radial-gradient(rgba(29,23,16,.05) 1px, transparent 1.4px),
-      linear-gradient(180deg, rgba(255,255,255,.08), rgba(0,0,0,.05));
-    background-size:4px 4px, 100% 100%;
-    font-family:"Libre Franklin",sans-serif;
-    color:var(--ink);
-    font-size:16px;line-height:1.55;
-    padding:36px 14px 60px;
-  }
-  a{color:inherit}
-  :focus-visible{outline:3px solid var(--red);outline-offset:3px}
-  .slab{font-family:"Alfa Slab One",serif;font-weight:400}
-
-  .flyer{
-    max-width:880px;margin:0 auto;background:var(--paper);
-    background-image:radial-gradient(rgba(29,23,16,.06) 1px, transparent 1.3px);
-    background-size:5px 5px;
-    border:3px solid var(--ink);
-    box-shadow:12px 12px 0 rgba(29,23,16,.32);
-    overflow:hidden;position:relative;
-  }
-
-  /* ---------- top strip ---------- */
-  .topline{
-    background:var(--ink);color:var(--paper);
-    font-family:"Oswald";font-weight:500;font-size:12px;letter-spacing:.26em;text-transform:uppercase;
-    display:flex;flex-wrap:wrap;justify-content:center;gap:4px 14px;padding:9px 14px;
-  }
-  .topline span+span::before{content:"★";color:var(--mustard);margin-right:14px}
-
-  /* ---------- masthead ---------- */
-  .masthead{
-    display:grid;grid-template-columns:150px 1fr 150px;align-items:center;gap:12px;
-    padding:34px 32px 28px;border-bottom:3px solid var(--ink);text-align:center;
-  }
-  .mascot{transform:rotate(-5deg)}
-  .mascot svg{width:100%;height:auto;display:block;overflow:visible}
-  .cap{font-family:"Oswald";font-weight:600;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-soft);margin-top:2px}
-  .masthead h1{
-    font-family:"Alfa Slab One";font-weight:400;font-size:clamp(50px,10vw,98px);line-height:.92;
-    color:var(--red);text-shadow:4px 4px 0 var(--ink);text-transform:uppercase;letter-spacing:.01em;
-  }
-  .masthead .sub{
-    display:inline-block;margin-top:16px;background:var(--ink);color:var(--paper);
-    font-family:"Oswald";font-weight:600;font-size:clamp(14px,2.4vw,21px);
-    letter-spacing:.4em;text-transform:uppercase;padding:6px 16px 6px 22px;
-  }
-  .masthead .tag{margin-top:16px;font-style:italic;font-size:17px}
-  .masthead .tag b{font-style:normal;background:var(--mustard);padding:0 4px}
-
-  .burst{
-    position:relative;width:150px;height:150px;justify-self:end;
-    display:flex;align-items:center;justify-content:center;text-align:center;
-    transform:rotate(10deg);
-  }
-  .burst svg{position:absolute;inset:0;width:100%;height:100%}
-  .burst .t{
-    position:relative;font-family:"Oswald";font-weight:600;font-size:13.5px;line-height:1.15;
-    text-transform:uppercase;width:96px;
-  }
-  .burst .t b{font-family:"Alfa Slab One";font-weight:400;font-size:28px;display:block;line-height:1.05}
-
-  /* ---------- got bugs ---------- */
-  .gotbugs{
-    background:var(--mustard);border-bottom:3px solid var(--ink);
-    padding:22px 40px;display:flex;align-items:center;gap:28px;justify-content:center;
-  }
-  .gotbugs h2{font-family:"Alfa Slab One";font-weight:400;font-size:clamp(30px,5.6vw,54px);text-transform:uppercase;line-height:1;white-space:nowrap}
-  .gotbugs p{font-family:"Oswald";font-weight:500;font-size:clamp(13px,2vw,17px);text-transform:uppercase;letter-spacing:.11em;max-width:32ch;line-height:1.45}
-  .gotbugs p b{color:var(--red)}
-
-  /* ---------- shared section bits ---------- */
-  section{padding:40px 40px 0}
-  .sec-title{
-    font-family:"Oswald";font-weight:600;font-size:15px;letter-spacing:.3em;text-transform:uppercase;
-    text-align:center;margin-bottom:26px;display:flex;align-items:center;gap:14px;
-  }
-  .sec-title::before,.sec-title::after{content:"";flex:1;height:0;border-top:2px solid var(--ink)}
-  .sec-title span{background:var(--ink);color:var(--paper);padding:5px 16px}
-
-  /* ---------- new & improved (AI) ---------- */
-  .improved{
-    border:3px solid var(--ink);background:#fff;position:relative;
-    box-shadow:6px 6px 0 var(--ink);
-  }
-  .improved .ribbon{
-    position:absolute;top:-16px;left:50%;transform:translateX(-50%) rotate(-2deg);
-    background:var(--red);color:var(--paper);border:2px solid var(--ink);
-    font-family:"Oswald";font-weight:700;font-size:13px;letter-spacing:.24em;text-transform:uppercase;
-    padding:4px 16px;white-space:nowrap;
-  }
-  .improved-hd{
-    display:grid;grid-template-columns:auto 1fr;gap:22px;align-items:center;
-    padding:30px 30px 22px;border-bottom:2px solid var(--ink);
-  }
-  .robot{width:96px;height:auto;display:block;transform:rotate(-6deg)}
-  .improved-hd h2{font-family:"Alfa Slab One";font-weight:400;font-size:clamp(24px,4.2vw,36px);line-height:1.05;text-transform:uppercase}
-  .improved-hd h2 em{font-style:normal;color:var(--red)}
-  .improved-hd p{margin-top:8px;font-size:15px;color:var(--ink-soft);max-width:58ch}
-
-  .split{display:grid;grid-template-columns:1fr 1fr}
-  .split > div{padding:22px 26px 24px}
-  .split > div + div{border-left:2px solid var(--ink)}
-  .split h3{
-    font-family:"Oswald";font-weight:600;font-size:16px;letter-spacing:.16em;text-transform:uppercase;
-    display:flex;align-items:center;gap:10px;margin-bottom:12px;
-  }
-  .split h3 .chip{
-    font-size:10px;letter-spacing:.18em;padding:2px 8px;border:2px solid currentColor;border-radius:3px;
-  }
-  .machine h3{color:var(--teal)}
-  .hunter{background:var(--paper-2)}
-  .hunter h3{color:var(--red)}
-  .split ul{list-style:none}
-  .split li{font-size:14px;padding:7px 0 7px 24px;position:relative;color:var(--ink-soft)}
-  .split li + li{border-top:1px dashed var(--rule)}
-  .split li::before{position:absolute;left:0;top:7px;font-family:"Oswald";font-weight:700}
-  .machine li::before{content:"⚙";color:var(--teal)}
-  .hunter li::before{content:"✓";color:var(--red)}
-  .split li b{color:var(--ink);font-weight:600}
-
-  .motto{
-    background:var(--ink);color:var(--paper);text-align:center;padding:14px 20px;
-    font-family:"Oswald";font-weight:500;font-size:clamp(14px,2.2vw,18px);letter-spacing:.14em;text-transform:uppercase;
-  }
-  .motto b{color:var(--mustard);font-weight:600}
-
-  /* ---------- treatment plan (process) ---------- */
-  .steps{display:grid;grid-template-columns:repeat(4,1fr);border:2px solid var(--ink);counter-reset:step}
-  .step{padding:20px 18px 22px;position:relative;background:rgba(255,255,255,.35)}
-  .step + .step{border-left:2px solid var(--ink)}
-  .step .no{
-    font-family:"Alfa Slab One";font-size:34px;line-height:1;color:var(--red);
-    text-shadow:2px 2px 0 var(--ink);
-  }
-  .step h4{font-family:"Oswald";font-weight:600;font-size:17px;letter-spacing:.08em;text-transform:uppercase;margin-top:10px}
-  .step p{font-size:13.5px;color:var(--ink-soft);margin-top:6px}
-  .who{
-    display:inline-block;margin-top:8px;font-family:"Oswald";font-weight:600;font-size:10px;
-    letter-spacing:.18em;text-transform:uppercase;padding:2px 7px;border:2px solid currentColor;border-radius:3px;
-  }
-  .who.ai{color:var(--teal)}
-  .who.hand{color:var(--red)}
-  .who.both{color:var(--ink)}
-
-  /* ---------- services ---------- */
-  .svc-grid{display:grid;grid-template-columns:1fr 1fr;border:2px solid var(--ink)}
-  .svc{
-    display:grid;grid-template-columns:60px 1fr;gap:16px;align-items:center;
-    padding:20px;border-bottom:2px solid var(--ink);transition:background .15s;
-  }
-  .svc:hover{background:rgba(223,164,31,.16)}
-  .svc:nth-child(odd){border-right:2px solid var(--ink)}
-  .svc:nth-last-child(-n+1){border-bottom:none}
-  .svc .ic{width:60px;height:60px;display:flex;align-items:center;justify-content:center}
-  .svc .ic svg{width:52px;height:52px}
-  .svc h4{font-family:"Oswald";font-weight:600;font-size:17px;text-transform:uppercase;letter-spacing:.06em;line-height:1.25}
-  .svc h4 small{display:block;font-weight:500;font-size:11px;letter-spacing:.18em;color:var(--red)}
-  .svc p{font-size:13.5px;margin-top:4px;color:var(--ink-soft)}
-  .svc.wide{grid-column:1/-1;border-right:none;background:var(--ink);color:var(--paper)}
-  .svc.wide:hover{background:#2a2219}
-  .svc.wide p{color:#cfc6b4}
-  .svc.wide h4 small{color:var(--mustard)}
-
-  /* ---------- guarantee ---------- */
-  .guarantee{
-    border:3px double var(--ink);padding:24px 28px;
-    display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;background:rgba(255,255,255,.4);
-  }
-  .guarantee h3{font-family:"Alfa Slab One";font-weight:400;font-size:23px;text-transform:uppercase;margin-bottom:10px}
-  .guarantee p{font-size:14.5px;max-width:58ch}
-  .guarantee p b{background:var(--ink);color:var(--paper);padding:0 5px}
-  .stamps{display:flex;flex-direction:column;gap:14px;align-items:center}
-  .stamp{
-    font-family:"Oswald";font-weight:600;text-transform:uppercase;color:var(--teal);
-    border:3px solid currentColor;border-radius:8px;padding:9px 14px;text-align:center;
-    font-size:12px;letter-spacing:.14em;line-height:1.3;opacity:.88;
-  }
-  .stamp b{display:block;font-size:16px}
-  .stamp.one{transform:rotate(-8deg)}
-  .stamp.two{transform:rotate(5deg);color:var(--red)}
-
-  /* ---------- scoreboard ---------- */
-  .score-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
-  .card{border:2px solid var(--ink);background:#fff;box-shadow:5px 5px 0 rgba(29,23,16,.85)}
-  .card .hd{
-    background:var(--red);color:var(--paper);font-family:"Oswald";font-weight:600;
-    text-transform:uppercase;letter-spacing:.18em;font-size:14px;padding:9px 14px;
-    display:flex;justify-content:space-between;align-items:baseline;border-bottom:2px solid var(--ink);
-  }
-  .card .hd a{font-size:11px;letter-spacing:.1em;text-underline-offset:3px}
-  .card .hd a:hover{color:var(--mustard)}
-  .card ul{list-style:none;padding:8px 0}
-  .card li{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:7px 16px;font-size:14px}
-  .card li + li{border-top:1px dashed var(--rule)}
-  .card li b{font-family:"Oswald";font-weight:600;font-size:16px;font-variant-numeric:tabular-nums}
-  .card .clear{color:var(--teal)}
-
-  /* ---------- coupon ---------- */
-  .coupon-wrap{padding:40px 40px 42px}
-  .coupon{
-    border:3px dashed var(--ink);padding:32px 28px 28px;text-align:center;background:#fff;position:relative;
-  }
-  .coupon .scissors{
-    position:absolute;top:-15px;left:28px;background:var(--paper);padding:0 6px;
-    font-size:22px;line-height:1;transform:rotate(-90deg) scaleX(-1);
-  }
-  .coupon h3{font-family:"Alfa Slab One";font-weight:400;font-size:clamp(24px,4vw,32px);text-transform:uppercase;line-height:1.05}
-  .coupon .quote-line{font-size:14.5px;color:var(--ink-muted);margin-top:8px;font-style:italic}
-  .coupon .mail{
-    display:inline-block;margin-top:18px;font-family:"Oswald";font-weight:600;
-    font-size:clamp(17px,3vw,23px);letter-spacing:.06em;text-transform:uppercase;
-    background:var(--ink);color:var(--paper);padding:11px 26px;text-decoration:none;
-    box-shadow:4px 4px 0 var(--red);transition:transform .12s, box-shadow .12s, background .12s;
-  }
-  .coupon .mail:hover{background:var(--red);box-shadow:4px 4px 0 var(--ink)}
-  .coupon .mail:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--ink)}
-  .coupon .addr{display:block;margin-top:10px;font-family:"Oswald";font-size:13px;letter-spacing:.14em;color:var(--ink-muted)}
-  .coupon p.small{margin-top:14px;font-size:13px;font-style:italic;color:var(--ink-muted)}
-
-  .fineprint{
-    border-top:3px solid var(--ink);padding:14px 40px 20px;
-    font-size:11px;color:var(--ink-muted);text-align:center;line-height:1.75;
-  }
-
-  /* ---------- responsive ---------- */
-  @media (max-width:760px){
-    .masthead{grid-template-columns:1fr;padding:26px 16px 24px}
-    .mascot{width:124px;margin:0 auto;transform:none;order:0}
-    .burst{justify-self:center;width:132px;height:132px;transform:rotate(6deg);margin-top:6px}
-    .burst .t{font-size:12px;width:88px}
-    .burst .t b{font-size:24px}
-    .gotbugs{flex-direction:column;text-align:center;gap:10px;padding:20px 16px}
-    section{padding:34px 16px 0}
-    .coupon-wrap{padding:34px 16px 36px}
-    .fineprint{padding:14px 16px 20px}
-    .improved-hd{grid-template-columns:1fr;text-align:center;padding:30px 18px 20px}
-    .robot{margin:0 auto;width:80px}
-    .improved-hd p{margin-left:auto;margin-right:auto}
-    .split{grid-template-columns:1fr}
-    .split > div{padding:20px 18px}
-    .split > div + div{border-left:none;border-top:2px solid var(--ink)}
-    .steps{grid-template-columns:1fr 1fr}
-    .step:nth-child(3){border-left:none}
-    .step:nth-child(n+3){border-top:2px solid var(--ink)}
-    .svc-grid{grid-template-columns:1fr}
-    .svc:nth-child(odd){border-right:none}
-    .score-grid{grid-template-columns:1fr}
-    .guarantee{grid-template-columns:1fr;padding:22px 18px}
-    .stamps{flex-direction:row;justify-content:center;gap:22px}
-    .sec-title{font-size:13px;letter-spacing:.22em}
-  }
-  @media (max-width:440px){
-    body{padding:16px 8px 40px}
-    .flyer{box-shadow:6px 6px 0 rgba(29,23,16,.32)}
-    .steps{grid-template-columns:1fr}
-    .step + .step{border-left:none;border-top:2px solid var(--ink)}
-    .improved .ribbon{font-size:11px;letter-spacing:.16em}
-    .sec-title::before,.sec-title::after{display:none}
-  }
-  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+body{margin:0;background:#14161F}
+a{color:#E5A823}a:hover{color:#F4C95B}
+a:focus-visible{outline:3px solid #F4C95B;outline-offset:3px}
+html{scroll-behavior:smooth}
+.pk-walk{transform:translate(548px,0)}
+.pk-top{transform-origin:133px 130px}
+.pk-la1{transform-origin:124px 132px;transform:rotate(-22.2deg)}
+.pk-la2{transform-origin:124px 148px;transform:rotate(56.7deg)}
+.pk-la3{transform-origin:124px 164px;transform:rotate(-34.5deg)}
+.pk-lb1{transform-origin:142px 128px;transform:rotate(-33.5deg)}
+.pk-lb2{transform-origin:142px 146px;transform:rotate(52.8deg)}
+.pk-lb3{transform-origin:142px 164px;transform:rotate(-19.3deg)}
+@keyframes pk-twitch{0%,84%,100%{transform:rotate(0)}87%{transform:rotate(-9deg)}90%{transform:rotate(7deg)}93%{transform:rotate(-5deg)}96%{transform:rotate(3deg)}}
+.pk-dot{transform-origin:50% 100%;animation:pk-twitch 5s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.pk-dot{animation:none}}
 </style>
 </head>
 <body>
+<div style="background: #14161F; color: #ECE7DA; font-family: 'Hanken Grotesk', system-ui, sans-serif; font-size: 18px; line-height: 1.55">
 
-<main class="flyer">
+<!-- nav -->
+<nav aria-label="Main" style="max-width: 1160px; margin: 0 auto; padding: 22px clamp(20px, 5vw, 56px); box-sizing: border-box; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 32px">
+<a href="#top" style="font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: 18px; color: #ECE7DA; text-decoration: none; padding: 10px 0">peki.sh</a>
+<div style="display: flex; flex-wrap: wrap; gap: 4px 28px; font-size: 16px; font-weight: 500">
+<a href="#scoreboard" style="color: #B4B9CB; text-decoration: none; padding: 10px 0">Scoreboard</a>
+<a href="#bugs" style="color: #B4B9CB; text-decoration: none; padding: 10px 0">What I find</a>
+<a href="#method" style="color: #B4B9CB; text-decoration: none; padding: 10px 0">How I work</a>
+<a href="#contact" style="color: #E5A823; text-decoration: none; padding: 10px 0">Taking on new work</a>
+</div>
+</nav>
 
-  <div class="topline">
-    <span>Sole operator</span><span>Human-led · AI-assisted</span><span>HackerOne &amp; YesWeHack</span><span>London &amp; worldwide (remote)</span>
-  </div>
-
-  <header class="masthead">
-    <div class="mascot">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" fill="none" role="img" aria-label="A chicken pecking a bug off the ground">
-  <!-- ground + shadow -->
-  <ellipse cx="128" cy="161" rx="52" ry="4" fill="#1d1710" opacity=".15"/>
-  <path d="M10 160 H230" stroke="#1d1710" stroke-width="2.5" stroke-linecap="round"/>
-
-  <!-- legs (behind body) -->
-  <g stroke-linecap="round" stroke-linejoin="round">
-    <path d="M124 132 L120 159 M120 159 L110 161 M120 159 L121 163 M120 159 L129 162" stroke="#1d1710" stroke-width="7"/>
-    <path d="M142 128 L144 159 M144 159 L135 161 M144 159 L145 163 M144 159 L153 161" stroke="#1d1710" stroke-width="7"/>
-    <path d="M124 132 L120 159 M120 159 L110 161 M120 159 L121 163 M120 159 L129 162" stroke="#dfa41f" stroke-width="3.5"/>
-    <path d="M142 128 L144 159 M144 159 L135 161 M144 159 L145 163 M144 159 L153 161" stroke="#dfa41f" stroke-width="3.5"/>
-  </g>
-
-  <!-- comb (behind head outline) -->
-  <path transform="translate(0 -6)" d="M50 124 C40 121 39 111 47 110 C43 102 53 97 58 103 C58 95 68 93 70 101 C75 97 82 102 77 110 L66 117 Z" fill="#c8271b" stroke="#1d1710" stroke-width="3" stroke-linejoin="round"/>
-
-  <!-- one silhouette: head, neck, back, tail, belly, breast -->
-  <path d="M52 112
-           C56 108 66 107 72 110
-           C82 105 92 96 104 84
-           C118 72 140 66 158 62
-           C166 56 172 44 176 30
-           C186 42 192 58 193 72
-           C194 86 188 94 180 99
-           C178 114 168 126 152 131
-           C138 137 118 138 104 133
-           C96 131 90 130 84 131
-           C78 134 72 136 66 136
-           C60 136 55 133 53 129
-           C49 124 48 117 52 112 Z"
-        fill="#f3ecdb" stroke="#1d1710" stroke-width="3.5" stroke-linejoin="round"/>
-
-  <!-- tail feathers -->
-  <g stroke="#1d1710" stroke-width="2.4" stroke-linecap="round">
-    <path d="M160 66 C168 56 173 44 176 32"/>
-    <path d="M166 74 C176 64 184 52 188 44"/>
-    <path d="M172 86 C180 80 187 74 192 70"/>
-  </g>
-
-  <!-- hackles where the neck meets the body -->
-  <path d="M100 90 C96 98 94 104 96 112 C92 116 90 122 92 128" stroke="#1d1710" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-
-  <!-- folded wing -->
-  <path d="M106 96 C124 84 152 86 168 102
-           C160 108 150 110 142 111
-           C150 114 156 117 160 121
-           C142 126 120 122 108 112
-           C102 106 101 100 106 96 Z"
-        fill="#dfa41f" stroke="#1d1710" stroke-width="3" stroke-linejoin="round"/>
-  <g stroke="#1d1710" stroke-width="2" stroke-linecap="round">
-    <path d="M114 100 C128 94 144 96 156 104"/>
-    <path d="M114 108 C126 106 136 108 144 112"/>
-  </g>
-
-  <!-- beak, open to snap up the bug -->
-  <path transform="translate(0 -6)" d="M50 125 C47 133 45 141 43 149 L59 135 Z" fill="#dfa41f" stroke="#1d1710" stroke-width="2.6" stroke-linejoin="round"/>
-  <path transform="translate(0 -6)" d="M59 135 L54 153 C58 149 62 145 66 140 Z" fill="#dfa41f" stroke="#1d1710" stroke-width="2.6" stroke-linejoin="round"/>
-
-  <!-- wattle -->
-  <path transform="translate(3 -7)" d="M60 139 C57 147 61 153 66 151 C69 147 67 142 65 139 Z" fill="#c8271b" stroke="#1d1710" stroke-width="2.4" stroke-linejoin="round"/>
-
-  <!-- eye -->
-  <circle cx="61" cy="120" r="3.6" fill="#fff" stroke="#1d1710" stroke-width="2"/>
-  <circle cx="60" cy="121" r="1.7" fill="#1d1710"/>
-
-  <!-- the bug -->
-  <g transform="translate(36 152)">
-    <g stroke="#1d1710" stroke-width="1.8" stroke-linecap="round">
-      <path d="M-5 2 L-8 8 L-10 8"/><path d="M0 3 L0 8 L-2 8"/><path d="M5 2 L8 8 L10 8"/>
-      <path d="M-10 -2 C-14 -6 -16 -8 -18 -7"/><path d="M-9 -4 C-11 -9 -13 -11 -15 -11"/>
-    </g>
-    <path d="M-7 3 C-7 -4 -3 -6 1 -6 C6 -6 9 -3 9 3 Z" fill="#1d1710"/>
-    <path d="M1 -6 V3" stroke="#f3ecdb" stroke-width="1.3"/>
-    <circle cx="-9" cy="0" r="3" fill="#1d1710"/>
-  </g>
-
-  <!-- peck impact -->
-  <g stroke="#c8271b" stroke-width="2.2" stroke-linecap="round">
-    <path d="M20 136 L14 131"/><path d="M27 132 L25 125"/><path d="M14 143 L7 141"/>
-  </g>
+<!-- hero -->
+<header id="top" style="display: flex; flex-direction: column; gap: clamp(20px, 4vw, 40px); padding-top: clamp(28px, 6vw, 72px)">
+<div style="width: 100%; max-width: 1160px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 56px); box-sizing: border-box; display: flex; flex-direction: column; gap: 22px">
+<div style="display: flex; flex-direction: column; gap: 10px">
+<h1 aria-label="Peckish" style="margin: 0; font-family: 'Unbounded', sans-serif; font-weight: 800; font-size: clamp(52px, 12.5vw, 164px); line-height: 0.95; letter-spacing: -0.03em; color: #ECE7DA"><span aria-hidden="true">Peckı<span style="display: inline-block; position: relative; width: 0; height: 0"><svg class="pk-dot" viewBox="-19 -12 30 21" fill="none" aria-hidden="true" style="position: absolute; bottom: 0.6em; right: 0.12em; width: 0.36em; height: auto; margin-right: -0.12em; overflow: visible"><use href="#pk-bug"/></svg></span>sh</span></h1>
+<p style="margin: 0; font-family: 'Unbounded', sans-serif; font-weight: 500; font-size: clamp(18px, 2.6vw, 30px); line-height: 1.2; color: #E5A823">Bug bounty hunter</p>
+</div>
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 28px 48px">
+<div style="flex: 1 1 420px; min-width: 0; display: flex; flex-direction: column; gap: 22px">
+<p style="margin: 0; max-width: 30ch; font-size: clamp(22px, 2.6vw, 30px); line-height: 1.35; color: #ECE7DA">I find the vulnerabilities <span style="background: #E5A823; color: #14161F; font-weight: 700; padding: 0 0.22em; border-radius: 3px">before</span> the bad guys do.</p>
+<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 12px 28px; max-width: 620px; font-size: 17px; color: #D6D2C6">
+<li style="display: inline-flex; align-items: center; gap: 10px"><svg viewBox="0 0 24 24" fill="none" stroke="#E5A823" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width: 22px; height: 22px; flex: none"><circle cx="12" cy="8" r="4"/><path d="M4.5 20.5c1-4 4-6 7.500-6s6.500 2 7.500 6"/></svg>Sole operator</li>
+<li style="display: inline-flex; align-items: center; gap: 10px"><svg viewBox="0 0 24 24" fill="none" stroke="#E5A823" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width: 22px; height: 22px; flex: none"><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/><path d="M12 2.500v3.500M12 18v3.500M2.500 12H6M18 12h3.500M5.300 5.300l2.500 2.500M16.200 16.200l2.500 2.500M5.300 18.700l2.500-2.500M16.200 7.800l2.500-2.500"/></svg>Human-led, AI-assisted</li>
+<li style="display: inline-flex; align-items: center; gap: 10px"><svg viewBox="0 0 24 24" fill="none" stroke="#E5A823" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width: 22px; height: 22px; flex: none"><path d="M12 3l7.500 3v5.500c0 4.500-3 8-7.500 9.500-4.500-1.500-7.500-5-7.500-9.500V6z"/><path d="M8.500 12l2.500 2.500 4.500-5"/></svg>On HackerOne and YesWeHack</li>
+<li style="display: inline-flex; align-items: center; gap: 10px"><svg viewBox="0 0 24 24" fill="none" stroke="#E5A823" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width: 22px; height: 22px; flex: none"><path d="M12 21.500c4.500-4.500 7-8 7-11.500a7 7 0 0 0-14 0c0 3.500 2.500 7 7 11.500z"/><circle cx="12" cy="10" r="2.500"/></svg>London, and remote worldwide</li>
+</ul>
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px 28px; margin-top: 6px">
+<a href="mailto:admin@peki.sh" style="display: inline-block; background: #E5A823; color: #14161F; font-weight: 700; font-size: 18px; text-decoration: none; padding: 14px 24px; border-radius: 4px">Book an inspection</a>
+<a href="#scoreboard" style="color: #ECE7DA; font-weight: 600; padding: 12px 0">See the scoreboard</a>
+</div>
+</div>
+<svg viewBox="0 0 200 200" role="img" aria-label="174 bugs exterminated and counting" style="flex: none; width: clamp(150px, 19vw, 230px); height: auto; transform: rotate(9deg)">
+<polygon points="100.0,3.0 110.1,16.6 123.2,5.8 129.8,21.5 145.1,14.1 147.7,30.9 164.3,27.4 162.9,44.3 179.8,44.9 174.4,61.0 190.7,65.6 181.6,79.9 196.3,88.3 184.0,100.0 196.3,111.7 181.6,120.1 190.7,134.4 174.4,139.0 179.8,155.1 162.9,155.7 164.3,172.6 147.7,169.1 145.1,185.9 129.8,178.5 123.2,194.2 110.1,183.4 100.0,197.0 89.9,183.4 76.8,194.2 70.2,178.5 54.9,185.9 52.3,169.1 35.7,172.6 37.1,155.7 20.2,155.1 25.6,139.0 9.3,134.4 18.4,120.1 3.7,111.7 16.0,100.0 3.7,88.3 18.4,79.9 9.3,65.6 25.6,61.0 20.2,44.9 37.1,44.3 35.7,27.4 52.3,30.9 54.9,14.1 70.2,21.5 76.8,5.8 89.9,16.6" fill="#E5A823"/>
+<circle cx="100" cy="100" r="74" fill="none" stroke="#14161F" stroke-width="1.500" stroke-dasharray="1 5" stroke-linecap="round"/>
+<text x="100" y="108" text-anchor="middle" font-family="Unbounded, sans-serif" font-weight="800" font-size="52" letter-spacing="-1.500" fill="#14161F">174</text>
+<text x="100" y="128" text-anchor="middle" font-family="'Hanken Grotesk', sans-serif" font-weight="700" font-size="13.500" fill="#14161F">bugs exterminated</text>
+<text x="100" y="145" text-anchor="middle" font-family="'Hanken Grotesk', sans-serif" font-weight="600" font-size="12.500" fill="#14161F">and counting</text>
 </svg>
-      <div class="cap">The exterminator himself</div>
-    </div>
+</div>
+</div>
+<div style="overflow: hidden">
+<svg class="pk-scene" viewBox="0 0 900 190" preserveAspectRatio="xMidYMax meet" fill="none" role="img" aria-label="A chicken walks along the ground eating a line of bugs one by one" style="display: block; width: 100%; height: auto; max-height: 300px; overflow: visible">
+<defs>
+<g id="pk-bug">
+<g stroke="#EC5A4C" stroke-width="1.8" stroke-linecap="round">
+<path d="M-5 2 L-8 8 L-10 8"/><path d="M0 3 L0 8 L-2 8"/><path d="M5 2 L8 8 L10 8"/>
+<path d="M-10 -2 C-14 -6 -16 -8 -18 -7"/><path d="M-9 -4 C-11 -9 -13 -11 -15 -11"/>
+</g>
+<path d="M-7 3 C-7 -4 -3 -6 1 -6 C6 -6 9 -3 9 3 Z" fill="#EC5A4C"/>
+<circle cx="-9" cy="0" r="3" fill="#EC5A4C"/>
+</g>
+<g id="pk-top">
+<path transform="translate(0 -6)" d="M50 124 C40 121 39 111 47 110 C43 102 53 97 58 103 C58 95 68 93 70 101 C75 97 82 102 77 110 L66 117 Z" fill="#EC5A4C" stroke="#14161F" stroke-width="3" stroke-linejoin="round"/>
+<path d="M52 112 C56 108 66 107 72 110 C82 105 92 96 104 84 C118 72 140 66 158 62 C166 56 172 44 176 30 C186 42 192 58 193 72 C194 86 188 94 180 99 C178 114 168 126 152 131 C138 137 118 138 104 133 C96 131 90 130 84 131 C78 134 72 136 66 136 C60 136 55 133 53 129 C49 124 48 117 52 112 Z" fill="#ECE7DA" stroke="#14161F" stroke-width="3.5" stroke-linejoin="round"/>
+<g stroke="#14161F" stroke-width="2.4" stroke-linecap="round">
+<path d="M160 66 C168 56 173 44 176 32"/>
+<path d="M166 74 C176 64 184 52 188 44"/>
+<path d="M172 86 C180 80 187 74 192 70"/>
+</g>
+<path d="M100 90 C96 98 94 104 96 112 C92 116 90 122 92 128" stroke="#14161F" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M106 96 C124 84 152 86 168 102 C160 108 150 110 142 111 C150 114 156 117 160 121 C142 126 120 122 108 112 C102 106 101 100 106 96 Z" fill="#E5A823" stroke="#14161F" stroke-width="3" stroke-linejoin="round"/>
+<g stroke="#14161F" stroke-width="2" stroke-linecap="round">
+<path d="M114 100 C128 94 144 96 156 104"/>
+<path d="M114 108 C126 106 136 108 144 112"/>
+</g>
+<path transform="translate(0 -6)" d="M50 125 C47 133 45 141 43 149 L59 135 Z" fill="#E5A823" stroke="#14161F" stroke-width="2.6" stroke-linejoin="round"/>
+<path transform="translate(0 -6)" d="M59 135 L54 153 C58 149 62 145 66 140 Z" fill="#E5A823" stroke="#14161F" stroke-width="2.6" stroke-linejoin="round"/>
+<path transform="translate(3 -7)" d="M60 139 C57 147 61 153 66 151 C69 147 67 142 65 139 Z" fill="#EC5A4C" stroke="#14161F" stroke-width="2.4" stroke-linejoin="round"/>
+<circle cx="61" cy="120" r="3.6" fill="#fff" stroke="#14161F" stroke-width="2"/>
+<circle cx="60" cy="121" r="1.7" fill="#14161F"/>
+</g>
+</defs>
+<path d="M-2000 160 H2900" stroke="#3A3F55" stroke-width="2.5" stroke-linecap="round"/>
+<use class="pk-bug" href="#pk-bug" x="794" y="152"/>
+<use class="pk-bug" href="#pk-bug" x="662" y="152"/>
+<use class="pk-bug" href="#pk-bug" x="596" y="152"/>
+<use class="pk-bug" href="#pk-bug" x="464" y="152"/>
+<use class="pk-bug" href="#pk-bug" x="310" y="152"/>
+<use class="pk-bug" href="#pk-bug" x="244" y="152"/>
+<use class="pk-bug" href="#pk-bug" x="112" y="152"/>
+<g class="pk-walk">
+<g class="pk-body">
+<g class="pk-lb1" stroke="#B98A22" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"><path d="M142 128 V146.0"/><g class="pk-lb2"><path d="M142 146.0 V164.0"/><g class="pk-lb3"><path d="M142 164.0 l-11 1.5 M142 164.0 l-8 4 M142 164.0 l8 2.5"/></g></g></g>
+<g class="pk-la1" stroke="#E5A823" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"><path d="M124 132 V148.0"/><g class="pk-la2"><path d="M124 148.0 V164.0"/><g class="pk-la3"><path d="M124 164.0 l-11 1.5 M124 164.0 l-8 4 M124 164.0 l8 2.5"/></g></g></g>
+<g class="pk-top"><use href="#pk-top"/></g>
+</g>
+</g>
+</svg>
+</div>
+</header>
 
-    <div>
-      <h1>Peckish</h1>
-      <div class="sub">Bug Bounty Hunter</div>
-      <p class="tag">“I find the vulnerabilities <b>before</b> the bad guys do.”</p>
-    </div>
+<main style="max-width: 1160px; margin: 0 auto; padding: clamp(56px, 8vw, 104px) clamp(20px, 5vw, 56px); box-sizing: border-box; display: flex; flex-direction: column; gap: clamp(72px, 10vw, 128px)">
 
-    <div class="burst" aria-label="174 bugs exterminated and counting">
-      <svg viewBox="0 0 100 100" aria-hidden="true"><polygon fill="#dfa41f" stroke="#1d1710" stroke-width="2" points="50,2 57,14 70,6 72,20 86,17 83,31 97,33 89,44 100,52 88,59 94,72 80,72 81,86 68,81 64,95 53,86 44,97 38,84 25,90 26,76 12,77 18,64 5,58 16,50 6,41 20,37 15,23 29,25 30,11 43,17"/></svg>
-      <div class="t"><b>174</b>bugs exterminated<br>&amp; counting</div>
-    </div>
-  </header>
+<!-- scoreboard -->
+<section id="scoreboard" style="display: flex; flex-direction: column; gap: 32px">
+<div style="display: flex; flex-direction: column; gap: 10px">
+<h2 style="margin: 0; font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: clamp(28px, 4.4vw, 48px); line-height: 1.1; letter-spacing: -0.02em">The scoreboard</h2>
+<p style="margin: 0; max-width: 58ch; color: #B4B9CB">Public numbers from both platforms. Most engagements are under NDA, so specifics are shared privately on request.</p>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 24px">
+<div style="background: #1D2030; border-radius: 6px; padding: clamp(20px, 3vw, 32px); box-sizing: border-box; display: flex; flex-direction: column; gap: 22px">
+<div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 16px">
+<h3 style="margin: 0; font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: 24px; line-height: 1.15">HackerOne</h3>
+<a href="https://hackerone.com/peckish" style="font-weight: 600; font-size: 16px; padding: 8px 0">Verify on HackerOne</a>
+</div>
+<dl style="margin: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 28px">
+<div style="display: flex; flex-direction: column; gap: 4px; border-top: 1px solid #343A52; padding-top: 14px"><dd style="margin: 0; font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: clamp(28px, 3.4vw, 38px); line-height: 1.1; letter-spacing: -0.01em; color: #E5A823">61</dd><dt style="font-size: 16px; color: #B4B9CB">Bugs exterminated</dt></div>
+<div style="display: flex; flex-direction: column; gap: 4px; border-top: 1px solid #343A52; padding-top: 14px"><dd style="margin: 0; font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: clamp(28px, 3.4vw, 38px); line-height: 1.1; letter-spacing: -0.01em; color: #ECE7DA">6.45 <span style="font-size: 15px; font-weight: 400; letter-spacing: 0; color: #B4B9CB">/ 7.0</span></dd><dt style="font-size: 16px; color: #B4B9CB">Signal</dt><div role="img" aria-label="Signal 6.45 out of 7" style="margin-top: 6px; width: 100%; max-width: 150px; height: 6px; border-radius: 3px; background: #343A52"><div style="width: 92%; height: 6px; border-radius: 3px; background: #E5A823"></div></div></div>
+<div style="display: flex; flex-direction: column; gap: 4px; border-top: 1px solid #343A52; padding-top: 14px"><dd style="margin: 0; font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: clamp(28px, 3.4vw, 38px); line-height: 1.1; letter-spacing: -0.01em; color: #ECE7DA">23.41</dd><dt style="font-size: 16px; color: #B4B9CB">Impact</dt></div>
+<div style="display: flex; flex-direction: column; gap: 4px; border-top: 1px solid #343A52; padding-top: 14px"><dd style="margin: 0; font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: clamp(28px, 3.4vw, 38px); line-height: 1.1; letter-spacing: -0.01em; color: #ECE7DA"><span style="display: inline-flex; align-items: center; gap: 10px">Clear<svg viewBox="0 0 20 20" fill="none" stroke="#E5A823" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width: 0.7em; height: 0.7em"><path d="M4 10.5l4 4 8-9"/></svg></span></dd><dt style="font-size: 16px; color: #B4B9CB">Background check</dt></div>
+</dl>
+</div>
+<div style="background: #1D2030; border-radius: 6px; padding: clamp(20px, 3vw, 32px); box-sizing: border-box; display: flex; flex-direction: column; gap: 22px">
+<div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 16px">
+<h3 style="margin: 0; font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: 24px; line-height: 1.15">YesWeHack</h3>
+<a href="https://yeswehack.com/hunters/sirpeckish#latest-hacktivity" style="font-weight: 600; font-size: 16px; padding: 8px 0">Verify on YesWeHack</a>
+</div>
+<dl style="margin: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 28px">
+<div style="display: flex; flex-direction: column; gap: 4px; border-top: 1px solid #343A52; padding-top: 14px"><dd style="margin: 0; font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: clamp(28px, 3.4vw, 38px); line-height: 1.1; letter-spacing: -0.01em; color: #E5A823">113</dd><dt style="font-size: 16px; color: #B4B9CB">Bugs exterminated</dt></div>
+<div style="display: flex; flex-direction: column; gap: 4px; border-top: 1px solid #343A52; padding-top: 14px"><dd style="margin: 0; font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: clamp(28px, 3.4vw, 38px); line-height: 1.1; letter-spacing: -0.01em; color: #ECE7DA">23.8</dd><dt style="font-size: 16px; color: #B4B9CB">Impact</dt></div>
+<div style="display: flex; flex-direction: column; gap: 4px; border-top: 1px solid #343A52; padding-top: 14px"><dd style="margin: 0; font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: clamp(28px, 3.4vw, 38px); line-height: 1.1; letter-spacing: -0.01em; color: #ECE7DA">#115</dd><dt style="font-size: 16px; color: #B4B9CB">League table</dt></div>
+<div style="display: flex; flex-direction: column; gap: 4px; border-top: 1px solid #343A52; padding-top: 14px"><dd style="margin: 0; font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: clamp(28px, 3.4vw, 38px); line-height: 1.1; letter-spacing: -0.01em; color: #ECE7DA">2,332</dd><dt style="font-size: 16px; color: #B4B9CB">Points</dt></div>
+</dl>
+</div>
+</div>
+</section>
 
-  <div class="gotbugs">
-    <h2>Got bugs?</h2>
-    <p>Every website, app and API has them. The only question is <b>who finds them first</b>: me, or somebody far less polite.</p>
-  </div>
+<svg viewBox="0 0 396 44" fill="none" stroke="#3A3F55" stroke-width="2.6" stroke-linecap="round" aria-hidden="true" style="width: min(100%, 396px); height: auto; align-self: flex-end"><g transform="translate(20 30) rotate(-90)"><path d="M0 7 V-11 M0 -1 L-6 -9 M0 -1 L6 -9"/></g><g transform="translate(64 14) rotate(-90)"><path d="M0 7 V-11 M0 -1 L-6 -9 M0 -1 L6 -9"/></g><g transform="translate(108 30) rotate(-90)"><path d="M0 7 V-11 M0 -1 L-6 -9 M0 -1 L6 -9"/></g><g transform="translate(152 14) rotate(-90)"><path d="M0 7 V-11 M0 -1 L-6 -9 M0 -1 L6 -9"/></g><g transform="translate(196 30) rotate(-90)"><path d="M0 7 V-11 M0 -1 L-6 -9 M0 -1 L6 -9"/></g><g transform="translate(240 14) rotate(-90)"><path d="M0 7 V-11 M0 -1 L-6 -9 M0 -1 L6 -9"/></g><g transform="translate(284 30) rotate(-90)"><path d="M0 7 V-11 M0 -1 L-6 -9 M0 -1 L6 -9"/></g><g transform="translate(328 14) rotate(-90)"><path d="M0 7 V-11 M0 -1 L-6 -9 M0 -1 L6 -9"/></g><g transform="translate(372 30) rotate(-90)"><path d="M0 7 V-11 M0 -1 L-6 -9 M0 -1 L6 -9"/></g></svg>
 
-  <!-- AI-assisted pitch -->
-  <section>
-    <div class="improved">
-      <div class="ribbon">★ New &amp; improved ★</div>
-      <div class="improved-hd">
-        <svg class="robot" viewBox="0 0 100 120" role="img" aria-label="A retro tin robot assistant">
-          <path d="M50 4 V16" stroke="#1d1710" stroke-width="3" stroke-linecap="round"/>
-          <circle cx="50" cy="5" r="4.5" fill="#c8271b" stroke="#1d1710" stroke-width="2"/>
-          <rect x="22" y="16" width="56" height="40" rx="6" fill="#1f6b60" stroke="#1d1710" stroke-width="3"/>
-          <rect x="15" y="28" width="7" height="14" rx="2" fill="#1d1710"/>
-          <rect x="78" y="28" width="7" height="14" rx="2" fill="#1d1710"/>
-          <circle cx="38" cy="33" r="8" fill="#f3ecdb" stroke="#1d1710" stroke-width="2.5"/>
-          <circle cx="62" cy="33" r="8" fill="#f3ecdb" stroke="#1d1710" stroke-width="2.5"/>
-          <circle cx="39" cy="34" r="3.2" fill="#1d1710"/>
-          <circle cx="63" cy="34" r="3.2" fill="#1d1710"/>
-          <rect x="34" y="45" width="32" height="6" rx="1.5" fill="#f3ecdb" stroke="#1d1710" stroke-width="2"/>
-          <path d="M42 45 V51 M50 45 V51 M58 45 V51" stroke="#1d1710" stroke-width="1.6"/>
-          <rect x="44" y="56" width="12" height="6" fill="#1d1710"/>
-          <rect x="18" y="62" width="64" height="44" rx="5" fill="#dfa41f" stroke="#1d1710" stroke-width="3"/>
-          <circle cx="50" cy="82" r="11" fill="#f3ecdb" stroke="#1d1710" stroke-width="2.5"/>
-          <path d="M50 82 L57 76" stroke="#c8271b" stroke-width="2.6" stroke-linecap="round"/>
-          <circle cx="50" cy="82" r="2" fill="#1d1710"/>
-          <circle cx="28" cy="72" r="2.5" fill="#1d1710"/><circle cx="28" cy="80" r="2.5" fill="#c8271b"/>
-          <path d="M18 72 L6 88 L10 92" stroke="#1d1710" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-          <path d="M82 72 L94 60 L96 52" stroke="#1d1710" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-          <path d="M36 106 V116 M64 106 V116" stroke="#1d1710" stroke-width="6" stroke-linecap="round"/>
-        </svg>
-        <div>
-          <h2>Now with a <em>mechanical</em> assistant!</h2>
-          <p>Same pair of hands on every job, now backed by AI tooling that covers more ground, faster. The machine does the legwork. A human does the hunting, the proving and the signing-off.</p>
-        </div>
-      </div>
-      <div class="split">
-        <div class="machine">
-          <h3>The machine <span class="chip">AI-assisted</span></h3>
-          <ul>
-            <li><b>Recon at scale</b>: subdomains, endpoints and forgotten assets mapped and triaged</li>
-            <li><b>Reading the haystack</b>: JS bundles, API schemas and source skimmed for interesting sinks</li>
-            <li><b>Variant ideas</b>: every confirmed bug brainstormed into its siblings</li>
-            <li><b>Grunt work</b>: tooling, scripts and payload lists built on demand</li>
-          </ul>
-        </div>
-        <div class="hunter">
-          <h3>The hunter <span class="chip">By hand</span></h3>
-          <ul>
-            <li><b>Business logic</b>: auth flows, roles and workflows probed like a user who shouldn't be there</li>
-            <li><b>Proof, not guesses</b>: every finding reproduced manually with a working PoC</li>
-            <li><b>Chaining</b>: small leaks joined up into demonstrated, real impact</li>
-            <li><b>Reports you can trust</b>: reviewed line by line; no hallucinated findings, ever</li>
-          </ul>
-        </div>
-      </div>
-      <div class="motto">The machine finds the haystack. <b>I find the needle.</b></div>
-    </div>
-  </section>
+<!-- what I find -->
+<section id="bugs" style="display: flex; flex-direction: column; gap: 32px">
+<div style="display: flex; flex-direction: column; gap: 10px">
+<h2 style="margin: 0; font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: clamp(28px, 4.4vw, 48px); line-height: 1.1; letter-spacing: -0.02em">I exterminate all common infestations</h2>
+<p style="margin: 0; max-width: 58ch; color: #B4B9CB">Every website, app and API has them. The only question is who finds them first: me, or somebody far less polite.</p>
+</div>
+<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; border-top: 1px solid #2C3044">
+<li style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px 36px; padding: 22px 0; border-bottom: 1px solid #2C3044">
+<div style="flex: 1 1 290px; display: flex; align-items: center; gap: 18px">
+<svg viewBox="0 0 56 56" fill="none" stroke="#ECE7DA" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width: 60px; height: 60px; flex: none"><g transform="rotate(-45 28 28)"><rect x="17" y="21" width="12" height="14" fill="#EC5A4C" stroke="none"/><rect x="17" y="21" width="24" height="14" rx="2"/><path d="M41 28 H50 M50 21 V35 M17 28 H5"/><path d="M23 21 V25 M29 21 V25 M35 21 V25" stroke-width="1.8"/></g></svg>
+<div style="display: flex; flex-direction: column; gap: 2px">
+<h3 style="margin: 0; font-weight: 700; font-size: 22px; line-height: 1.25">SQL and code injection</h3>
+<span style="color: #E5A823; font-style: italic">Structural pest</span>
+</div>
+</div>
+<p style="margin: 0; flex: 2 1 320px; max-width: 52ch; color: #D6D2C6">Eats straight through your data layer. Left untreated, brings the whole application down.</p>
+<code style="flex: 0 1 240px; font-family: 'JetBrains Mono', monospace; font-size: 14px; background: #1D2030; color: #ECE7DA; padding: 8px 12px; border-radius: 4px; overflow-wrap: anywhere">name=' OR 1=1 --</code>
+</li>
+<li style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px 36px; padding: 22px 0; border-bottom: 1px solid #2C3044">
+<div style="flex: 1 1 290px; display: flex; align-items: center; gap: 18px">
+<svg viewBox="0 0 56 56" fill="none" stroke="#ECE7DA" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width: 60px; height: 60px; flex: none"><rect x="13" y="26" width="30" height="22" rx="3"/><path d="M20 26 V16 a8 8 0 0 1 16 0 V19"/><circle cx="28" cy="35" r="3" fill="#E5A823" stroke="#E5A823"/><path d="M28 37 V42" stroke="#E5A823"/></svg>
+<div style="display: flex; flex-direction: column; gap: 2px">
+<h3 style="margin: 0; font-weight: 700; font-size: 22px; line-height: 1.25">Broken access control</h3>
+<span style="color: #E5A823; font-style: italic">Door and lock specialist</span>
+</div>
+</div>
+<p style="margin: 0; flex: 2 1 320px; max-width: 52ch; color: #D6D2C6">Your locks look fine, but half of them don't check who's holding the key. I test every door.</p>
+<code style="flex: 0 1 240px; font-family: 'JetBrains Mono', monospace; font-size: 14px; background: #1D2030; color: #ECE7DA; padding: 8px 12px; border-radius: 4px; overflow-wrap: anywhere">GET /admin <span style="color: #EC5A4C">200 OK</span></code>
+</li>
+<li style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px 36px; padding: 22px 0; border-bottom: 1px solid #2C3044">
+<div style="flex: 1 1 290px; display: flex; align-items: center; gap: 18px">
+<svg viewBox="0 0 56 56" fill="none" stroke="#ECE7DA" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width: 60px; height: 60px; flex: none"><rect x="6" y="18" width="19" height="28" rx="2"/><rect x="31" y="18" width="19" height="28" rx="2" stroke="#EC5A4C"/><path d="M11 28 H20 M11 34 H18"/><path d="M36 28 H45 M36 34 H43" stroke="#EC5A4C"/><path d="M15 12 C21 5 35 5 41 12 M41 12 L35 11 M41 12 L40 6" stroke="#E5A823"/></svg>
+<div style="display: flex; flex-direction: column; gap: 2px">
+<h3 style="margin: 0; font-weight: 700; font-size: 22px; line-height: 1.25">IDOR</h3>
+<span style="color: #E5A823; font-style: italic">Gets into other people's data</span>
+</div>
+</div>
+<p style="margin: 0; flex: 2 1 320px; max-width: 52ch; color: #D6D2C6">Change one number in a request, get another user's data. Astonishingly common; very quick to catch.</p>
+<code style="flex: 0 1 240px; font-family: 'JetBrains Mono', monospace; font-size: 14px; background: #1D2030; color: #ECE7DA; padding: 8px 12px; border-radius: 4px; overflow-wrap: anywhere">id=<s style="color: #B4B9CB">41</s> <span style="color: #EC5A4C">id=42</span></code>
+</li>
+<li style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px 36px; padding: 22px 0; border-bottom: 1px solid #2C3044">
+<div style="flex: 1 1 290px; display: flex; align-items: center; gap: 18px">
+<svg viewBox="0 0 56 56" fill="none" stroke="#ECE7DA" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width: 60px; height: 60px; flex: none"><path d="M4 18 H32 a9 9 0 0 1 9 9 V32" stroke-width="7"/><path d="M4 18 H32 a9 9 0 0 1 9 9 V32" stroke="#14161F" stroke-width="2.4"/><path d="M35 32 H47"/><path d="M41 38 c3.5 4.5 3.5 8 0 8 c-3.5 0 -3.5 -3.5 0 -8z" fill="#EC5A4C" stroke="#EC5A4C" stroke-width="1"/><path d="M41 49 c2 2.6 2 4.6 0 4.6 c-2 0 -2 -2 0 -4.6z" fill="#EC5A4C" stroke="none"/></svg>
+<div style="display: flex; flex-direction: column; gap: 2px">
+<h3 style="margin: 0; font-weight: 700; font-size: 22px; line-height: 1.25">Information disclosure</h3>
+<span style="color: #E5A823; font-style: italic">Leaks and seepage</span>
+</div>
+</div>
+<p style="margin: 0; flex: 2 1 320px; max-width: 52ch; color: #D6D2C6">Secrets, internals and credentials seeping out of the foundations, then chained into worse.</p>
+<code style="flex: 0 1 240px; font-family: 'JetBrains Mono', monospace; font-size: 14px; background: #1D2030; color: #ECE7DA; padding: 8px 12px; border-radius: 4px; overflow-wrap: anywhere">GET /.env <span style="color: #EC5A4C">200 OK</span></code>
+</li>
+<li style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px 36px; padding: 22px 0; border-bottom: 1px solid #2C3044">
+<div style="flex: 1 1 290px; display: flex; align-items: center; gap: 18px">
+<svg viewBox="0 0 56 56" fill="none" stroke="#ECE7DA" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width: 60px; height: 60px; flex: none"><use href="#pk-bug" transform="translate(18 16) scale(.85)"/><use href="#pk-bug" transform="translate(40 24) scale(.7) rotate(20)"/><use href="#pk-bug" transform="translate(24 38) scale(1) rotate(-12)"/><use href="#pk-bug" transform="translate(44 46) scale(.6)"/></svg>
+<div style="display: flex; flex-direction: column; gap: 2px">
+<h3 style="margin: 0; font-weight: 700; font-size: 22px; line-height: 1.25">Cross-site scripting</h3>
+<span style="color: #E5A823; font-style: italic">Swarms: stored, reflected, DOM</span>
+</div>
+</div>
+<p style="margin: 0; flex: 2 1 320px; max-width: 52ch; color: #D6D2C6">One unescaped field and it's in every visitor's browser. I trace each swarm to demonstrated account impact. No alert(1) and gone.</p>
+<code style="flex: 0 1 240px; font-family: 'JetBrains Mono', monospace; font-size: 14px; background: #1D2030; color: #ECE7DA; padding: 8px 12px; border-radius: 4px; overflow-wrap: anywhere">&lt;img src=x onerror=&hellip;&gt;</code>
+</li>
+</ul>
+</section>
 
-  <!-- process -->
-  <section>
-    <h2 class="sec-title"><span>The treatment plan</span></h2>
-    <div class="steps">
-      <div class="step">
-        <div class="no">01</div>
-        <h4>Survey</h4>
-        <span class="who ai">AI-assisted</span>
-        <p>The whole property mapped: every subdomain, endpoint and dusty corner surfaced and ranked.</p>
-      </div>
-      <div class="step">
-        <div class="no">02</div>
-        <h4>Inspection</h4>
-        <span class="who hand">By hand</span>
-        <p>Hands-on testing of the logic, permissions and flows that scanners and models walk straight past.</p>
-      </div>
-      <div class="step">
-        <div class="no">03</div>
-        <h4>Treatment</h4>
-        <span class="who both">Hand + machine</span>
-        <p>Findings proven, chained and pushed to real impact, with AI hunting for variants of each.</p>
-      </div>
-      <div class="step">
-        <div class="no">04</div>
-        <h4>Report</h4>
-        <span class="who hand">Human-verified</span>
-        <p>Clear steps to reproduce, honest severity and an obvious fix. Every word checked by me.</p>
-      </div>
-    </div>
-  </section>
+<!-- how I work -->
+<section id="method" style="display: flex; flex-direction: column; gap: 40px">
+<div style="display: flex; flex-direction: column; gap: 10px">
+<h2 style="margin: 0; font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: clamp(28px, 4.4vw, 48px); line-height: 1.1; letter-spacing: -0.02em">Now with a mechanical assistant</h2>
+<p style="margin: 0; max-width: 58ch; color: #B4B9CB">Same pair of hands on every job, now backed by AI tooling that covers more ground, faster. The machine does the legwork. A human does the hunting, the proving and the signing-off.</p>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 24px">
+<div style="background: #1D2030; border: 2px solid #1D2030; border-radius: 6px; padding: clamp(20px, 3vw, 32px); box-sizing: border-box; display: flex; flex-direction: column; gap: 24px">
+<div style="display: flex; align-items: flex-end; gap: 16px; min-height: 84px">
+<svg viewBox="0 0 100 120" fill="none" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="A small robot waving" style="width: 68px; height: auto; flex: none"><path d="M50 20 V9" stroke="#ECE7DA" stroke-width="3"/><circle cx="50" cy="8" r="4.5" fill="#EC5A4C"/><path d="M22 64 L9 80 M78 64 L92 48" stroke="#ECE7DA" stroke-width="4"/><path d="M38 94 V110 H31 M62 94 V110 H69" stroke="#ECE7DA" stroke-width="4"/><rect x="26" y="20" width="48" height="30" rx="7" fill="#1D2030" stroke="#ECE7DA" stroke-width="3"/><circle cx="40" cy="33" r="4.5" fill="#E5A823"/><circle cx="60" cy="33" r="4.5" fill="#E5A823"/><path d="M41 43 H59" stroke="#ECE7DA" stroke-width="2.4"/><rect x="22" y="56" width="56" height="38" rx="7" fill="#E5A823" stroke="#14161F" stroke-width="1"/><circle cx="50" cy="75" r="10" fill="#ECE7DA"/><path d="M50 75 L56 69" stroke="#EC5A4C" stroke-width="2.6"/><circle cx="50" cy="75" r="1.8" fill="#14161F"/></svg>
+<div style="display: flex; flex-direction: column; gap: 2px; padding-bottom: 4px">
+<h3 style="margin: 0; font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: 24px; line-height: 1.15; color: #ECE7DA">The machine</h3>
+<span style="font-size: 16px; font-weight: 600; color: #B4B9CB">AI-assisted</span>
+</div>
+</div>
+<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 18px">
+<li style="display: flex; align-items: flex-start; gap: 14px"><svg viewBox="0 0 24 24" fill="none" stroke="#B4B9CB" stroke-width="2" stroke-linecap="round" aria-hidden="true" style="width: 24px; height: 24px; flex: none; margin-top: 2px"><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/><path d="M12 2.5v3.5M12 18v3.5M2.5 12H6M18 12h3.5M5.3 5.3l2.5 2.5M16.2 16.2l2.5 2.5M5.3 18.7l2.5-2.5M16.2 7.8l2.5-2.5"/></svg><div style="display: flex; flex-direction: column; gap: 2px"><strong style="font-size: 19px; line-height: 1.3; color: #ECE7DA">Recon at scale</strong><span style="font-size: 16px; line-height: 1.45; color: #B4B9CB">Subdomains, endpoints and forgotten assets mapped and triaged</span></div></li>
+<li style="display: flex; align-items: flex-start; gap: 14px"><svg viewBox="0 0 24 24" fill="none" stroke="#B4B9CB" stroke-width="2" stroke-linecap="round" aria-hidden="true" style="width: 24px; height: 24px; flex: none; margin-top: 2px"><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/><path d="M12 2.5v3.5M12 18v3.5M2.5 12H6M18 12h3.5M5.3 5.3l2.5 2.5M16.2 16.2l2.5 2.5M5.3 18.7l2.5-2.5M16.2 7.8l2.5-2.5"/></svg><div style="display: flex; flex-direction: column; gap: 2px"><strong style="font-size: 19px; line-height: 1.3; color: #ECE7DA">Reading the haystack</strong><span style="font-size: 16px; line-height: 1.45; color: #B4B9CB">JS bundles, API schemas and source skimmed for interesting sinks</span></div></li>
+<li style="display: flex; align-items: flex-start; gap: 14px"><svg viewBox="0 0 24 24" fill="none" stroke="#B4B9CB" stroke-width="2" stroke-linecap="round" aria-hidden="true" style="width: 24px; height: 24px; flex: none; margin-top: 2px"><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/><path d="M12 2.5v3.5M12 18v3.5M2.5 12H6M18 12h3.5M5.3 5.3l2.5 2.5M16.2 16.2l2.5 2.5M5.3 18.7l2.5-2.5M16.2 7.8l2.5-2.5"/></svg><div style="display: flex; flex-direction: column; gap: 2px"><strong style="font-size: 19px; line-height: 1.3; color: #ECE7DA">Variant ideas</strong><span style="font-size: 16px; line-height: 1.45; color: #B4B9CB">Every confirmed bug brainstormed into its siblings</span></div></li>
+<li style="display: flex; align-items: flex-start; gap: 14px"><svg viewBox="0 0 24 24" fill="none" stroke="#B4B9CB" stroke-width="2" stroke-linecap="round" aria-hidden="true" style="width: 24px; height: 24px; flex: none; margin-top: 2px"><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/><path d="M12 2.5v3.5M12 18v3.5M2.5 12H6M18 12h3.5M5.3 5.3l2.5 2.5M16.2 16.2l2.5 2.5M5.3 18.7l2.5-2.5M16.2 7.8l2.5-2.5"/></svg><div style="display: flex; flex-direction: column; gap: 2px"><strong style="font-size: 19px; line-height: 1.3; color: #ECE7DA">Grunt work</strong><span style="font-size: 16px; line-height: 1.45; color: #B4B9CB">Tooling, scripts and payload lists built on demand</span></div></li>
+</ul>
+</div>
+<div style="border: 2px solid #E5A823; border-radius: 6px; padding: clamp(20px, 3vw, 32px); box-sizing: border-box; display: flex; flex-direction: column; gap: 24px">
+<div style="display: flex; align-items: flex-end; gap: 16px; min-height: 84px">
+<svg viewBox="0 0 240 180" fill="none" role="img" aria-label="The chicken, pecking" style="width: 104px; height: auto; flex: none"><g stroke-linecap="round" stroke-linejoin="round" stroke="#E5A823" stroke-width="4.5"><path d="M124 132 L120 159 M120 159 L110 161 M120 159 L121 163 M120 159 L129 162"/><path d="M142 128 L144 159 M144 159 L135 161 M144 159 L145 163 M144 159 L153 161"/></g><use href="#pk-top"/></svg>
+<div style="display: flex; flex-direction: column; gap: 2px; padding-bottom: 4px">
+<h3 style="margin: 0; font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: 24px; line-height: 1.15; color: #ECE7DA">The hunter</h3>
+<span style="font-size: 16px; font-weight: 600; color: #E5A823">By hand</span>
+</div>
+</div>
+<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 18px">
+<li style="display: flex; align-items: flex-start; gap: 14px"><svg viewBox="0 0 24 24" fill="none" stroke="#E5A823" stroke-width="2.6" stroke-linecap="round" aria-hidden="true" style="width: 24px; height: 24px; flex: none; margin-top: 2px"><path d="M12 21V7M12 14L5.5 6.5M12 14l6.5-7.5"/></svg><div style="display: flex; flex-direction: column; gap: 2px"><strong style="font-size: 19px; line-height: 1.3; color: #ECE7DA">Business logic</strong><span style="font-size: 16px; line-height: 1.45; color: #B4B9CB">Auth flows, roles and workflows probed like a user who shouldn't be there</span></div></li>
+<li style="display: flex; align-items: flex-start; gap: 14px"><svg viewBox="0 0 24 24" fill="none" stroke="#E5A823" stroke-width="2.6" stroke-linecap="round" aria-hidden="true" style="width: 24px; height: 24px; flex: none; margin-top: 2px"><path d="M12 21V7M12 14L5.5 6.5M12 14l6.5-7.5"/></svg><div style="display: flex; flex-direction: column; gap: 2px"><strong style="font-size: 19px; line-height: 1.3; color: #ECE7DA">Proof, not guesses</strong><span style="font-size: 16px; line-height: 1.45; color: #B4B9CB">Every finding reproduced manually with a working PoC</span></div></li>
+<li style="display: flex; align-items: flex-start; gap: 14px"><svg viewBox="0 0 24 24" fill="none" stroke="#E5A823" stroke-width="2.6" stroke-linecap="round" aria-hidden="true" style="width: 24px; height: 24px; flex: none; margin-top: 2px"><path d="M12 21V7M12 14L5.5 6.5M12 14l6.5-7.5"/></svg><div style="display: flex; flex-direction: column; gap: 2px"><strong style="font-size: 19px; line-height: 1.3; color: #ECE7DA">Chaining</strong><span style="font-size: 16px; line-height: 1.45; color: #B4B9CB">Small leaks joined up into demonstrated, real impact</span></div></li>
+<li style="display: flex; align-items: flex-start; gap: 14px"><svg viewBox="0 0 24 24" fill="none" stroke="#E5A823" stroke-width="2.6" stroke-linecap="round" aria-hidden="true" style="width: 24px; height: 24px; flex: none; margin-top: 2px"><path d="M12 21V7M12 14L5.5 6.5M12 14l6.5-7.5"/></svg><div style="display: flex; flex-direction: column; gap: 2px"><strong style="font-size: 19px; line-height: 1.3; color: #ECE7DA">Reports you can trust</strong><span style="font-size: 16px; line-height: 1.45; color: #B4B9CB">Reviewed line by line; no hallucinated findings, ever</span></div></li>
+</ul>
+</div>
+</div>
+<p style="margin: 0; font-family: 'Unbounded', sans-serif; font-weight: 600; font-size: clamp(20px, 3vw, 30px); line-height: 1.3; max-width: 26ch">The machine finds the haystack. I find the needle.</p>
+<div style="display: flex; flex-direction: column; gap: 20px">
+<h3 style="margin: 0; font-family: 'Unbounded', sans-serif; font-weight: 600; font-size: 22px">The treatment plan</h3>
+<ol style="margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 28px 32px">
+<li style="display: flex; flex-direction: column; gap: 6px; border-top: 2px solid #E5A823; padding-top: 14px">
+<span style="font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: 20px"><span style="color: #E5A823">1</span> Survey</span>
+<span style="font-size: 15px; color: #B4B9CB">AI-assisted</span>
+<p style="margin: 0; color: #D6D2C6">The whole property mapped: every subdomain, endpoint and dusty corner surfaced and ranked.</p>
+</li>
+<li style="display: flex; flex-direction: column; gap: 6px; border-top: 2px solid #E5A823; padding-top: 14px">
+<span style="font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: 20px"><span style="color: #E5A823">2</span> Inspection</span>
+<span style="font-size: 15px; color: #B4B9CB">By hand</span>
+<p style="margin: 0; color: #D6D2C6">Hands-on testing of the logic, permissions and flows that scanners and models walk straight past.</p>
+</li>
+<li style="display: flex; flex-direction: column; gap: 6px; border-top: 2px solid #E5A823; padding-top: 14px">
+<span style="font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: 20px"><span style="color: #E5A823">3</span> Treatment</span>
+<span style="font-size: 15px; color: #B4B9CB">Hand and machine</span>
+<p style="margin: 0; color: #D6D2C6">Findings proven, chained and pushed to real impact, with AI hunting for variants of each.</p>
+</li>
+<li style="display: flex; flex-direction: column; gap: 6px; border-top: 2px solid #E5A823; padding-top: 14px">
+<span style="font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: 20px"><span style="color: #E5A823">4</span> Report</span>
+<span style="font-size: 15px; color: #B4B9CB">Human-verified</span>
+<p style="margin: 0; color: #D6D2C6">Clear steps to reproduce, honest severity and an obvious fix. Every word checked by me.</p>
+</li>
+</ol>
+</div>
+</section>
 
-  <!-- services -->
-  <section>
-    <h2 class="sec-title"><span>I exterminate all common infestations</span></h2>
-    <div class="svc-grid">
+<svg viewBox="0 0 396 44" fill="none" stroke="#3A3F55" stroke-width="2.6" stroke-linecap="round" aria-hidden="true" style="width: min(100%, 396px); height: auto; align-self: flex-start"><g transform="translate(20 30) rotate(-90)"><path d="M0 7 V-11 M0 -1 L-6 -9 M0 -1 L6 -9"/></g><g transform="translate(64 14) rotate(-90)"><path d="M0 7 V-11 M0 -1 L-6 -9 M0 -1 L6 -9"/></g><g transform="translate(108 30) rotate(-90)"><path d="M0 7 V-11 M0 -1 L-6 -9 M0 -1 L6 -9"/></g><g transform="translate(152 14) rotate(-90)"><path d="M0 7 V-11 M0 -1 L-6 -9 M0 -1 L6 -9"/></g><g transform="translate(196 30) rotate(-90)"><path d="M0 7 V-11 M0 -1 L-6 -9 M0 -1 L6 -9"/></g><g transform="translate(240 14) rotate(-90)"><path d="M0 7 V-11 M0 -1 L-6 -9 M0 -1 L6 -9"/></g><g transform="translate(284 30) rotate(-90)"><path d="M0 7 V-11 M0 -1 L-6 -9 M0 -1 L6 -9"/></g><g transform="translate(328 14) rotate(-90)"><path d="M0 7 V-11 M0 -1 L-6 -9 M0 -1 L6 -9"/></g><g transform="translate(372 30) rotate(-90)"><path d="M0 7 V-11 M0 -1 L-6 -9 M0 -1 L6 -9"/></g></svg>
 
-      <div class="svc">
-        <div class="ic"><svg viewBox="0 0 54 54" aria-hidden="true"><ellipse cx="27" cy="30" rx="11" ry="14" fill="#1d1710"/><circle cx="27" cy="13" r="5" fill="#1d1710"/><g stroke="#1d1710" stroke-width="2.4" stroke-linecap="round"><path d="M17 22 L6 17"/><path d="M16 30 L5 30"/><path d="M17 38 L7 45"/><path d="M37 22 L48 17"/><path d="M38 30 L49 30"/><path d="M37 38 L47 45"/></g><path d="M27 18 L27 42" stroke="#f3ecdb" stroke-width="2"/></svg></div>
-        <div><h4>SQL &amp; code injection <small>structural pest</small></h4>
-        <p>Eats straight through your data layer. Left untreated, brings the whole application down.</p></div>
-      </div>
-
-      <div class="svc">
-        <div class="ic"><svg viewBox="0 0 54 54" aria-hidden="true"><rect x="14" y="24" width="26" height="20" rx="3" fill="none" stroke="#1d1710" stroke-width="3"/><path d="M20 24 V17 a7 7 0 0 1 14 0" fill="none" stroke="#1d1710" stroke-width="3"/><circle cx="27" cy="34" r="3.4" fill="#1d1710"/></svg></div>
-        <div><h4>Broken access control <small>door &amp; lock specialist</small></h4>
-        <p>Your locks look fine, but half of them don't check who's holding the key. I test every door.</p></div>
-      </div>
-
-      <div class="svc">
-        <div class="ic"><svg viewBox="0 0 54 54" aria-hidden="true"><rect x="8" y="14" width="24" height="16" rx="2" fill="none" stroke="#1d1710" stroke-width="2.6"/><rect x="22" y="26" width="24" height="16" rx="2" fill="#1d1710"/><text x="12" y="26" font-family="Oswald" font-size="9" fill="#1d1710">id=41</text><text x="26" y="38" font-family="Oswald" font-size="9" fill="#f3ecdb">id=42</text></svg></div>
-        <div><h4>IDOR <small>gets into other people’s data</small></h4>
-        <p>Change one number in a request, get another user's data. Astonishingly common; very quick to catch.</p></div>
-      </div>
-
-      <div class="svc">
-        <div class="ic"><svg viewBox="0 0 54 54" aria-hidden="true"><path d="M8 40 C16 20 38 20 46 40" fill="none" stroke="#1d1710" stroke-width="3"/><circle cx="27" cy="34" r="6" fill="#1d1710"/><g stroke="#1d1710" stroke-width="2"><path d="M27 12 L27 5"/><path d="M14 16 L9 10"/><path d="M40 16 L45 10"/></g></svg></div>
-        <div><h4>Information disclosure <small>leaks &amp; seepage</small></h4>
-        <p>Secrets, internals and credentials seeping out of the foundations, then chained into worse.</p></div>
-      </div>
-
-      <div class="svc wide">
-        <div class="ic"><svg viewBox="0 0 54 54" aria-hidden="true"><path d="M27 14 C13 3 2 11 8 22 C13 31 21 31 27 25 C33 31 41 31 46 22 C52 11 41 3 27 14 Z" fill="#f3ecdb"/><path d="M27 14 L27 46" stroke="#f3ecdb" stroke-width="2.6"/></svg></div>
-        <div><h4>Cross-site scripting <small>swarms: stored · reflected · DOM</small></h4>
-        <p>One unescaped field and it's in every visitor's browser. I trace each swarm to demonstrated account impact. No alert(1) and gone.</p></div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- guarantee -->
-  <section>
-    <div class="guarantee">
-      <div>
-        <h3>The Peckish guarantee</h3>
-        <p><b>Human-verified, always.</b> AI makes me faster, but it doesn't make the calls. Every finding is reproduced by hand before it reaches you: no scanner spray-and-pray, no machine-written guesswork, no 40-page pile of duplicates. Application logic over noise, impact over volume, chained where possible and written up so the fix is obvious.</p>
-      </div>
-      <div class="stamps">
-        <div class="stamp one"><b>HackerOne Clear ✓</b>background checked</div>
-        <div class="stamp two"><b>Hand-checked</b>every report</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- scoreboard -->
-  <section>
-    <h2 class="sec-title"><span>The scoreboard</span></h2>
-    <div class="score-grid">
-      <div class="card">
-        <div class="hd">HackerOne <a href="https://hackerone.com/peckish" target="_blank" rel="noopener">verify ↗</a></div>
-        <ul>
-          <li>Bugs exterminated <b>61</b></li>
-          <li>Signal <b>6.45 / 7.0</b></li>
-          <li>Impact <b>23.41</b></li>
-          <li>Background check <b class="clear">CLEAR ✓</b></li>
-        </ul>
-      </div>
-      <div class="card">
-        <div class="hd">YesWeHack <a href="https://yeswehack.com/hunters/sirpeckish#latest-hacktivity" target="_blank" rel="noopener">verify ↗</a></div>
-        <ul>
-          <li>Bugs exterminated <b>113</b></li>
-          <li>Impact <b>23.8</b></li>
-          <li>League table <b>#115</b></li>
-          <li>Points <b>2,332</b></li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- contact -->
-  <div class="coupon-wrap">
-    <div class="coupon">
-      <span class="scissors" aria-hidden="true">✂</span>
-      <h3>Free quote</h3>
-      <p class="quote-line">No obligation. Currently taking on new engagements.</p>
-      <a class="mail" href="mailto:admin@peki.sh">Book an inspection</a>
-      <span class="addr">admin@peki.sh</span>
-      <p class="small">Open for work: auditing attack surfaces. Thousands in bounties paid out by bug bounty programs to date.</p>
-    </div>
-  </div>
-
-  <footer class="fineprint">
-    peki.sh · Most engagements conducted under NDA; specifics shared privately on request.<br>
-    AI used as a tool, never as the tester. Responsible disclosure, always.
-  </footer>
+<!-- guarantee -->
+<section id="guarantee" style="display: flex; flex-wrap: wrap; gap: 32px clamp(32px, 6vw, 80px); background: #1D2030; padding: clamp(24px, 5vw, 56px); border-radius: 6px">
+<div style="flex: 2 1 380px; display: flex; flex-direction: column; gap: 14px">
+<h2 style="margin: 0; font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: clamp(26px, 3.8vw, 40px); line-height: 1.15; letter-spacing: -0.02em">The Peckish guarantee</h2>
+<p style="margin: 0; font-weight: 700; font-size: 21px; color: #E5A823">Human-verified, always.</p>
+<p style="margin: 0; max-width: 60ch; color: #D6D2C6">AI makes me faster, but it doesn't make the calls. Every finding is reproduced by hand before it reaches you: no scanner spray-and-pray, no machine-written guesswork, no 40-page pile of duplicates. Application logic over noise, impact over volume, chained where possible and written up so the fix is obvious.</p>
+</div>
+<ul style="flex: 1 1 220px; margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; justify-content: center; gap: 20px">
+<li style="display: flex; flex-direction: column; border-left: 0; padding: 0">
+<span style="font-family: 'Unbounded', sans-serif; font-weight: 600; font-size: 19px">HackerOne Clear</span>
+<span style="color: #B4B9CB">Background checked</span>
+</li>
+<li style="display: flex; flex-direction: column">
+<span style="font-family: 'Unbounded', sans-serif; font-weight: 600; font-size: 19px">Hand-checked</span>
+<span style="color: #B4B9CB">Every report</span>
+</li>
+</ul>
+<svg viewBox="0 0 120 120" fill="none" role="img" aria-label="Seal with a chicken footprint" style="width: 116px; height: 116px; flex: none; align-self: center; transform: rotate(-8deg)"><circle cx="60" cy="60" r="54" stroke="#E5A823" stroke-width="3"/><circle cx="60" cy="60" r="46" stroke="#E5A823" stroke-width="1.5" stroke-dasharray="2 5" stroke-linecap="round"/><path d="M60 86 V46 M60 68 L44 50 M60 68 L76 50" stroke="#E5A823" stroke-width="6" stroke-linecap="round"/></svg>
+</section>
 
 </main>
 
+<!-- contact -->
+<section id="contact" style="background: #E5A823; color: #14161F">
+<div style="max-width: 1160px; margin: 0 auto; padding: clamp(48px, 8vw, 96px) clamp(20px, 5vw, 56px); box-sizing: border-box; display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 32px 56px">
+<div style="flex: 1 1 380px; display: flex; flex-direction: column; gap: 16px">
+<h2 style="margin: 0; font-family: 'Unbounded', sans-serif; font-weight: 800; font-size: clamp(44px, 9vw, 116px); line-height: 0.95; letter-spacing: -0.03em">Got bugs?</h2>
+<p style="margin: 0; max-width: 46ch; font-size: 20px; font-weight: 500">Free quote, no obligation. Currently taking on new engagements.</p>
+<p style="margin: 0; max-width: 52ch">Open for work: auditing attack surfaces. Thousands in bounties paid out by bug bounty programs to date.</p>
+</div>
+<div style="flex: 0 1 340px; display: flex; flex-direction: column; align-items: flex-start; gap: 12px">
+<svg viewBox="0 0 240 180" fill="none" role="img" aria-label="The chicken about to eat one last bug" style="width: min(100%, 280px); height: auto; flex: none"><path d="M4 160 H236" stroke="#14161F" stroke-width="2.5" stroke-linecap="round"/><g transform="translate(36 152)"><g stroke="#14161F" stroke-width="1.8" stroke-linecap="round"><path d="M-5 2 L-8 8 L-10 8"/><path d="M0 3 L0 8 L-2 8"/><path d="M5 2 L8 8 L10 8"/><path d="M-10 -2 C-14 -6 -16 -8 -18 -7"/><path d="M-9 -4 C-11 -9 -13 -11 -15 -11"/></g><path d="M-7 3 C-7 -4 -3 -6 1 -6 C6 -6 9 -3 9 3 Z" fill="#14161F"/><circle cx="-9" cy="0" r="3" fill="#14161F"/></g><g stroke-linecap="round" stroke-linejoin="round" stroke="#14161F" stroke-width="4.5"><path d="M124 132 L120 159 M120 159 L110 161 M120 159 L121 163 M120 159 L129 162"/><path d="M142 128 L144 159 M144 159 L135 161 M144 159 L145 163 M144 159 L153 161"/></g><use href="#pk-top"/></svg>
+<a href="mailto:admin@peki.sh" style="display: inline-block; background: #14161F; color: #ECE7DA; font-weight: 700; font-size: 20px; text-decoration: none; padding: 16px 28px; border-radius: 4px">Book an inspection</a>
+<a href="mailto:admin@peki.sh" style="color: #14161F; font-weight: 600; font-size: 18px; padding: 10px 0">admin@peki.sh</a>
+</div>
+</div>
+</section>
+
+<footer style="max-width: 1160px; margin: 0 auto; padding: 28px clamp(20px, 5vw, 56px) 40px; box-sizing: border-box; display: flex; flex-direction: column; gap: 4px; font-size: 15px; color: #B4B9CB">
+<span>peki.sh. Most engagements conducted under NDA; specifics shared privately on request.</span>
+<span>AI used as a tool, never as the tester. Responsible disclosure, always.</span>
+</footer>
+</div>
+<script>
+// The hero chicken: walks along the ground line and eats each bug in turn.
+class ChickenWalk {
+start() {
+this._build();
+if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) { return; }
+const start = performance.now();
+const loop = (now) => {
+this._frame(((now - start) / 1000) % this._total);
+this._raf = requestAnimationFrame(loop);
+};
+this._raf = requestAnimationFrame(loop);
+}
+_build() {
+// One clock drives the chicken, his legs and the bugs, so they cannot drift apart.
+const bugs = [794, 662, 596, 464, 310, 244, 112];
+const HALF = 22;            // ground covered by one step
+const V = 100;              // walking speed, units per second
+const RAMP = 0.24;          // seconds to ease in or out of a stop
+const PAUSE = 0.26;         // seconds standing still at each bug
+const stops = bugs.map((x) => x - 48);
+const T0 = stops[0] + HALF * 14;
+const TEND = stops[stops.length - 1] - HALF * 20;
+const segs = [];
+const pecks = [];
+let t = 0;
+let from = T0;
+const pts = stops.concat([TEND]);
+for (let i = 0; i < pts.length; i++) {
+const rin = i > 0;
+const rout = i < pts.length - 1;
+const d = from - pts[i];
+const dur = d / V + (rin ? RAMP / 2 : 0) + (rout ? RAMP / 2 : 0);
+segs.push({ t0: t, dur: dur, from: from, d: d, rin: rin, rout: rout });
+t += dur;
+from = pts[i];
+if (rout) { pecks.push(t + 0.05); t += PAUSE; }
+}
+this._c = { HALF: HALF, V: V, RAMP: RAMP, T0: T0, TEND: TEND, segs: segs, pecks: pecks, exit: t };
+this._total = t + 1.4;
+}
+_pos(t) {
+const c = this._c;
+for (let i = 0; i < c.segs.length; i++) {
+const g = c.segs[i];
+if (t < g.t0) { return g.from; }
+const u = t - g.t0;
+if (u <= g.dur) {
+let s;
+const tin = g.rin ? c.RAMP : 0;
+const sin = g.rin ? c.V * c.RAMP / 2 : 0;
+const tout = g.dur - (g.rout ? c.RAMP : 0);
+if (g.rin && u < c.RAMP) { s = c.V * u * u / (2 * c.RAMP); }
+else if (u <= tout) { s = sin + c.V * (u - tin); }
+else { const r = g.dur - u; s = g.d - c.V * r * r / (2 * c.RAMP); }
+return g.from - s;
+}
+}
+return c.TEND;
+}
+_head(t) {
+// Head carried up while walking; one strike down onto each bug, then back up.
+const UP = 22, DOWN = -13, DIP = 0.26, HOLD = 0.1, RISE = 0.34;
+const pk = this._c.pecks;
+for (let i = 0; i < pk.length; i++) {
+const tc = pk[i];
+if (t >= tc - DIP && t < tc) { const u = (t - (tc - DIP)) / DIP; return UP + (DOWN - UP) * u * u; }
+if (t >= tc && t < tc + HOLD) { return DOWN; }
+if (t >= tc + HOLD && t < tc + HOLD + RISE) { const u = (t - tc - HOLD) / RISE; return DOWN + (UP - DOWN) * u * u * (3 - 2 * u); }
+}
+return UP;
+}
+_leg(hy, len, ph, bob) {
+// Foot planted and sliding back under the body for half the cycle, lifted and swung forward for the other half.
+const S = this._c.HALF / 2;
+let p = ph - Math.floor(ph);
+let dx, lift = 0, tilt = 0;
+if (p < 0.5) { dx = -S + 4 * S * p; }
+else { const q = (p - 0.5) / 0.5; const e = (1 - Math.cos(Math.PI * q)) / 2; dx = S - 2 * S * e; lift = 7 * Math.sin(Math.PI * q); tilt = -28 * Math.sin(Math.PI * q); }
+const dy = (160 - hy) - bob - lift;
+const D = Math.min(Math.hypot(dx, dy), 2 * len - 0.05);
+const a0 = Math.atan2(dy, dx);
+const A = Math.acos(D / (2 * len));
+let best = null;
+[1, -1].forEach((sg) => {
+const t1 = a0 + sg * A;
+const kx = len * Math.cos(t1), ky = len * Math.sin(t1);
+const t2 = Math.atan2(dy - ky, dx - kx);
+if (!best || kx > best[0]) { best = [kx, t1, t2]; }
+});
+const deg = 180 / Math.PI;
+const r1 = best[1] * deg - 90;
+const r2 = (best[2] - best[1]) * deg;
+return [r1, r2, tilt - (r1 + r2)];
+}
+_frame(t) {
+const root = document.querySelector('svg.pk-scene');
+if (!root) { return; }
+if (this._root !== root || !this._els || !this._els.walk.isConnected) {
+const q = (sel) => root.querySelector(sel);
+this._root = root;
+this._els = { walk: q('.pk-walk'), body: q('.pk-body'), top: q('.pk-top'),
+a: [q('.pk-la1'), q('.pk-la2'), q('.pk-la3')], b: [q('.pk-lb1'), q('.pk-lb2'), q('.pk-lb3')],
+bugs: Array.prototype.slice.call(root.querySelectorAll('.pk-bug')) };
+}
+const c = this._c, e = this._els;
+if (!e.walk) { return; }
+const T = this._pos(t);
+const ph = (c.T0 - T) / (c.HALF * 2);
+const sn = Math.sin(2 * Math.PI * ph);
+const bob = -1.5 * sn * sn;
+e.walk.style.transform = 'translate(' + T.toFixed(2) + 'px,0)';
+e.body.style.transform = 'translateY(' + bob.toFixed(2) + 'px)';
+e.top.style.transform = 'rotate(' + this._head(t).toFixed(2) + 'deg)';
+const la = this._leg(132, 16, ph, bob), lb = this._leg(128, 18, ph + 0.5, bob);
+for (let i = 0; i < 3; i++) {
+e.a[i].style.transform = 'rotate(' + la[i].toFixed(2) + 'deg)';
+e.b[i].style.transform = 'rotate(' + lb[i].toFixed(2) + 'deg)';
+}
+const back = Math.max(0, Math.min(1, (t - c.exit - 0.3) / 0.8));
+for (let i = 0; i < e.bugs.length; i++) {
+const eaten = i < c.pecks.length && t >= c.pecks[i];
+e.bugs[i].style.opacity = eaten ? back : 1;
+}
+}
+}
+new ChickenWalk().start();
+</script>
 </body>
 </html>
