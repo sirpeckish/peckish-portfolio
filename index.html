@@ -4,14 +4,17 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>peckish // portfolio</title>
-<meta name="description" content="Peckish Pest Control: human-led, AI-assisted security research. 174 disclosed reports across HackerOne and YesWeHack. Open for engagements, auditing attack surfaces.">
+<meta name="description" content="Peckish Pest Control: human-led, AI-assisted security research. Top 100 hunter on YesWeHack, also on HackerOne. Open for engagements, auditing attack surfaces.">
 <link rel="canonical" href="https://peki.sh/">
 <meta name="theme-color" content="#14161F">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://peki.sh/">
 <meta property="og:title" content="Peckish Bug Bounty Hunter: got bugs?">
-<meta property="og:description" content="I find the bugs before the bad guys do. Human-led, AI-assisted. 174 confirmed exterminations across HackerOne &amp; YesWeHack.">
+<meta property="og:description" content="I find the bugs before the bad guys do. Human-led, AI-assisted. Top 100 hunter on YesWeHack.">
 <meta property="og:image" content="https://peki.sh/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Peckish, bug bounty hunter: a chicken pecking a bug. Top 100 on YesWeHack.">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22%3E%3Crect width=%2264%22 height=%2264%22 rx=%2214%22 fill=%22%2314161F%22/%3E%3Ccircle cx=%2227%22 cy=%2216%22 r=%227%22 fill=%22%23EC5A4C%22/%3E%3Ccircle cx=%2237%22 cy=%2213%22 r=%227.5%22 fill=%22%23EC5A4C%22/%3E%3Ccircle cx=%2246%22 cy=%2218%22 r=%226.5%22 fill=%22%23EC5A4C%22/%3E%3Cpath d=%22M21 31 L4 38 L21 45 Z%22 fill=%22%23E5A823%22/%3E%3Cellipse cx=%2224%22 cy=%2250%22 rx=%225%22 ry=%226.5%22 fill=%22%23EC5A4C%22/%3E%3Ccircle cx=%2236%22 cy=%2236%22 r=%2219%22 fill=%22%23ECE7DA%22/%3E%3Ccircle cx=%2230%22 cy=%2232%22 r=%224.6%22 fill=%22%2314161F%22/%3E%3C/svg%3E">
 <script data-goatcounter="https://peckish.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
@@ -24,8 +27,24 @@
 <style>
 body{margin:0;background:#14161F}
 a{color:#E5A823}a:hover{color:#F4C95B}
-a:focus-visible{outline:3px solid #F4C95B;outline-offset:3px}
+a:focus-visible,button:focus-visible{outline:3px solid #F4C95B;outline-offset:3px}
+/* On the yellow contact panel a yellow outline vanishes, so use ink there. */
+#contact a:focus-visible{outline-color:#14161F}
 html{scroll-behavior:smooth}
+/* Link colours live here, not inline, so hover can override them. */
+.nav-link{color:#B4B9CB}.nav-link:hover{color:#ECE7DA}
+.nav-home,.link-light{color:#ECE7DA}.nav-home:hover,.link-light:hover{color:#E5A823}
+.nav-cta{color:#E5A823}.nav-cta:hover{color:#F4C95B}
+.btn{display:inline-block;font-weight:700;text-decoration:none;border-radius:4px;transition:background-color .15s,color .15s}
+.btn-yellow{background:#E5A823;color:#14161F}.btn-yellow:hover{background:#F4C95B;color:#14161F}
+.btn-ink{background:#14161F;color:#ECE7DA}.btn-ink:hover{background:#2C3044;color:#ECE7DA}
+.link-ink{color:#14161F}.link-ink:hover{color:#3A3F55}
+.top100 svg{transition:transform .2s}.top100:hover svg{transform:rotate(4deg) scale(1.04)!important}
+#top .top100:focus-visible{outline-offset:6px;border-radius:50%}
+@media (prefers-reduced-motion:reduce){.top100 svg{transition:none}}
+/* Scoreboard: label comes first in the markup for screen readers, number shows first on screen. */
+.stat dd{order:1}.stat dt{order:2}.stat dd.stat-bar{order:3}
+@media (prefers-reduced-motion:reduce){.btn{transition:none}}
 .pk-walk{transform:translate(548px,0)}
 .pk-top{transform-origin:133px 130px}
 .pk-jaw{transform-origin:63px 131px;transform:rotate(27deg)}
@@ -43,12 +62,12 @@ html{scroll-behavior:smooth}
 
 <!-- nav -->
 <nav aria-label="Main" style="max-width: 1160px; margin: 0 auto; padding: 22px clamp(20px, 5vw, 56px); box-sizing: border-box; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 32px">
-<a href="#top" style="font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: 18px; color: #ECE7DA; text-decoration: none; padding: 10px 0">peki.sh</a>
+<a href="#top" class="nav-home" style="font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: 18px; text-decoration: none; padding: 10px 0">peki.sh</a>
 <div style="display: flex; flex-wrap: wrap; gap: 4px 28px; font-size: 16px; font-weight: 500">
-<a href="#scoreboard" style="color: #B4B9CB; text-decoration: none; padding: 10px 0">Scoreboard</a>
-<a href="#bugs" style="color: #B4B9CB; text-decoration: none; padding: 10px 0">What I find</a>
-<a href="#method" style="color: #B4B9CB; text-decoration: none; padding: 10px 0">How I work</a>
-<a href="#contact" style="color: #E5A823; text-decoration: none; padding: 10px 0">Taking on new work</a>
+<a href="#scoreboard" class="nav-link" style="text-decoration: none; padding: 10px 0">Scoreboard</a>
+<a href="#bugs" class="nav-link" style="text-decoration: none; padding: 10px 0">What I find</a>
+<a href="#method" class="nav-link" style="text-decoration: none; padding: 10px 0">How I work</a>
+<a href="#contact" class="nav-cta" style="text-decoration: none; padding: 10px 0">Taking on new work</a>
 </div>
 </nav>
 
@@ -69,21 +88,23 @@ html{scroll-behavior:smooth}
 <li style="display: inline-flex; align-items: center; gap: 10px"><svg viewBox="0 0 24 24" fill="none" stroke="#E5A823" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width: 22px; height: 22px; flex: none"><path d="M12 21.500c4.500-4.500 7-8 7-11.500a7 7 0 0 0-14 0c0 3.500 2.500 7 7 11.500z"/><circle cx="12" cy="10" r="2.500"/></svg>London, and remote worldwide</li>
 </ul>
 <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px 28px; margin-top: 6px">
-<a href="mailto:admin@peki.sh" style="display: inline-block; background: #E5A823; color: #14161F; font-weight: 700; font-size: 18px; text-decoration: none; padding: 14px 24px; border-radius: 4px">Book an inspection</a>
-<a href="#scoreboard" style="color: #ECE7DA; font-weight: 600; padding: 12px 0">See the scoreboard</a>
+<a href="mailto:admin@peki.sh" class="btn btn-yellow" style="font-size: 18px; padding: 14px 24px">Book an inspection</a>
+<a href="#scoreboard" class="link-light" style="font-weight: 600; padding: 12px 0">See the scoreboard</a>
 </div>
 </div>
-<svg viewBox="0 0 200 200" role="img" aria-label="174 bugs exterminated and counting" style="flex: none; width: clamp(150px, 19vw, 230px); height: auto; transform: rotate(9deg)">
+<a href="https://yeswehack.com/hunters/sirpeckish" class="top100" aria-label="Top 100 hunter on YesWeHack, see the profile" style="flex: none; display: block">
+<svg viewBox="0 0 200 200" aria-hidden="true" style="display: block; width: clamp(140px, 19vw, 230px); height: auto; transform: rotate(9deg)">
 <polygon points="100.0,3.0 110.1,16.6 123.2,5.8 129.8,21.5 145.1,14.1 147.7,30.9 164.3,27.4 162.9,44.3 179.8,44.9 174.4,61.0 190.7,65.6 181.6,79.9 196.3,88.3 184.0,100.0 196.3,111.7 181.6,120.1 190.7,134.4 174.4,139.0 179.8,155.1 162.9,155.7 164.3,172.6 147.7,169.1 145.1,185.9 129.8,178.5 123.2,194.2 110.1,183.4 100.0,197.0 89.9,183.4 76.8,194.2 70.2,178.5 54.9,185.9 52.3,169.1 35.7,172.6 37.1,155.7 20.2,155.1 25.6,139.0 9.3,134.4 18.4,120.1 3.7,111.7 16.0,100.0 3.7,88.3 18.4,79.9 9.3,65.6 25.6,61.0 20.2,44.9 37.1,44.3 35.7,27.4 52.3,30.9 54.9,14.1 70.2,21.5 76.8,5.8 89.9,16.6" fill="#E5A823"/>
 <circle cx="100" cy="100" r="74" fill="none" stroke="#14161F" stroke-width="1.500" stroke-dasharray="1 5" stroke-linecap="round"/>
-<text x="100" y="108" text-anchor="middle" font-family="Unbounded, sans-serif" font-weight="800" font-size="52" letter-spacing="-1.500" fill="#14161F">174</text>
-<text x="100" y="128" text-anchor="middle" font-family="'Hanken Grotesk', sans-serif" font-weight="700" font-size="13.500" fill="#14161F">bugs exterminated</text>
-<text x="100" y="145" text-anchor="middle" font-family="'Hanken Grotesk', sans-serif" font-weight="600" font-size="12.500" fill="#14161F">and counting</text>
+<text x="100" y="80" text-anchor="middle" font-family="Unbounded, sans-serif" font-weight="700" font-size="18" letter-spacing="1.5" fill="#14161F">TOP</text>
+<text x="100" y="124" text-anchor="middle" font-family="Unbounded, sans-serif" font-weight="800" font-size="52" letter-spacing="-1.500" fill="#14161F">100</text>
+<text x="100" y="146" text-anchor="middle" font-family="'Hanken Grotesk', sans-serif" font-weight="700" font-size="14" fill="#14161F">on YesWeHack</text>
 </svg>
+</a>
 </div>
 </div>
 <div style="overflow: hidden">
-<svg class="pk-scene" viewBox="0 0 900 190" preserveAspectRatio="xMidYMax meet" fill="none" role="img" aria-label="A chicken walks along the ground eating a line of bugs one by one" style="display: block; width: 100%; height: auto; max-height: 300px; overflow: visible">
+<svg class="pk-scene" id="pk-scene" viewBox="0 0 900 190" preserveAspectRatio="xMidYMax meet" fill="none" role="img" aria-label="A chicken walks along the ground eating a line of bugs one by one" style="display: block; width: 100%; height: auto; max-height: 300px; overflow: visible">
 <defs>
 <g id="pk-bug">
 <g stroke="#EC5A4C" stroke-width="1.8" stroke-linecap="round">
@@ -218,10 +239,10 @@ html{scroll-behavior:smooth}
 <a href="https://hackerone.com/peckish" style="font-weight: 600; font-size: 16px; padding: 8px 0">Verify on HackerOne</a>
 </div>
 <dl style="margin: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 28px">
-<div style="display: flex; flex-direction: column; gap: 4px; border-top: 1px solid #343A52; padding-top: 14px"><dd style="margin: 0; font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: clamp(28px, 3.4vw, 38px); line-height: 1.1; letter-spacing: -0.01em; color: #E5A823">61</dd><dt style="font-size: 16px; color: #B4B9CB">Bugs exterminated</dt></div>
-<div style="display: flex; flex-direction: column; gap: 4px; border-top: 1px solid #343A52; padding-top: 14px"><dd style="margin: 0; font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: clamp(28px, 3.4vw, 38px); line-height: 1.1; letter-spacing: -0.01em; color: #ECE7DA">6.45 <span style="font-size: 15px; font-weight: 400; letter-spacing: 0; color: #B4B9CB">/ 7.0</span></dd><dt style="font-size: 16px; color: #B4B9CB">Signal</dt><div role="img" aria-label="Signal 6.45 out of 7" style="margin-top: 6px; width: 100%; max-width: 150px; height: 6px; border-radius: 3px; background: #343A52"><div style="width: 92%; height: 6px; border-radius: 3px; background: #E5A823"></div></div></div>
-<div style="display: flex; flex-direction: column; gap: 4px; border-top: 1px solid #343A52; padding-top: 14px"><dd style="margin: 0; font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: clamp(28px, 3.4vw, 38px); line-height: 1.1; letter-spacing: -0.01em; color: #ECE7DA">23.41</dd><dt style="font-size: 16px; color: #B4B9CB">Impact</dt></div>
-<div style="display: flex; flex-direction: column; gap: 4px; border-top: 1px solid #343A52; padding-top: 14px"><dd style="margin: 0; font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: clamp(28px, 3.4vw, 38px); line-height: 1.1; letter-spacing: -0.01em; color: #ECE7DA"><span style="display: inline-flex; align-items: center; gap: 10px">Clear<svg viewBox="0 0 20 20" fill="none" stroke="#E5A823" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width: 0.7em; height: 0.7em"><path d="M4 10.5l4 4 8-9"/></svg></span></dd><dt style="font-size: 16px; color: #B4B9CB">Background check</dt></div>
+<div class="stat" style="display: flex; flex-direction: column; gap: 4px; border-top: 1px solid #343A52; padding-top: 14px"><dt style="font-size: 16px; color: #B4B9CB">Bugs exterminated</dt><dd style="margin: 0; font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: clamp(28px, 3.4vw, 38px); line-height: 1.1; letter-spacing: -0.01em; color: #E5A823">61</dd></div>
+<div class="stat" style="display: flex; flex-direction: column; gap: 4px; border-top: 1px solid #343A52; padding-top: 14px"><dt style="font-size: 16px; color: #B4B9CB">Signal</dt><dd style="margin: 0; font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: clamp(28px, 3.4vw, 38px); line-height: 1.1; letter-spacing: -0.01em; color: #ECE7DA">6.45 <span style="font-size: 15px; font-weight: 400; letter-spacing: 0; color: #B4B9CB">/ 7.0</span></dd><dd class="stat-bar" aria-hidden="true" style="margin: 6px 0 0; width: 100%; max-width: 150px; height: 6px; border-radius: 3px; background: #343A52"><div style="width: 92%; height: 6px; border-radius: 3px; background: #E5A823"></div></dd></div>
+<div class="stat" style="display: flex; flex-direction: column; gap: 4px; border-top: 1px solid #343A52; padding-top: 14px"><dt style="font-size: 16px; color: #B4B9CB">Impact</dt><dd style="margin: 0; font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: clamp(28px, 3.4vw, 38px); line-height: 1.1; letter-spacing: -0.01em; color: #ECE7DA">23.41</dd></div>
+<div class="stat" style="display: flex; flex-direction: column; gap: 4px; border-top: 1px solid #343A52; padding-top: 14px"><dt style="font-size: 16px; color: #B4B9CB">Background check</dt><dd style="margin: 0; font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: clamp(28px, 3.4vw, 38px); line-height: 1.1; letter-spacing: -0.01em; color: #ECE7DA"><span style="display: inline-flex; align-items: center; gap: 10px">Clear<svg viewBox="0 0 20 20" fill="none" stroke="#E5A823" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width: 0.7em; height: 0.7em"><path d="M4 10.5l4 4 8-9"/></svg></span></dd></div>
 </dl>
 </div>
 <div style="background: #1D2030; border-radius: 6px; padding: clamp(20px, 3vw, 32px); box-sizing: border-box; display: flex; flex-direction: column; gap: 22px">
@@ -230,10 +251,10 @@ html{scroll-behavior:smooth}
 <a href="https://yeswehack.com/hunters/sirpeckish#latest-hacktivity" style="font-weight: 600; font-size: 16px; padding: 8px 0">Verify on YesWeHack</a>
 </div>
 <dl style="margin: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 28px">
-<div style="display: flex; flex-direction: column; gap: 4px; border-top: 1px solid #343A52; padding-top: 14px"><dd style="margin: 0; font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: clamp(28px, 3.4vw, 38px); line-height: 1.1; letter-spacing: -0.01em; color: #E5A823">113</dd><dt style="font-size: 16px; color: #B4B9CB">Bugs exterminated</dt></div>
-<div style="display: flex; flex-direction: column; gap: 4px; border-top: 1px solid #343A52; padding-top: 14px"><dd style="margin: 0; font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: clamp(28px, 3.4vw, 38px); line-height: 1.1; letter-spacing: -0.01em; color: #ECE7DA">23.8</dd><dt style="font-size: 16px; color: #B4B9CB">Impact</dt></div>
-<div style="display: flex; flex-direction: column; gap: 4px; border-top: 1px solid #343A52; padding-top: 14px"><dd style="margin: 0; font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: clamp(28px, 3.4vw, 38px); line-height: 1.1; letter-spacing: -0.01em; color: #ECE7DA">#115</dd><dt style="font-size: 16px; color: #B4B9CB">League table</dt></div>
-<div style="display: flex; flex-direction: column; gap: 4px; border-top: 1px solid #343A52; padding-top: 14px"><dd style="margin: 0; font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: clamp(28px, 3.4vw, 38px); line-height: 1.1; letter-spacing: -0.01em; color: #ECE7DA">2,332</dd><dt style="font-size: 16px; color: #B4B9CB">Points</dt></div>
+<div class="stat" style="display: flex; flex-direction: column; gap: 4px; border-top: 1px solid #343A52; padding-top: 14px"><dt style="font-size: 16px; color: #B4B9CB">Reports submitted</dt><dd style="margin: 0; font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: clamp(28px, 3.4vw, 38px); line-height: 1.1; letter-spacing: -0.01em; color: #E5A823">168</dd></div>
+<div class="stat" style="display: flex; flex-direction: column; gap: 4px; border-top: 1px solid #343A52; padding-top: 14px"><dt style="font-size: 16px; color: #B4B9CB">Impact</dt><dd style="margin: 0; font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: clamp(28px, 3.4vw, 38px); line-height: 1.1; letter-spacing: -0.01em; color: #ECE7DA">23.12</dd></div>
+<div class="stat" style="display: flex; flex-direction: column; gap: 4px; border-top: 1px solid #343A52; padding-top: 14px"><dt style="font-size: 16px; color: #B4B9CB">Leaderboard</dt><dd style="margin: 0; font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: clamp(28px, 3.4vw, 38px); line-height: 1.1; letter-spacing: -0.01em; color: #E5A823">Top 100</dd></div>
+<div class="stat" style="display: flex; flex-direction: column; gap: 4px; border-top: 1px solid #343A52; padding-top: 14px"><dt style="font-size: 16px; color: #B4B9CB">Points</dt><dd style="margin: 0; font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: clamp(28px, 3.4vw, 38px); line-height: 1.1; letter-spacing: -0.01em; color: #ECE7DA">3,112</dd></div>
 </dl>
 </div>
 </div>
@@ -407,8 +428,8 @@ html{scroll-behavior:smooth}
 </div>
 <div style="flex: 0 1 340px; display: flex; flex-direction: column; align-items: flex-start; gap: 12px">
 <svg viewBox="0 0 240 180" fill="none" role="img" aria-label="The chicken about to eat one last bug" style="width: min(100%, 280px); height: auto; flex: none"><path d="M4 160 H236" stroke="#14161F" stroke-width="2.5" stroke-linecap="round"/><g transform="translate(36 152)"><g stroke="#14161F" stroke-width="1.8" stroke-linecap="round"><path d="M-5 2 L-8 8 L-10 8"/><path d="M0 3 L0 8 L-2 8"/><path d="M5 2 L8 8 L10 8"/><path d="M-10 -2 C-14 -6 -16 -8 -18 -7"/><path d="M-9 -4 C-11 -9 -13 -11 -15 -11"/></g><path d="M-7 3 C-7 -4 -3 -6 1 -6 C6 -6 9 -3 9 3 Z" fill="#14161F"/><circle cx="-9" cy="0" r="3" fill="#14161F"/></g><g stroke-linecap="round" stroke-linejoin="round" stroke="#14161F" stroke-width="4.5"><path d="M124 132 L120 159 M120 159 L110 161 M120 159 L121 163 M120 159 L129 162"/><path d="M142 128 L144 159 M144 159 L135 161 M144 159 L145 163 M144 159 L153 161"/></g><use href="#pk-top"/></svg>
-<a href="mailto:admin@peki.sh" style="display: inline-block; background: #14161F; color: #ECE7DA; font-weight: 700; font-size: 20px; text-decoration: none; padding: 16px 28px; border-radius: 4px">Book an inspection</a>
-<a href="mailto:admin@peki.sh" style="color: #14161F; font-weight: 600; font-size: 18px; padding: 10px 0">admin@peki.sh</a>
+<a href="mailto:admin@peki.sh" class="btn btn-ink" style="font-size: 20px; padding: 16px 28px">Book an inspection</a>
+<a href="mailto:admin@peki.sh" class="link-ink" style="font-weight: 600; font-size: 18px; padding: 10px 0">admin@peki.sh</a>
 </div>
 </div>
 </section>
@@ -424,12 +445,37 @@ class ChickenWalk {
 start() {
 this._build();
 if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) { return; }
-const start = performance.now();
-const loop = (now) => {
-this._frame(((now - start) / 1000) % this._total);
-this._raf = requestAnimationFrame(loop);
+// The clock only advances while running, so pausing and resuming picks up where it left off.
+this._t = 0;
+this._last = null;
+this._raf = null;
+this._onScreen = true;
+this._loop = (now) => {
+if (this._last !== null) { this._t += Math.min(now - this._last, 100) / 1000; }
+this._last = now;
+this._frame(this._t % this._total);
+this._raf = requestAnimationFrame(this._loop);
 };
-this._raf = requestAnimationFrame(loop);
+// Stops when the scene scrolls out of view or the tab is hidden.
+const scene = document.querySelector('svg.pk-scene');
+if (scene && 'IntersectionObserver' in window) {
+new IntersectionObserver((entries) => {
+this._onScreen = entries[entries.length - 1].isIntersecting;
+this._update();
+}).observe(scene);
+}
+document.addEventListener('visibilitychange', () => this._update());
+this._update();
+}
+_update() {
+const run = this._onScreen && !document.hidden;
+if (run && this._raf === null) {
+this._last = null;
+this._raf = requestAnimationFrame(this._loop);
+} else if (!run && this._raf !== null) {
+cancelAnimationFrame(this._raf);
+this._raf = null;
+}
 }
 _build() {
 // One clock drives the chicken, his legs and the bugs, so they cannot drift apart.
